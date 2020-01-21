@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../home.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        
+         <h:form>
+              <p:messages autoUpdate="true" showDetail="true" closable="true" />
+        </h:form>
+            <h3>
+                Dados Do Cliente
+            </h3>
+        
+            <f:view>
+
+                <h:form id="forCliente">
+                    <p:dialog header="Dados" widgetVar="dlgClientes" showEffect="explode" hideEffect="bounce"
+                              style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;
+                              overflow: auto!important ">
+                        <p:messages autoUpdate="true" showDetail="true" closable="true" />
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Nome:" for="nome" />
+                            <p:inputText id="nome" value="#{clienteBean.pessoa.nome}" 
+                                         style="width: 400px;" 
+                                         title="Nome" required="true" 
+                                         requiredMessage="Nome não pode ser em branco."
+                                         onfocus="true"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Razão Social:" for="razaoSocial" />
+                            <p:inputText id="razaoSocial" style="width: 400px;" value="#{clienteBean.pessoa.razaoSocial}" title="RazaoSocial" />
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Cpf:" for="cpf" />
+                            <p:inputText id="cpf" value="#{clienteBean.documentos.cpf}" title="Cpf" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Cnpj:" for="cnpj" />
+                                <p:inputText id="cnpj" value="#{clienteBean.documentos.cnpj}" title="Cnpj" />
+                            </h:panelGrid>
+                            <h:panelGrid>
+                                <p:outputLabel value="Rg:" for="rg" />
+                                <p:inputText id="rg" value="#{clienteBean.documentos.rg}" title="Rg" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Inscrição Estudal:" for="inscricaoEstudal" />
+                                <p:inputText id="inscricaoEstudal" value="#{clienteBean.documentos.inscricaoEstudal}" title="InscricaoEstudal" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Inscrição Municipal:" for="inscricaoMunicipal" />
+                                <p:inputText id="inscricaoMunicipal" value="#{clienteBean.documentos.inscricaoMunicipal}" title="InscricaoMunicipal" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Data Nascimento:" for="dataNascimento" />
+                            <p:calendar id="dataNascimento"  value="#{clienteBean.pessoa.dataNascimento}" title="DataNascimento" pattern="dd/MM/yyyy" locale="pt" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Sexo:" for="sexo" />
+                                <p:selectOneMenu id="sexo" value="#{clienteBean.pessoa.sexo}" label="Sexo" style="width: 180px;">
+                                    <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                    <f:selectItem itemLabel="Feminino" itemValue="F" />
+                                </p:selectOneMenu>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Tipo Pessoa:" for="tipoPessoa" />
+                                <p:selectOneMenu id="tipoPessoa" value="#{clienteBean.pessoa.tipoPessoa}" label="Pessoa" style="width: 200px;">
+                                    <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Jurídica" itemValue="Juridica" />
+                                    <f:selectItem itemLabel="Física" itemValue="Fisica" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <p:panelGrid columns="1">
+                                <p:outputLabel value="Estrangeiro:" for="estra" />
+                                <p:selectBooleanCheckbox id="estra" value="#{clienteBean.pessoa.estrangeiro}" itemLabel="SIM"/>
+                            </p:panelGrid>
+                            <p:spacer  width="100"/>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Estado Civil:" for="estadoCivil" />
+                                <p:inputText id="estadoCivil" value="#{clienteBean.pessoa.estadoCivil}" title="EstadoCivil" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Profissão:" for="profissao" />
+                            <p:inputText id="profissao" value="#{clienteBean.pessoa.profissao}" title="Profissao" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Conjuge:" for="conjuge" />
+                                <p:inputText id="conjuge" value="#{clienteBean.pessoa.conjuge}" title="Conjuge" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Passaporte:" for="passaporte" />
+                                <p:inputText id="passaporte" value="#{clienteBean.documentos.passaporte}" title="Passaporte" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Validade Passaporte:" for="validadePassaporte" />
+                                <p:calendar id="validadePassaporte" style="width: 200px;" value="#{clienteBean.documentos.validadePassaporte}" title="ValidadePassaporte" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:calendar>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Nacionalidade:" for="nacionalidade" />
+                                <p:inputText id="nacionalidade" value="#{clienteBean.pessoa.nacionalidade}" title="Nacionalidade" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Situacao:" for="situacao" />
+                            <p:selectOneMenu id="situacao" value="#{clienteBean.pessoa.situacao}" label="Situação" style="width: 200px;">
+                                <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                                <f:selectItem itemLabel="Ativo" itemValue="SIM" />
+                                <f:selectItem itemLabel="Desativado" itemValue="NAO" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">    
+                            <p:outputLabel value="Endereço" for="logradouro" />
+                            <p:inputText id="logradouro" style="width: 400px;" value="#{clienteBean.endereco.logradouro}" title="Logradouro" required="true" requiredMessage="The Logradouro field is required."/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Numero:" for="numero" />
+                                <p:inputText id="numero" value="#{clienteBean.endereco.numero}" title="Numero" required="true" requiredMessage="The Numero field is required."/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Bairro:" for="bairro" />
+                                <p:inputText id="bairro" value="#{clienteBean.endereco.bairro}" title="Bairro" required="true" requiredMessage="The Bairro field is required."/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Complemento:" for="complemento" />
+                            <p:inputText id="complemento" value="#{clienteBean.endereco.complemento}" title="Complemento" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Cidade:" for="cidade" />
+                                <p:inputText id="cidade" value="#{clienteBean.endereco.cidade}" title="Cidade" required="true" requiredMessage="The Cidade field is required."/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Cep:" for="cep" />
+                                <p:inputText id="cep" value="#{clienteBean.endereco.cep}" title="Cep" required="true" requiredMessage="The Cep field is required."/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Estado:" for="uf" />
+                                <p:selectOneMenu id="uf" value="#{clienteBean.endereco.uf}" label="Estados" style="width: 200px;" effect="fade" var="t"  filter="true" filterMatchMode="startsWith">
+                                    <f:selectItems value="#{estadosDTO.lista}" var="theme" itemLabel="#{theme.descricao}" itemValue="#{theme.sigla}" />
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Name"/>
+                                        </f:facet>
+                                        <h:outputText value="#{t}" />
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Pais:" for="pais" />
+                                <p:inputText id="pais" value="#{clienteBean.pessoa.pais}" title="Pais" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Representante Legal :" for="representanteLegalFk" />
+                            <p:inputText id="representanteLegalFk" value="#{clienteBean.cliente.representanteLegalFk}" title="RepresentanteLegalFk" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Ddd:" for="ddd" />
+                                <p:inputText id="ddd" value="#{clienteBean.telefone.ddd}" title="Ddd" required="true" requiredMessage="Ddd não pode ser vazio."/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                            <p:outputLabel value="Telefone:" for="telefone" />
+                            <p:inputText id="telefone" value="#{clienteBean.telefone.telefone}" title="Telefone" required="true" requiredMessage="Telefone obrigátorio."/>
+                            </h:panelGrid>
+                            </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:panelGrid columns="1">
+                                <p:outputLabel value="Whatsapp:" for="whatsapp" />
+                                <p:selectBooleanCheckbox id="whatsapp" value="#{clienteBean.telefone.whatsapp}" itemLabel="SIM"/>
+                            </p:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Email:" for="email" />
+                                <p:inputText id="email" style="width: 300px;" value="#{clienteBean.email.email}" title="Email" required="true" requiredMessage="Email não pode ser em branco"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Site:" for="site" />
+                        <p:inputText id="site" value="#{clienteBean.email.site}" title="Site" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Observação Email:" for="observacaoEmail" />
+                        <p:inputText id="observacaoEmail" style="width: 400px;" value="#{clienteBean.email.observacao}" title="Observacao" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                             <p:outputLabel value="Observação Cliente:" for="observacao" />
+                        <p:inputText id="observacao" style="width: 400px;" value="#{clienteBean.cliente.observacao}" title="Observacao" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                             <p:outputLabel value="VendedorFk:" for="vendedorFk" />
+                        <p:inputText id="vendedorFk" value="#{clienteBean.cliente.vendedorFk}" title="VendedorFk" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Suframa:" for="suframa" />
+                            <p:inputText id="suframa" value="#{clienteBean.documentos.suframa}" title="Suframa" />
+                        </h:panelGrid>
+                            <h:panelGrid columns="1">
+                             <p:outputLabel value="Plano Pagto:" for="planoPagto" />
+                        <p:inputText id="planoPagto" value="#{clienteBean.cliente.planoPagto}" title="PlanoPagto" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                 <p:outputLabel value="TabelaPreco:" for="tabelaPrecoFk" />
+                        <p:inputText id="tabelaPrecoFk" value="#{clienteBean.cliente.tabelaPrecoFk}" title="TabelaPrecoFk" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Segmento:" for="segmentoFk" />
+                        <p:inputText id="segmentoFk" value="#{clienteBean.cliente.segmentoFk}" title="SegmentoFk" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Classificacao:" for="classificacaoFk" />
+                        <p:inputText id="classificacaoFk" value="#{clienteBean.cliente.classificacaoFk}" title="ClassificacaoFk" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                        <p:outputLabel value="LimiteCredito:" for="limiteCredito" />
+                        <p:inputText id="limiteCredito" value="#{clienteBean.cliente.limiteCredito}" title="LimiteCredito" />
+                            </h:panelGrid>
+                            
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvar()}" rendered="#{clienteBean.cliente.idCliente == null}" />
+                            <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{clienteBean.editar()}" rendered="#{clienteBean.cliente.idCliente != null}" />
+                            <p:commandButton value="Cancelar" onclick="PF('dlgClientes').hide()" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="fortblcli">
+
+                <p:dataTable id="tblClientes" value="#{clienteBean.listaClientes}" var="item"
+                             widgetVar="carsTable2"
+                             emptyMessage="Não ha dados para exibir" 
+                             paginator="true" rows="10" style="font-size: 13px!important">
+                    <f:facet name="header">
+
+                        <div style="float: right">
+                            <p:commandButton value="Novo" actionListener="#{clienteBean.novo()}"  icon="ui ui-icon-plus"/>
+                        </div>
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome cliente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Observacao"/>
+                        </f:facet>
+                        <h:outputText value="#{item.observacao}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ação"/>
+                        </f:facet>
+                        <p:commandButton id="btneditar" value="Editar" icon="ui-icon-pencil" actionListener="#{clienteBean.setarEditar(item.documentoFk)}"/>
+                        <p:commandButton id="btnexcluir" value="Excluir" icon="ui-icon-trash" actionListener="#{clienteBean.setarDeletar(item.documentoFk.pessoaFk)}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <h:form id="forUsuConf">
+                <p:dialog header="Dados" widgetVar="dlgConf" showEffect="explode">
+                    <h:panelGrid columns="1">
+                        <h1>Atenção</h1>
+                        <h3>Confirmar a remoção?</h3>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="SIM #{clienteBean.pessoa.idPessoa}" actionListener="#{clienteBean.deletar(clienteBean.pessoa.idPessoa)}" oncomplete="PF('dlgConf')hide();"/>
+                            <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
+
+    </ui:define>
+
+</ui:composition>

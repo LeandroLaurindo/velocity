@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../home.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <h:form>
+            <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+        </h:form>
+        <h:form id="forUsuDado">
+            <p:dialog header="Dados" widgetVar="dlgUsuario" showEffect="explode" hideEffect="bounce">
+                <h1><h:outputText value="Dados do usuários"/></h1>
+                <h:panelGrid columns="1">
+
+                    <p:outputLabel value="Login:" for="login" />
+                    <p:inputText id="login" value="#{usuario.usuario.login}" title="Login" required="true" requiredMessage="O login não pode ser em branco"/>
+                    <p:outputLabel value="Senha:" for="senha" />
+                    <p:inputText id="senha" value="#{usuario.usuario.senha}" title="Senha" required="true" requiredMessage="A senha não pode ser vazia."/>
+                    <p:outputLabel for="@next" value="Perfil:" />
+                    <p:selectOneMenu id="advanced" value="#{usuario.idPerfil}"  panelStyle="width:180px"
+                                     effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{usuario.listaPefis}" var="theme" itemLabel="#{theme.nomePerfil}" itemValue="#{theme.nomePerfil}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Name"/>
+                            </f:facet>
+                            <h:outputText value="#{t}" />
+                        </p:column>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Ativo:" for="ativo" />
+
+                    <p:selectOneMenu id="ativo" value="#{usuario.ativo}"   panelStyle="width:180px" style="width: 180px">
+                        <f:selectItem itemLabel="SIM" itemValue="SIM" />
+                        <f:selectItem itemLabel="NAO" itemValue="NAO" />
+                    </p:selectOneMenu>
+
+                    <br />
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{usuario.salvar()}"
+                                         rendered="#{usuario.usuario.idUsuario == null}"
+                                         oncomplete="PF('dlgUsuario').hide();"/>
+                        <p:commandButton value="Atualizar" icon="ui-icon-pencil" actionListener="#{usuario.editar()}"  
+                                         rendered="#{usuario.usuario.idUsuario != null}" ajax="true"/> 
+                        <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()"/> 
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form id="databelaUsuario">
+            <p:dataTable var="item" value="#{usuario.lista}" widgetVar="carsTable1"
+                         emptyMessage="Não a dados para exibir" 
+                         paginator="true" rows="10" style="font-size: 13px!important">
+                <f:facet name="header">
+                    <div style="float: right">
+                        <p:commandButton value="Novo" actionListener="#{usuario.limpar()}"  icon="ui ui-icon-plus"/>
+                    </div>
+                </f:facet>
+
+
+                <p:column filterBy="#{item.login}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Login"/>
+                    </f:facet>
+                    <h:outputText value="#{item.login}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ativo"/>
+                    </f:facet>
+                    <h:outputText value="SIM" rendered="#{item.ativo}"/>
+                    <h:outputText value="NAO" rendered="#{!item.ativo}"/>
+                </p:column>
+                <p:column>
+                    <p:commandButton id="btneditar" value="Editar" icon="ui-icon-pencil" actionListener="#{usuario.setarDados(item)}"/>
+                    <p:commandButton id="btnexcluir" value="Excluir" icon="ui-icon-trash" actionListener="#{usuario.setarDadosRemover(item)}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <h:form id="forUsuConf">
+            <p:dialog header="Dados" widgetVar="dlgConf" showEffect="explode">
+                <h:panelGrid columns="1">
+                    <h1>Atenção</h1>
+                    <h3>Confirmar a remoção?</h3>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="SIM" actionListener="#{usuario.excluir(usuario.usuario.idUsuario)}" oncomplete="PF('dlgConf')hide();"/>
+                        <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
