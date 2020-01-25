@@ -24,6 +24,7 @@ public class GenericDAO<PK, T> {
     }
  
      public T getByParametro(String p) {
+         System.out.println("SELECT c FROM " + getTypeClass().getSimpleName() + " c " + p +"");
         return (T) entityManager.createQuery("SELECT c FROM " + getTypeClass().getSimpleName() + " c " + p +"").getSingleResult();
     }
     public void save(T entity) {

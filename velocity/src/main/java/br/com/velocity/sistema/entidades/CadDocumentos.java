@@ -7,9 +7,7 @@ package br.com.velocity.sistema.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -83,27 +81,9 @@ public class CadDocumentos implements Serializable {
     @NotNull
     @Column(name = "usuario_fk")
     private int usuarioFk;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadFuncionarios> cadFuncionariosList;
     @JoinColumn(name = "pessoa_fk", referencedColumnName = "id_pessoa")
     @ManyToOne(optional = false)
     private CadPessoa pessoaFk;
-    @OneToMany(mappedBy = "documentoFk")
-    private List<CadHabilitacao> cadHabilitacaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadEmail> cadEmailList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadFornecedor> cadFornecedorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadVendedor> cadVendedorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadCliente> cadClienteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadTelefone> cadTelefoneList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadOcorrencias> cadOcorrenciasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
-    private List<CadEndereco> cadEnderecoList;
 
     public CadDocumentos() {
     }
@@ -215,93 +195,12 @@ public class CadDocumentos implements Serializable {
         this.usuarioFk = usuarioFk;
     }
 
-    @XmlTransient
-    public List<CadFuncionarios> getCadFuncionariosList() {
-        return cadFuncionariosList;
-    }
-
-    public void setCadFuncionariosList(List<CadFuncionarios> cadFuncionariosList) {
-        this.cadFuncionariosList = cadFuncionariosList;
-    }
-
     public CadPessoa getPessoaFk() {
         return pessoaFk;
     }
 
     public void setPessoaFk(CadPessoa pessoaFk) {
         this.pessoaFk = pessoaFk;
-    }
-
-    @XmlTransient
-    public List<CadHabilitacao> getCadHabilitacaoList() {
-        return cadHabilitacaoList;
-    }
-
-    public void setCadHabilitacaoList(List<CadHabilitacao> cadHabilitacaoList) {
-        this.cadHabilitacaoList = cadHabilitacaoList;
-    }
-
-    @XmlTransient
-    public List<CadEmail> getCadEmailList() {
-        return cadEmailList;
-    }
-
-    public void setCadEmailList(List<CadEmail> cadEmailList) {
-        this.cadEmailList = cadEmailList;
-    }
-
-    @XmlTransient
-    public List<CadFornecedor> getCadFornecedorList() {
-        return cadFornecedorList;
-    }
-
-    public void setCadFornecedorList(List<CadFornecedor> cadFornecedorList) {
-        this.cadFornecedorList = cadFornecedorList;
-    }
-
-    @XmlTransient
-    public List<CadVendedor> getCadVendedorList() {
-        return cadVendedorList;
-    }
-
-    public void setCadVendedorList(List<CadVendedor> cadVendedorList) {
-        this.cadVendedorList = cadVendedorList;
-    }
-
-    @XmlTransient
-    public List<CadCliente> getCadClienteList() {
-        return cadClienteList;
-    }
-
-    public void setCadClienteList(List<CadCliente> cadClienteList) {
-        this.cadClienteList = cadClienteList;
-    }
-
-    @XmlTransient
-    public List<CadTelefone> getCadTelefoneList() {
-        return cadTelefoneList;
-    }
-
-    public void setCadTelefoneList(List<CadTelefone> cadTelefoneList) {
-        this.cadTelefoneList = cadTelefoneList;
-    }
-
-    @XmlTransient
-    public List<CadOcorrencias> getCadOcorrenciasList() {
-        return cadOcorrenciasList;
-    }
-
-    public void setCadOcorrenciasList(List<CadOcorrencias> cadOcorrenciasList) {
-        this.cadOcorrenciasList = cadOcorrenciasList;
-    }
-
-    @XmlTransient
-    public List<CadEndereco> getCadEnderecoList() {
-        return cadEnderecoList;
-    }
-
-    public void setCadEnderecoList(List<CadEndereco> cadEnderecoList) {
-        this.cadEnderecoList = cadEnderecoList;
     }
 
     @Override
@@ -326,7 +225,7 @@ public class CadDocumentos implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.locadora.entidades.CadDocumentos[ idDocumentos=" + idDocumentos + " ]";
+        return "br.com.velocity.sistema.entidades.CadDocumentos[ idDocumentos=" + idDocumentos + " ]";
     }
     
 }

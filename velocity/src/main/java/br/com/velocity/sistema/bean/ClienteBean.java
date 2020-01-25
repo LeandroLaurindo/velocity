@@ -142,8 +142,10 @@ public class ClienteBean implements Serializable {
                 this.email.setDocumentoFk(this.cliente.getDocumentoFk());
                 this.emailService.save(email);
                 this.msg.info("Cliente inserido com sucesso.");
+                listarDados();
                 Util.executarAcao("PF('dlgClientes').hide()");
                 Util.updateComponente("fortblcli");
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
                 this.msg.error("Não foi possivel inserir.");
@@ -173,8 +175,10 @@ public class ClienteBean implements Serializable {
             this.endereco.setDataAlteracao(new Date());
             this.endereco.setDocumentoFk(documentos);
             this.enderecoService.update(endereco);
+            
             msg.info("Editado com sucesso.");
             Util.executarAcao("PF('dlgClientes').hide()");
+            listarDados();
             Util.updateComponente("fortblcli");
         } catch (Exception ex) {
             msg.error("Não foi possivel editar");
@@ -220,6 +224,7 @@ public class ClienteBean implements Serializable {
 
     }
 
+    
     public void novo() {
         this.cliente = new CadCliente();
         this.telefone = new CadTelefone();
@@ -231,7 +236,9 @@ public class ClienteBean implements Serializable {
         Util.updateComponente("forCliente");
 
     }
-
+    public void urlHabilitacao(int id){
+        Util.rediricionar("habilitacao/lista.xhtml?id="+id);
+    }
     public SimpleEntityManager getManager() {
         return manager;
     }

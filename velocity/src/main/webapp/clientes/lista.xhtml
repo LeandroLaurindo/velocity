@@ -19,7 +19,7 @@
             <f:view>
 
                 <h:form id="forCliente">
-                    <p:dialog header="Dados" widgetVar="dlgClientes" showEffect="explode" hideEffect="bounce"
+                    <p:dialog header="Dados" widgetVar="dlgClientes" showEffect="explode" hideEffect="fade"
                               style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;
                               overflow: auto!important ">
                         <p:messages autoUpdate="true" showDetail="true" closable="true" />
@@ -267,25 +267,36 @@
                             <p:commandButton value="Novo" actionListener="#{clienteBean.novo()}"  icon="ui ui-icon-plus"/>
                         </div>
                     </f:facet>
-                    <p:column>
+                    <p:column filterBy="#{item.documentoFk.pessoaFk.nome}" sortBy="#{item.documentoFk.pessoaFk.nome}">
                         <f:facet name="header">
                             <h:outputText value="Nome cliente"/>
                         </f:facet>
                         <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
                     </p:column>
-
+                    <p:column filterBy="#{item.documentoFk.pessoaFk.razaoSocial}" sortBy="#{item.documentoFk.pessoaFk.razaoSocial}">
+                        <f:facet name="header">
+                            <h:outputText value="Razão Social"/>
+                        </f:facet>
+                          <h:outputText value="#{item.documentoFk.pessoaFk.razaoSocial}"/>
+                    </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Observacao"/>
                         </f:facet>
                         <h:outputText value="#{item.observacao}"/>
                     </p:column>
-                    <p:column>
+                    <p:column width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Habilitação"/>
+                        </f:facet>
+                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlHabilitacao(item.documentoFk.idDocumentos)}" />
+                    </p:column>
+                    <p:column width="100">
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
                         </f:facet>
-                        <p:commandButton id="btneditar" value="Editar" icon="ui-icon-pencil" actionListener="#{clienteBean.setarEditar(item.documentoFk)}"/>
-                        <p:commandButton id="btnexcluir" value="Excluir" icon="ui-icon-trash" actionListener="#{clienteBean.setarDeletar(item.documentoFk.pessoaFk)}" />
+                        <p:commandButton id="btneditar" value="" icon="ui-icon-pencil"  styleClass="botaoIcon" actionListener="#{clienteBean.setarEditar(item.documentoFk)}"/>
+                        <p:commandButton id="btnexcluir" value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{clienteBean.setarDeletar(item.documentoFk.pessoaFk)}" />
                     </p:column>
                 </p:dataTable>
             </h:form>
