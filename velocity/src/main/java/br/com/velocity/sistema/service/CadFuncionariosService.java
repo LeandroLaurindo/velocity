@@ -8,13 +8,14 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.CadFuncionariosDAO;
 import br.com.velocity.sistema.entidades.CadFuncionarios;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadFuncionariosService {
+public class CadFuncionariosService implements Serializable {
 
     private CadFuncionariosDAO dao;
 

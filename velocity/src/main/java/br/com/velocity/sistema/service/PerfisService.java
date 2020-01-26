@@ -8,13 +8,14 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.PerfisDAO;
 import br.com.velocity.sistema.entidades.Perfis;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class PerfisService {
+public class PerfisService implements Serializable {
 
     private PerfisDAO dao;
 

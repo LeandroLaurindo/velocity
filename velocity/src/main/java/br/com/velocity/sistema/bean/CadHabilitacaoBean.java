@@ -37,7 +37,7 @@ public class CadHabilitacaoBean implements Serializable {
     
     private CadClienteService  clienteService = new CadClienteService(manager);
     
-    private CadDocumentosService service =  new CadDocumentosService(manager);
+    private CadDocumentosService documentosService =  new CadDocumentosService(manager);
 
     private MessagesView msg = new MessagesView();
 
@@ -48,6 +48,10 @@ public class CadHabilitacaoBean implements Serializable {
     private List<CadCliente> listaClientes;
 
     private CadDocumentos documentos;
+    
+    private List<CadDocumentos> listaDocumentos;
+    
+    private Integer idDocumento;
 
     @PostConstruct
     public void init() {
@@ -55,22 +59,30 @@ public class CadHabilitacaoBean implements Serializable {
         this.listaHabilitacoes = new ArrayList<>();
         this.listaClientes = new ArrayList<>();
         this.documentos = new CadDocumentos();
+        this.listaDocumentos = new ArrayList<>();
         try{
        String pessoa = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-            
-           this.documentos = this.service.carregar("WHERE c.idDocumentos="+ pessoa+"");
-           // System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + documentos.getPessoaFk().getNome());
+            if(null != pessoa){
+           this.documentos = this.documentosService.carregar("WHERE c.idDocumentos="+ pessoa+"");
             setarDocumentos();
+            
+            }else{
+              this.listaDocumentos = this.documentosService.findAll();
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
         listarDados();
     }
 
-    public void setarDocumentos() {
-       
+    public void setarDocumentos() {   
         Util.executarAcao("PF('dlghab').show()");
         Util.updateComponente("frmdadosH");
+    }
+    
+     public void setaDocumentos() {   
+        Util.executarAcao("PF('dlghab2').show()");
+        Util.updateComponente("frmdadosH2");
     }
 
     public void setarDadosEditar(CadHabilitacao ch) {
@@ -105,6 +117,26 @@ public class CadHabilitacaoBean implements Serializable {
             Util.executarAcao("PF('dlghab').hide()");
             Util.updateComponente("formHabilitacao");
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void salvarN() {
+        Date atual = new Date();
+        try {
+            if (cadHabilitacao.getValidade().getTime() > atual.getTime()) {
+                this.documentos = this.documentosService.carregar(idDocumento);
+                this.cadHabilitacao.setDocumentoFk(documentos);
+                this.habilitacaoService.save(cadHabilitacao);
+                listarDados();
+                this.msg.info("Habilitação inserida com sucesso.");
+            } else {
+                this.msg.info("Habilitação vencida.");
+            }
+            Util.executarAcao("PF('dlghab2').hide()");
+            Util.updateComponente("formHabilitacao");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -112,6 +144,25 @@ public class CadHabilitacaoBean implements Serializable {
         try {
             Date atual = new Date();
             if (cadHabilitacao.getValidade().getTime() > atual.getTime()) {
+                this.cadHabilitacao.setDocumentoFk(documentos);
+                this.habilitacaoService.update(cadHabilitacao);
+                this.msg.info("Habilitação editada com sucesso.");
+                Util.executarAcao("PF('dlghab').hide()");
+             Util.updateComponente("formHabilitacao");
+            } else {
+                this.msg.info("Habilitação vencida.");
+            }
+            
+        } catch (Exception e) {
+            this.msg.info("Não foi  possivel editar habilitação.");
+        }
+    }
+    
+    public void editarN() {
+        try {
+            Date atual = new Date();
+            if (cadHabilitacao.getValidade().getTime() > atual.getTime()) {
+                this.documentos = this.documentosService.carregar(idDocumento);
                 this.cadHabilitacao.setDocumentoFk(documentos);
                 this.habilitacaoService.update(cadHabilitacao);
                 this.msg.info("Habilitação editada com sucesso.");
@@ -142,8 +193,7 @@ public class CadHabilitacaoBean implements Serializable {
         this.cadHabilitacao = new CadHabilitacao();
         this.documentos = new CadDocumentos();
         this.listaClientes = this.clienteService.findAll();
-       this.msg.warn("Por favor selecione o cliente!");
-        Util.rediricionar("clientes/lista.xhtml");
+        
     }
 
     public SimpleEntityManager getManager() {
@@ -202,4 +252,36 @@ public class CadHabilitacaoBean implements Serializable {
         this.documentos = documentos;
     }
 
+    public CadClienteService getClienteService() {
+        return clienteService;
+    }
+
+    public void setClienteService(CadClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
+    public CadDocumentosService getDocumentosService() {
+        return documentosService;
+    }
+
+    public void setDocumentosService(CadDocumentosService documentosService) {
+        this.documentosService = documentosService;
+    }
+
+    public List<CadDocumentos> getListaDocumentos() {
+        return listaDocumentos;
+    }
+
+    public void setListaDocumentos(List<CadDocumentos> listaDocumentos) {
+        this.listaDocumentos = listaDocumentos;
+    }
+
+    public Integer getIdDocumento() {
+        return idDocumento;
+    }
+
+    public void setIdDocumento(Integer idDocumento) {
+        this.idDocumento = idDocumento;
+    }
+  
 }

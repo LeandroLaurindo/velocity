@@ -8,13 +8,14 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.CadEnderecoDAO;
 import br.com.velocity.sistema.entidades.CadEndereco;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadEnderecoService {
+public class CadEnderecoService implements Serializable {
 
     private CadEnderecoDAO dao;
 

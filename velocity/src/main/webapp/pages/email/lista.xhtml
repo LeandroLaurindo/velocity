@@ -2,7 +2,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition  xmlns="http://www.w3.org/1999/xhtml"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                 template="./../home.xhtml"
+                 template="./../../home.xhtml"
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:f="http://xmlns.jcp.org/jsf/core"
                  xmlns:p="http://primefaces.org/ui">
@@ -10,11 +10,12 @@
     <ui:define name="conteudo">
         <f:view>
             <h:form id="formHabilitacao">
+                <p:messages autoUpdate="true" showDetail="true" />
                 <p:dataTable value="#{cadHabilitacaoBean.listaHabilitacoes}" var="item">
                     <f:facet name="header">
-                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadHabilitacaoBean.novo()}"/>
+                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadHabilitacaoBean.setaDocumentos()}"/>
                     </f:facet>
-                    <p:column>
+                    <p:column sortBy="#{item.documentoFk.pessoaFk.nome}" filterBy="#{item.documentoFk.pessoaFk.nome}">
                         <f:facet name="header">
                             <h:outputText value="Nome do cliente"/>
                         </f:facet>
@@ -98,6 +99,7 @@
                 <p:dialog header="Dados" widgetVar="dlghab" showEffect="explode" hideEffect="fade"
                           style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadHabilitacaoBean.documentos.idDocumentos != null}">
                     <p:panelGrid columns="1">
+                         <p:messages autoUpdate="true" />
                         <p:outputLabel value="Nome do Cliente : #{cadHabilitacaoBean.documentos.pessoaFk.nome}" />
                     </p:panelGrid>
                     <h:panelGrid columns="3">
@@ -136,6 +138,61 @@
                         <h:panelGrid columns="2">
                             <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvar()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
                             <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editar()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+            
+             <h:form id="frmdadosH2">
+                <p:dialog header="Dados" widgetVar="dlghab2" showEffect="explode" hideEffect="fade"
+                          style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;">
+                  
+                    <h:panelGrid columns="1">
+                        
+                        <p:messages autoUpdate="true" />
+                        <p:outputLabel value="Clientes" for="clien_tes" />
+                        <p:selectOneMenu id="clien_tes" value="#{cadHabilitacaoBean.idDocumento}">
+                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                        <f:selectItems var="t" value="#{cadHabilitacaoBean.listaDocumentos}" itemLabel="#{t.pessoaFk.nome}" itemValue="#{t.idDocumentos}" />
+                        </p:selectOneMenu>
+                        
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Numero Registro" for="nRegistr" />
+                        <p:inputText id="nRegistr" value="#{cadHabilitacaoBean.cadHabilitacao.numRegistro}" title="NumRegistro" required="true" requiredMessage="Numero é obrigatório"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Validade:" for="validades" />
+                        <p:calendar id="validades" value="#{cadHabilitacaoBean.cadHabilitacao.validade}" title="Validade" required="true"  pattern="dd/MM/yyyy" locale="pt" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Categoria:" for="categorias" />
+                        <p:inputText id="categorias" value="#{cadHabilitacaoBean.cadHabilitacao.categoria}" title="Categoria" required="true" requiredMessage="Categoria é obrigatório."/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Orgão:" for="orgaos" />
+                        <p:inputText id="orgaos" value="#{cadHabilitacaoBean.cadHabilitacao.orgao}" title="Orgao" required="true" requiredMessage="Orgao é obrigatório"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Emissão:" for="emissaos" />
+                        <p:calendar id="emissaos" value="#{cadHabilitacaoBean.cadHabilitacao.emissao}" title="Emissao" required="true" pattern="dd/MM/yyyy" locale="pt" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Cnh:" for="cnhs" />
+                        <p:inputText id="cnhs" value="#{cadHabilitacaoBean.cadHabilitacao.cnh}" title="Cnh" required="true" requiredMessage="Cnh  é obrigatório."/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Numero Seguranca:" for="numSegurancas" />
+                        <p:inputText id="numSegurancas" value="#{cadHabilitacaoBean.cadHabilitacao.numSeguranca}" title="NumSeguranca" required="true" requiredMessage="Numero de Seguranca  é obrigatório"/>
+                        </h:panelGrid>
+                        <p:spacer width="40" />
+                        <p:spacer width="40" />
+                        <p:spacer width="40" />
+                        <p:spacer width="40" />
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
+                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>

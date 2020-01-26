@@ -8,13 +8,14 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.CadModeloVeiculoDAO;
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadModeloVeiculoService {
+public class CadModeloVeiculoService implements Serializable {
 
     private CadModeloVeiculoDAO dao;
 

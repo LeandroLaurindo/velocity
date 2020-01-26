@@ -8,13 +8,14 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.CadTelefoneDAO;
 import br.com.velocity.sistema.entidades.CadTelefone;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadTelefoneService {
+public class CadTelefoneService implements Serializable {
 
     private CadTelefoneDAO dao;
 

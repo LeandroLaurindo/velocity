@@ -38,7 +38,11 @@ public class Util {
     public static void rediricionar(String destino){
         try {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() +"/"+ destino+"");
+            if(destino.contains("index") || destino.contains("home")){
+              context.redirect(context.getRequestContextPath() +"/"+ destino+"");  
+            }else{
+            context.redirect(context.getRequestContextPath() +"/pages/"+ destino+"");
+            }
         } catch (IOException ex) {
             Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
         }

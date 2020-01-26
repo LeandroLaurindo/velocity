@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Leandro Laurindo
  */
-public class CadPessoaService implements Serializable{
+public class CadPessoaService implements Serializable {
 
     private CadPessoaDAO dao;
 
