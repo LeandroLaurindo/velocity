@@ -6,16 +6,18 @@
 package br.com.velocity.sistema.dao;
 
 import br.com.velocity.sistema.entidades.CadEndereco;
+import br.com.velocity.sistema.util.Util;
+import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadEnderecoDAO extends GenericDAO<Integer, CadEndereco>{
+public class CadEnderecoDAO extends GenericDAO<Integer, CadEndereco> implements Serializable{
     
-    public CadEnderecoDAO(EntityManager entityManager) {
-        super(entityManager);
+    public CadEnderecoDAO() {
+       // super(Util.JpaEntityManager());
     }
     
 }

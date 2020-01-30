@@ -7,7 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadModeloVeiculoDAO;
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,46 +18,22 @@ public class CadModeloVeiculoService implements Serializable {
 
     private CadModeloVeiculoDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadModeloVeiculoService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadModeloVeiculoDAO(simpleEntityManager.getEntityManager());
+    public CadModeloVeiculoService() {
+        dao = new CadModeloVeiculoDAO();
     }
 
     public void save(CadModeloVeiculo modeloVeiculo) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.save(modeloVeiculo);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void update(CadModeloVeiculo modeloVeiculo) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.getById(modeloVeiculo.getIdModelo());
             dao.update(modeloVeiculo);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void delete(CadModeloVeiculo modeloVeiculo) {
-        try {
-            simpleEntityManager.beginTransaction();
             CadModeloVeiculo u = dao.getById(modeloVeiculo.getIdModelo());
             dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public CadModeloVeiculo carregar(Integer id){

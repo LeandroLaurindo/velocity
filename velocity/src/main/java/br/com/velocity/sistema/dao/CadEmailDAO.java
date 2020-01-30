@@ -6,16 +6,17 @@
 package br.com.velocity.sistema.dao;
 
 import br.com.velocity.sistema.entidades.CadEmail;
-import javax.persistence.EntityManager;
+import br.com.velocity.sistema.util.Util;
+import java.io.Serializable;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadEmailDAO extends GenericDAO<Integer, CadEmail>{
+public class CadEmailDAO extends GenericDAO<Integer, CadEmail> implements Serializable{
     
-    public CadEmailDAO(EntityManager entityManager) {
-        super(entityManager);
+    public CadEmailDAO() {
+       // super(Util.JpaEntityManager());
     }
     
 }

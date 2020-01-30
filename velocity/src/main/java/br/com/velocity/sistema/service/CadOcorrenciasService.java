@@ -7,7 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadOcorrenciasDAO;
 import br.com.velocity.sistema.entidades.CadOcorrencias;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,48 +18,24 @@ public class CadOcorrenciasService implements Serializable {
 
     private CadOcorrenciasDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadOcorrenciasService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadOcorrenciasDAO(simpleEntityManager.getEntityManager());
+    public CadOcorrenciasService() {
+        dao = new CadOcorrenciasDAO();
     }
 
     public void save(CadOcorrencias cadOcorrencias) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.save(cadOcorrencias);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+            dao.save(cadOcorrencias);   
     }
 
     public void update(CadOcorrencias cadOcorrencias) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.getById(cadOcorrencias.getIdOcorrencia());
             dao.update(cadOcorrencias);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
-    }
+          }
 
     public void delete(CadOcorrencias cadOcorrencias) {
-        try {
-            simpleEntityManager.beginTransaction();
             CadOcorrencias u = dao.getById(cadOcorrencias.getIdOcorrencia());
-            dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+            dao.delete(u);    
     }
-
+   
     public CadOcorrencias carregar(Integer id){
         return dao.getById(id);
     }

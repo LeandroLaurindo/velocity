@@ -6,16 +6,18 @@
 package br.com.velocity.sistema.dao;
 
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
+import br.com.velocity.sistema.util.Util;
+import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class CadModeloVeiculoDAO extends GenericDAO<Integer, CadModeloVeiculo>{
+public class CadModeloVeiculoDAO extends GenericDAO<Integer, CadModeloVeiculo> implements Serializable{
     
-    public CadModeloVeiculoDAO(EntityManager entityManager) {
-        super(entityManager);
+    public CadModeloVeiculoDAO() {
+        //super(Util.JpaEntityManager());
     }
     
 }

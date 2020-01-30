@@ -33,11 +33,11 @@ public class CadHabilitacaoBean implements Serializable {
 
     private SimpleEntityManager manager = new SimpleEntityManager("locadoraPU");
 
-    private CadHabilitacaoService habilitacaoService = new CadHabilitacaoService(manager);
+    private CadHabilitacaoService habilitacaoService = new CadHabilitacaoService();
     
-    private CadClienteService  clienteService = new CadClienteService(manager);
+    private CadClienteService  clienteService = new CadClienteService();
     
-    private CadDocumentosService documentosService =  new CadDocumentosService(manager);
+    private CadDocumentosService documentosService =  new CadDocumentosService();
 
     private MessagesView msg = new MessagesView();
 
@@ -125,6 +125,7 @@ public class CadHabilitacaoBean implements Serializable {
         Date atual = new Date();
         try {
             if (cadHabilitacao.getValidade().getTime() > atual.getTime()) {
+                
                 this.documentos = this.documentosService.carregar(idDocumento);
                 this.cadHabilitacao.setDocumentoFk(documentos);
                 this.habilitacaoService.save(cadHabilitacao);

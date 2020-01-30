@@ -23,7 +23,7 @@ public class CadServicosService implements Serializable {
 
     public CadServicosService(SimpleEntityManager simpleEntityManager) {
         this.simpleEntityManager = simpleEntityManager;
-        dao = new CadServicosDAO(simpleEntityManager.getEntityManager());
+        dao = new CadServicosDAO();
     }
 
     public void save(CadServicos cadServico) {

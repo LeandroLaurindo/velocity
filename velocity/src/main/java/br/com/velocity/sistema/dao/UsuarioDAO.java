@@ -6,16 +6,18 @@
 package br.com.velocity.sistema.dao;
 
 import br.com.velocity.sistema.entidades.Usuario;
+import br.com.velocity.sistema.util.Util;
+import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author Leandro Laurindo
  */
-public class UsuarioDAO extends GenericDAO<Integer, Usuario>{
+public class UsuarioDAO extends GenericDAO<Integer, Usuario>implements Serializable{
     
-    public UsuarioDAO(EntityManager entityManager) {
-        super(entityManager);
+    public UsuarioDAO() {
+        //super(Util.JpaEntityManager());
     }
     
 }

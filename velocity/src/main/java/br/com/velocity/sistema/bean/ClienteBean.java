@@ -56,19 +56,19 @@ public class ClienteBean implements Serializable {
 
     private List<CadCliente> listaClientes;
 
-    private CadEmailService emailService = new CadEmailService(manager);
+    private CadEmailService emailService = new CadEmailService();
 
-    private CadTelefoneService telefoneService = new CadTelefoneService(manager);
+    private CadTelefoneService telefoneService = new CadTelefoneService();
 
-    private CadEnderecoService enderecoService = new CadEnderecoService(manager);
+    private CadEnderecoService enderecoService = new CadEnderecoService();
 
-    private CadDocumentosService documentosService = new CadDocumentosService(manager);
+    private CadDocumentosService documentosService = new CadDocumentosService();
 
-    private CadClienteService clienteService = new CadClienteService(manager);
+    private CadClienteService clienteService = new CadClienteService();
 
-    private CadPessoaService pessoaService = new CadPessoaService(manager);
+    private CadPessoaService pessoaService = new CadPessoaService();
 
-    private UsuarioService usuarioService = new UsuarioService(manager);
+    private UsuarioService usuarioService = new UsuarioService();
 
     private MessagesView msg = new MessagesView();
 
@@ -202,6 +202,7 @@ public class ClienteBean implements Serializable {
             Util.updateComponente("forCliente");
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             msg.error("Não foi possvel carregar o cliente.");
         }
     }
@@ -238,6 +239,9 @@ public class ClienteBean implements Serializable {
     }
     public void urlHabilitacao(int id){
         Util.rediricionar("habilitacao/lista.xhtml?id="+id);
+    }
+    public void urlEndereco(int id){
+        Util.rediricionar("endereco/lista.xhtml?id="+id);
     }
     public SimpleEntityManager getManager() {
         return manager;

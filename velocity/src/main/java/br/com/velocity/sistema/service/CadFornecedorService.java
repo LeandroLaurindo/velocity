@@ -18,47 +18,22 @@ import java.util.List;
 public class CadFornecedorService implements Serializable {
 
     private CadFornecedorDAO dao;
-
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadFornecedorService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadFornecedorDAO(simpleEntityManager.getEntityManager());
+    public CadFornecedorService() {
+        dao = new CadFornecedorDAO();
     }
 
     public void save(CadFornecedor fornecedor) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.save(fornecedor);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void update(CadFornecedor fornecedor) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.getById(fornecedor.getIdFornecedor());
             dao.update(fornecedor);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void delete(CadFornecedor fornecedor) {
-        try {
-            simpleEntityManager.beginTransaction();
             CadFornecedor u = dao.getById(fornecedor.getIdFornecedor());
             dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public CadFornecedor carregar(Integer id){

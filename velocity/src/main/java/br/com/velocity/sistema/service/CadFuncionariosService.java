@@ -7,7 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadFuncionariosDAO;
 import br.com.velocity.sistema.entidades.CadFuncionarios;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,46 +18,22 @@ public class CadFuncionariosService implements Serializable {
 
     private CadFuncionariosDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadFuncionariosService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadFuncionariosDAO(simpleEntityManager.getEntityManager());
+    public CadFuncionariosService() {
+        dao = new CadFuncionariosDAO();
     }
 
     public void save(CadFuncionarios funcionarios) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.save(funcionarios);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
-    }
+         }
 
     public void update(CadFuncionarios funcionarios) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.getById(funcionarios.getIdFuncionario());
             dao.update(funcionarios);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void delete(CadFuncionarios funcionarios) {
-        try {
-            simpleEntityManager.beginTransaction();
             CadFuncionarios u = dao.getById(funcionarios.getIdFuncionario());
             dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public CadFuncionarios carregar(Integer id){

@@ -8,6 +8,7 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.UsuarioDAO;
 import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,44 +21,21 @@ public class UsuarioService implements Serializable {
     private UsuarioDAO dao;
     private SimpleEntityManager simpleEntityManager;
 
-    public UsuarioService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new UsuarioDAO(simpleEntityManager.getEntityManager());
+    public UsuarioService(){
+        dao = new UsuarioDAO();
     }
 
     public void save(Usuario cadUsuario) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.save(cadUsuario);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void update(Usuario cadUsuario) {
-        try {
-            simpleEntityManager.beginTransaction();
             dao.getById(cadUsuario.getIdUsuario());
-            dao.update(cadUsuario);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public void delete(Integer id) {
-        try {
-            simpleEntityManager.beginTransaction();
             Usuario u = dao.getById(id);
             dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
     }
 
     public Usuario carregar(Integer id){

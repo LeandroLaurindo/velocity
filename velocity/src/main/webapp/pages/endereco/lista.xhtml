@@ -2,18 +2,21 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition  xmlns="http://www.w3.org/1999/xhtml"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                 template="./../../home.xhtml"
+                 template="./../home.xhtml"
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:f="http://xmlns.jcp.org/jsf/core"
                  xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="conteudo">
         <f:view>
-            <h:form id="formHabilitacao">
+            <h:form id="formEndereco">
                 <p:messages autoUpdate="true" showDetail="true" />
-                <p:dataTable value="#{cadHabilitacaoBean.listaHabilitacoes}" var="item">
+                <p:dataTable value="#{cadEnderecoBean.listaEnderecos}" var="item">
                     <f:facet name="header">
-                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadHabilitacaoBean.setaDocumentos()}"/>
+                          <div>
+                        <p>Lista de Endereços</p>
+                        <p:commandButton style="float: right; margin: 5px; margin-top: -50px;" value="Novo" icon="ui-icon-plus"  actionListener="#{cadEnderecoBean.setaEnderecos()}"/>
+                          </div>
                     </f:facet>
                     <p:column sortBy="#{item.documentoFk.pessoaFk.nome}" filterBy="#{item.documentoFk.pessoaFk.nome}">
                         <f:facet name="header">
@@ -23,56 +26,52 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Numero Registro"/>
+                            <h:outputText value="Logradouro"/>
                         </f:facet>
-                        <h:outputText value="#{item.numRegistro}"/>
+                        <h:outputText value="#{item.logradouro}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Validade"/>
+                            <h:outputText value="Bairro"/>
                         </f:facet>
-                        <h:outputText value="#{item.validade}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                        <h:outputText value="#{item.bairro}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Categoria"/>
+                            <h:outputText value="Numero"/>
                         </f:facet>
-                        <h:outputText value="#{item.categoria}"/>
+                        <h:outputText value="#{item.numero}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Orgao"/>
+                            <h:outputText value="Complemento"/>
                         </f:facet>
-                        <h:outputText value="#{item.orgao}"/>
+                        <h:outputText value="#{item.complemento}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Emissao"/>
+                            <h:outputText value="Cidade"/>
                         </f:facet>
-                        <h:outputText value="#{item.emissao}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                        <h:outputText value="#{item.cidade}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Cnh"/>
+                            <h:outputText value="Cep"/>
                         </f:facet>
-                        <h:outputText value="#{item.cnh}"/>
+                        <h:outputText value="#{item.cep}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="NumSeguranca"/>
+                            <h:outputText value="Uf"/>
                         </f:facet>
-                        <h:outputText value="#{item.numSeguranca}"/>
+                        <h:outputText value="#{item.uf}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
                         </f:facet>
-                        <p:commandButton value="" actionListener="#{cadHabilitacaoBean.setarDadosEditar(item)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
-                        <p:commandButton value="" actionListener="#{cadHabilitacaoBean.setarDadosRemover(item)}" icon="ui-icon-trash"  styleClass="botaoIcon" />
+                        <p:commandButton value="" actionListener="#{cadEnderecoBean.setarDadosEditar(item)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
+                        <p:commandButton value="" actionListener="#{cadEnderecoBean.setarDadosRemover(item)}" icon="ui-icon-trash"  styleClass="botaoIcon" />
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -87,7 +86,7 @@
                         </h3>
                         <p:outputLabel value="Deseja excluir?" />
                         <h:panelGrid columns="2">
-                            <p:commandButton value="OK" actionListener="#{cadHabilitacaoBean.remover()}" />
+                            <p:commandButton value="OK" actionListener="#{cadEnderecoBean.remover()}" />
                             <p:commandButton value="NÂO" onclick="PF('removerHab').hide()" />
                         </h:panelGrid>
                     </h:panelGrid>
@@ -97,103 +96,111 @@
 
             <h:form id="frmdadosH">
                 <p:dialog header="Dados" widgetVar="dlghab" showEffect="explode" hideEffect="fade"
-                          style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadHabilitacaoBean.documentos.idDocumentos != null}">
+                          style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadEnderecoBean.documentos.idDocumentos != null}">
                     <p:panelGrid columns="1">
-                         <p:messages autoUpdate="true" />
-                        <p:outputLabel value="Nome do Cliente : #{cadHabilitacaoBean.documentos.pessoaFk.nome}" />
+                        <p:messages autoUpdate="true" />
+                        <p:outputLabel value="Nome do Cliente : #{cadEnderecoBean.documentos.pessoaFk.nome}" />
                     </p:panelGrid>
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Registro" for="nRegistro" />
-                        <p:inputText id="nRegistro" value="#{cadHabilitacaoBean.cadHabilitacao.numRegistro}" title="NumRegistro" required="true" requiredMessage="Numero é obrigatório"/>
+                            <p:outputLabel value="Endereço" for="logradouro" />
+                            <p:inputText id="logradouro" value="#{cadEnderecoBean.cadEndereco.logradouro}" title="Logradouro" required="true" requiredMessage="The Logradouro field is required."/>
+                        </h:panelGrid>
+                         <h:panelGrid columns="1">
+                            <p:outputLabel value="Numero:" for="numero" />
+                            <p:inputText id="numero" value="#{cadEnderecoBean.cadEndereco.numero}" title="Numero" required="true" requiredMessage="The Numero field is required."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Validade:" for="validade" />
-                        <p:calendar id="validade" value="#{cadHabilitacaoBean.cadHabilitacao.validade}" title="Validade" required="true"  pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Complemento:" for="complemento" />
+                            <p:inputText id="complemento" value="#{cadEnderecoBean.cadEndereco.complemento}" title="Complemento" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Categoria:" for="categoria" />
-                        <p:inputText id="categoria" value="#{cadHabilitacaoBean.cadHabilitacao.categoria}" title="Categoria" required="true" requiredMessage="Categoria é obrigatório."/>
+                            <p:outputLabel value="Bairro:" for="bairro" />
+                            <p:inputText id="bairro" value="#{cadEnderecoBean.cadEndereco.bairro}" title="Bairro" required="true" requiredMessage="The Bairro field is required."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Orgão:" for="orgao" />
-                        <p:inputText id="orgao" value="#{cadHabilitacaoBean.cadHabilitacao.orgao}" title="Orgao" required="true" requiredMessage="Orgao é obrigatório"/>
+                            <p:outputLabel value="Cidade:" for="cidade" />
+                            <p:inputText id="cidade" value="#{cadEnderecoBean.cadEndereco.cidade}" title="Cidade" required="true" requiredMessage="The Cidade field is required."/>
+                        </h:panelGrid>
+                         <h:panelGrid columns="1">
+                            <p:outputLabel value="Cep:" for="cep" />
+                            <p:inputText id="cep" value="#{cadEnderecoBean.cadEndereco.cep}" title="Cep" required="true" requiredMessage="The Cep field is required."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Emissão:" for="emissao" />
-                        <p:calendar id="emissao" value="#{cadHabilitacaoBean.cadHabilitacao.emissao}" title="Emissao" required="true" pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Estados:" for="uf" />
+                            <p:selectOneMenu id="uf" value="#{cadEnderecoBean.cadEndereco.uf}" label="Estados" style="width: 200px;" effect="fade" var="t"  filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{estadosDTO.lista}" var="theme" itemLabel="#{theme.descricao}" itemValue="#{theme.sigla}" />
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Name"/>
+                                    </f:facet>
+                                    <h:outputText value="#{t}" />
+                                </p:column>
+                            </p:selectOneMenu>
                         </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Cnh:" for="cnh" />
-                        <p:inputText id="cnh" value="#{cadHabilitacaoBean.cadHabilitacao.cnh}" title="Cnh" required="true" requiredMessage="Cnh  é obrigatório."/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Seguranca:" for="numSeguranca" />
-                        <p:inputText id="numSeguranca" value="#{cadHabilitacaoBean.cadHabilitacao.numSeguranca}" title="NumSeguranca" required="true" requiredMessage="Numero de Seguranca  é obrigatório"/>
-                        </h:panelGrid>
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <h:panelGrid columns="2">
-                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvar()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
-                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editar()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
-                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadEnderecoBean.salvar()}" rendered="#{cadEnderecoBean.cadEndereco.idEndereco == null}" />
+                        <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadEnderecoBean.editar()}" rendered="#{cadEnderecoBean.cadEndereco.idEndereco != null}" />
                     </h:panelGrid>
                 </p:dialog>
             </h:form>
-            
-             <h:form id="frmdadosH2">
+
+            <h:form id="frmdadosH2">
                 <p:dialog header="Dados" widgetVar="dlghab2" showEffect="explode" hideEffect="fade"
                           style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;">
-                  
+
                     <h:panelGrid columns="1">
-                        
+
                         <p:messages autoUpdate="true" />
                         <p:outputLabel value="Clientes" for="clien_tes" />
-                        <p:selectOneMenu id="clien_tes" value="#{cadHabilitacaoBean.idDocumento}">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <f:selectItems var="t" value="#{cadHabilitacaoBean.listaDocumentos}" itemLabel="#{t.pessoaFk.nome}" itemValue="#{t.idDocumentos}" />
+                        <p:selectOneMenu id="clien_tes" value="#{cadEnderecoBean.idDocumento}">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems var="t" value="#{cadEnderecoBean.listaDocumentos}" itemLabel="#{t.pessoaFk.nome}" itemValue="#{t.idDocumentos}" />
                         </p:selectOneMenu>
-                        
+
                     </h:panelGrid>
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Registro" for="nRegistr" />
-                        <p:inputText id="nRegistr" value="#{cadHabilitacaoBean.cadHabilitacao.numRegistro}" title="NumRegistro" required="true" requiredMessage="Numero é obrigatório"/>
+                            <p:outputLabel value="Logradouro:" for="logradouro" />
+                            <p:inputText id="logradouro" value="#{cadEnderecoBean.cadEndereco.logradouro}" title="Logradouro" required="true" requiredMessage="Logradouro não pode ser em branco."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Validade:" for="validades" />
-                        <p:calendar id="validades" value="#{cadHabilitacaoBean.cadHabilitacao.validade}" title="Validade" required="true"  pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Bairro:" for="bairro" />
+                            <p:inputText id="bairro" value="#{cadEnderecoBean.cadEndereco.bairro}" title="Bairro" required="true" requiredMessage="Bairro não pode ser em branco."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Categoria:" for="categorias" />
-                        <p:inputText id="categorias" value="#{cadHabilitacaoBean.cadHabilitacao.categoria}" title="Categoria" required="true" requiredMessage="Categoria é obrigatório."/>
+                            <p:outputLabel value="Numero:" for="numero" />
+                            <p:inputText id="numero" value="#{cadEnderecoBean.cadEndereco.numero}" title="Numero" required="true" requiredMessage="Numero não pode ser em branco."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Orgão:" for="orgaos" />
-                        <p:inputText id="orgaos" value="#{cadHabilitacaoBean.cadHabilitacao.orgao}" title="Orgao" required="true" requiredMessage="Orgao é obrigatório"/>
+                            <p:outputLabel value="Complemento:" for="complemento" />
+                            <p:inputText id="complemento" value="#{cadEnderecoBean.cadEndereco.complemento}" title="Complemento" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Emissão:" for="emissaos" />
-                        <p:calendar id="emissaos" value="#{cadHabilitacaoBean.cadHabilitacao.emissao}" title="Emissao" required="true" pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Cidade:" for="cidade" />
+                            <p:inputText id="cidade" value="#{cadEnderecoBean.cadEndereco.cidade}" title="Cidade" required="true" requiredMessage="Cidade não pode ser em branco."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Cnh:" for="cnhs" />
-                        <p:inputText id="cnhs" value="#{cadHabilitacaoBean.cadHabilitacao.cnh}" title="Cnh" required="true" requiredMessage="Cnh  é obrigatório."/>
+                            <p:outputLabel value="Cep:" for="cep" />
+                            <p:inputText id="cep" value="#{cadEnderecoBean.cadEndereco.cep}" title="Cep" required="true" maxlength="9"  requiredMessage="Cep não pode ser em branco"/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Seguranca:" for="numSegurancas" />
-                        <p:inputText id="numSegurancas" value="#{cadHabilitacaoBean.cadHabilitacao.numSeguranca}" title="NumSeguranca" required="true" requiredMessage="Numero de Seguranca  é obrigatório"/>
+                            <p:outputLabel value="Estados:" for="uf" />
+                            <p:selectOneMenu id="uf" value="#{cadEnderecoBean.cadEndereco.uf}" label="Estados" style="width: 200px;" effect="fade" var="t"  filter="true" filterMatchMode="startsWith" requiredMessage="Estado não pode ser em branco">
+                                <f:selectItems value="#{estadosDTO.lista}" var="theme" itemLabel="#{theme.descricao}" itemValue="#{theme.sigla}" />
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Name"/>
+                                    </f:facet>
+                                    <h:outputText value="#{t}" />
+                                </p:column>
+                            </p:selectOneMenu>
                         </h:panelGrid>
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <h:panelGrid columns="2">
-                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
-                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
-                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadEnderecoBean.salvarN()}" rendered="#{cadEnderecoBean.cadEndereco.idEndereco == null}" />
+                        <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadEnderecoBean.editarN()}" rendered="#{cadEnderecoBean.cadEndereco.idEndereco != null}" />
                     </h:panelGrid>
                 </p:dialog>
             </h:form>

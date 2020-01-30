@@ -8,6 +8,7 @@ package br.com.velocity.sistema.service;
 import br.com.velocity.sistema.dao.PerfisDAO;
 import br.com.velocity.sistema.entidades.Perfis;
 import br.com.velocity.sistema.managers.SimpleEntityManager;
+import br.com.velocity.sistema.util.Uteis;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,60 +20,36 @@ public class PerfisService implements Serializable {
 
     private PerfisDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public PerfisService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new PerfisDAO(simpleEntityManager.getEntityManager());
+    public PerfisService() {
+        dao = new PerfisDAO();
     }
 
     public void save(Perfis perfil) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.save(perfil);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.save(perfil);
     }
 
     public void update(Perfis perfil) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.getById(perfil.getIdPerfil());
-            dao.update(perfil);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.getById(perfil.getIdPerfil());
+        dao.update(perfil);
     }
 
     public void delete(Perfis perfil) {
-        try {
-            simpleEntityManager.beginTransaction();
-            Perfis u = dao.getById(perfil.getIdPerfil());
-            dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        Perfis u = dao.getById(perfil.getIdPerfil());
+        dao.delete(u);
     }
 
-    public Perfis carregar(Integer id){
+    public Perfis carregar(Integer id) {
         return dao.getById(id);
     }
-    
-    public Perfis carregar(String parametro){
+
+    public Perfis carregar(String parametro) {
         return dao.getByParametro(parametro);
     }
-    
+
     public List<Perfis> findAll() {
         return dao.findAll();
     }
-    
+
     public List<Perfis> findAll(String parametros) {
         return dao.findAll(parametros);
     }

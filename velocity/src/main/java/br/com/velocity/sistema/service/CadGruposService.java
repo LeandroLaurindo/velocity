@@ -7,7 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadGruposDAO;
 import br.com.velocity.sistema.entidades.CadGrupos;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,56 +18,32 @@ public class CadGruposService implements Serializable {
 
     private CadGruposDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadGruposService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadGruposDAO(simpleEntityManager.getEntityManager());
+    public CadGruposService() {
+        dao = new CadGruposDAO();
     }
 
     public void save(CadGrupos cadGrupos) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.save(cadGrupos);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.save(cadGrupos);
     }
 
     public void update(CadGrupos cadGrupos) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.getById(cadGrupos.getIdGrupo());
-            dao.update(cadGrupos);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.getById(cadGrupos.getIdGrupo());
+        dao.update(cadGrupos);
     }
 
     public void delete(CadGrupos cadGrupos) {
-        try {
-            simpleEntityManager.beginTransaction();
-            CadGrupos u = dao.getById(cadGrupos.getIdGrupo());
-            dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        CadGrupos u = dao.getById(cadGrupos.getIdGrupo());
+        dao.delete(u);
     }
 
-    public CadGrupos carregar(Integer id){
+    public CadGrupos carregar(Integer id) {
         return dao.getById(id);
     }
-    
+
     public List<CadGrupos> findAll() {
         return dao.findAll();
     }
-    
+
     public List<CadGrupos> findAll(String parametros) {
         return dao.findAll(parametros);
     }

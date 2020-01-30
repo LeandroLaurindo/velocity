@@ -7,7 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadDocumentosDAO;
 import br.com.velocity.sistema.entidades.CadDocumentos;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,61 +17,38 @@ import java.util.List;
 public class CadDocumentosService implements Serializable {
 
     private CadDocumentosDAO dao;
-
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadDocumentosService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadDocumentosDAO(simpleEntityManager.getEntityManager());
+    
+    
+    public CadDocumentosService() {
+        dao = new CadDocumentosDAO();
     }
 
     public void save(CadDocumentos documentos) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.save(documentos);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.save(documentos);
     }
 
     public void update(CadDocumentos documentos) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.getById(documentos.getIdDocumentos());
-            dao.update(documentos);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.getById(documentos.getIdDocumentos());
+        dao.update(documentos);
     }
 
     public void delete(CadDocumentos documentos) {
-        try {
-            simpleEntityManager.beginTransaction();
-            CadDocumentos u = dao.getById(documentos.getIdDocumentos());
-            dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        CadDocumentos u = dao.getById(documentos.getIdDocumentos());
+        dao.delete(u);
     }
 
-    public CadDocumentos carregar(Integer id){
+    public CadDocumentos carregar(Integer id) {
         return dao.getById(id);
     }
-    
-     public CadDocumentos carregar(String parametro){
+
+    public CadDocumentos carregar(String parametro) {
         return dao.getByParametro(parametro);
     }
-    
+
     public List<CadDocumentos> findAll() {
         return dao.findAll();
     }
-    
+
     public List<CadDocumentos> findAll(String parametros) {
         return dao.findAll(parametros);
     }

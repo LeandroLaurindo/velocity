@@ -9,7 +9,6 @@ import br.com.velocity.sistema.util.Util;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.entidades.Perfis;
 import br.com.velocity.sistema.entidades.Usuario;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import br.com.velocity.sistema.service.CadGruposService;
 import br.com.velocity.sistema.service.PerfisService;
 import br.com.velocity.sistema.service.UsuarioService;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -26,11 +24,9 @@ import javax.faces.view.ViewScoped;
  * @author Leandro Laurindo
  */
 @ManagedBean(name = "usuario")
-@SessionScoped
+@ViewScoped
 public class UsuarioBean implements Serializable {
 
-    String persistenceUnitName = "locadoraPU";
-    private SimpleEntityManager manager = new SimpleEntityManager(persistenceUnitName);
     private Usuario usuario;
     private UsuarioService serviceUsuario;
     private PerfisService perfisService;
@@ -45,11 +41,11 @@ public class UsuarioBean implements Serializable {
     @PostConstruct
     public void init() {
         this.usuario = new Usuario();
-        this.serviceUsuario = new UsuarioService(manager);
+        this.serviceUsuario = new UsuarioService();
         this.lista = new ArrayList<>();
         this.listaFiltrada = new ArrayList<>();
-        this.cadGruposService = new CadGruposService(manager);
-        this.perfisService = new PerfisService(manager);
+        this.cadGruposService = new CadGruposService();
+        this.perfisService = new PerfisService();
         this.perfis();
         this.listarUsuarios();
     }
@@ -116,6 +112,7 @@ public class UsuarioBean implements Serializable {
     }
 
     public void editar() {
+     //   System.out.println("chamouoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
         try {
             if (getAtivo().equalsIgnoreCase("SIM")) {
                 this.usuario.setAtivo(true);
@@ -143,6 +140,7 @@ public class UsuarioBean implements Serializable {
             this.msg.info("Removido com sucesso!");
             Util.updateComponente("databelaUsuario");
         } catch (Exception e) {
+            e.printStackTrace();
             this.msg.error("Não foi possivel remover!");
         }
     }
@@ -166,15 +164,6 @@ public class UsuarioBean implements Serializable {
     public void setIdPerfil(String idPerfil) {
         this.idPerfil = idPerfil;
     }
-
-    public SimpleEntityManager getManager() {
-        return manager;
-    }
-
-    public void setManager(SimpleEntityManager manager) {
-        this.manager = manager;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -213,14 +202,6 @@ public class UsuarioBean implements Serializable {
 
     public void setPerfisService(PerfisService perfisService) {
         this.perfisService = perfisService;
-    }
-
-    public String getPersistenceUnitName() {
-        return persistenceUnitName;
-    }
-
-    public void setPersistenceUnitName(String persistenceUnitName) {
-        this.persistenceUnitName = persistenceUnitName;
     }
 
     public List<Perfis> getListaPefis() {

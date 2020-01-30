@@ -7,72 +7,50 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadEmailDAO;
 import br.com.velocity.sistema.entidades.CadEmail;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  *
  * @author Leandro Laurindo
  */
 public class CadEmailService implements Serializable {
-
+   
+    @Inject
     private CadEmailDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadEmailService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadEmailDAO(simpleEntityManager.getEntityManager());
+    public CadEmailService() {
+        dao = new CadEmailDAO();
     }
 
     public void save(CadEmail email) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.save(email);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.save(email);
     }
 
     public void update(CadEmail email) {
-        try {
-            simpleEntityManager.beginTransaction();
-            dao.getById(email.getIdEmail());
-            dao.update(email);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        dao.getById(email.getIdEmail());
+        dao.update(email);
     }
 
     public void delete(CadEmail email) {
-        try {
-            simpleEntityManager.beginTransaction();
-            CadEmail u = dao.getById(email.getIdEmail());
-            dao.delete(u);
-            simpleEntityManager.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            simpleEntityManager.rollBack();
-        }
+        CadEmail u = dao.getById(email.getIdEmail());
+        dao.delete(u);
+
     }
 
-    public CadEmail carregar(Integer id){
+    public CadEmail carregar(Integer id) {
         return dao.getById(id);
     }
-    
-    public CadEmail carregar(String parametro){
+
+    public CadEmail carregar(String parametro) {
         return dao.getByParametro(parametro);
     }
-    
+
     public List<CadEmail> findAll() {
         return dao.findAll();
     }
-    
+
     public List<CadEmail> findAll(String parametros) {
         return dao.findAll(parametros);
     }
