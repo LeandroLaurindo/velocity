@@ -8,6 +8,7 @@ package br.com.velocity.sistema.bean;
 import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.service.UsuarioService;
 import br.com.velocity.sistema.util.MessagesView;
+import br.com.velocity.sistema.util.Util;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 @ManagedBean
 public class LoginBean {
+
     private String login;
     private String password;
     private UsuarioController usuarioController = new UsuarioController();
@@ -46,30 +48,46 @@ public class LoginBean {
     }
 
     private Usuario isValidLogin(String login, String password) {
-         Usuario user;
-        
-            user = new UsuarioService().carregar(" WHERE c.login= '"+login+"'");
-        
-        if (user == null || !password.equals(user.getSenha())) {
+        Usuario user;
+
+        user = new UsuarioService().carregar(" WHERE c.login= '" + login + "'");
+
+        if (user == null) {
             return null;
         }
-        return user;
-    }
-    
-    
-    public String entrar() {
-        Usuario user = isValidLogin(login, password);
-
-        if (user != null) {
-            usuarioController.setUser(user);
-            FacesContext context = FacesContext.getCurrentInstance();
-            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-            request.getSession().setAttribute("user", user);
-            return "/pages/home.xhtml";
+       
+        String s = String.valueOf(password);
+        if (Util.checkPass(s.trim(), user.getSenha().trim())) {
+            return user;
+        } else {
+            return null;
         }
-        
-        mv.warn("Check your login/password");
-        return null;
+    }
+
+    public String entrar() {
+        if (!login.isEmpty() && !password.isEmpty()) {
+            Usuario user = isValidLogin(login, password);
+
+            if (user != null) {
+                usuarioController.setUser(user);
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+                request.getSession().setAttribute("user", user);
+                return "/pages/home.xhtml";
+            }
+
+            mv.warn("Check your login/password");
+            return null;
+        } else {
+
+            if (login.isEmpty()) {
+                mv.warn("Informe o login.");
+            }
+            if (password.isEmpty()) {
+                mv.warn("Informe a senha.");
+            }
+            return null;
+        }
     }
 
 }

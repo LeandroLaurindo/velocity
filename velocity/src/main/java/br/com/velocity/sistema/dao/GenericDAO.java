@@ -31,7 +31,9 @@ public class GenericDAO<PK, T> implements Serializable {
     }
 
     public void save(T entity) {
+        JPAUtil.getEntityManager().getTransaction().begin();
         JPAUtil.getEntityManager().persist(entity);
+         JPAUtil.getEntityManager().getTransaction().commit();
     }
 
     public void update(T entity) {
@@ -39,7 +41,9 @@ public class GenericDAO<PK, T> implements Serializable {
     }
 
     public void delete(T entity) {
+        JPAUtil.getEntityManager().getTransaction().begin();
         JPAUtil.getEntityManager().remove(entity);
+        JPAUtil.getEntityManager().getTransaction().commit();
     }
 
     public List<T> findAll() {

@@ -51,11 +51,14 @@ public class UsuarioBean implements Serializable {
     }
 
     public void listarUsuarios() {
-        this.lista = serviceUsuario.findAll();
+        this.lista = serviceUsuario.findAll(" ORDER BY c.login");
+        
     }
 
     public void setarDados(Usuario usu) {
+        usu.setSenha("");
         this.usuario = usu;
+       
         if (usu.getAtivo()) {
             setAtivo("SIM");
         } else {
@@ -68,7 +71,6 @@ public class UsuarioBean implements Serializable {
     }
 
     public void setarDadosRemover(Usuario usu) {
-        System.out.println("br.com.locadora.bean.UsuarioBean.setarDadosRemover()" + usu.getIdUsuario());
         this.usuario = usu;
         Util.executarAcao("PF('dlgConf').show()");
         Util.updateComponente("forUsuConf");
@@ -92,8 +94,8 @@ public class UsuarioBean implements Serializable {
     }
 
     public void salvar() {
+        if(usuario.getIdUsuario() == null){
         try {
-            System.out.println("-------------------------------------" + idPerfil);
             if (getAtivo().equalsIgnoreCase("SIM")) {
                 this.usuario.setAtivo(true);
             } else {
@@ -101,18 +103,22 @@ public class UsuarioBean implements Serializable {
             }
             Perfis perfis = this.perfisService.carregar("WHERE c.nomePerfil ='" + idPerfil + "'");
             this.usuario.setPerfilFk(perfis);
+            this.usuario.setSenha(Util.hashPassword(this.usuario.getSenha()));
             this.serviceUsuario.save(this.usuario);
-            this.lista.add(this.usuario);
+            listarUsuarios();
             this.msg.info("Inserido com sucesso!");
+            Util.executarAcao("PF('dlgUsuario').hide()");
             Util.updateComponente("databelaUsuario");
         } catch (Exception e) {
+            e.printStackTrace();
             this.msg.error("Não foi possivel inserir!");
         }
-
+        }else{
+            editar();
+        }
     }
 
     public void editar() {
-     //   System.out.println("chamouoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
         try {
             if (getAtivo().equalsIgnoreCase("SIM")) {
                 this.usuario.setAtivo(true);
@@ -121,6 +127,12 @@ public class UsuarioBean implements Serializable {
             }
             Perfis perfis = this.perfisService.carregar("WHERE c.nomePerfil ='" + idPerfil + "'");
             this.usuario.setPerfilFk(perfis);
+            if(!usuario.getSenha().isEmpty()){
+            this.usuario.setSenha(Util.hashPassword(this.usuario.getSenha()));
+            }else{
+             Usuario u = serviceUsuario.carregar(" WHERE c.idUsuario=" +usuario.getIdUsuario()+"");
+             this.usuario.setSenha(u.getSenha());
+            }
             this.serviceUsuario.update(this.usuario);
             this.listarUsuarios();
             this.msg.info("Atualizado com sucesso!");
@@ -133,10 +145,10 @@ public class UsuarioBean implements Serializable {
         }
     }
 
-    public void excluir(Integer id) {
+    public void excluir() {
         try {
-            this.serviceUsuario.delete(id);
-            this.lista.remove(this.usuario);
+            this.serviceUsuario.delete(this.usuario.getIdUsuario());
+            listarUsuarios();
             this.msg.info("Removido com sucesso!");
             Util.updateComponente("databelaUsuario");
         } catch (Exception e) {

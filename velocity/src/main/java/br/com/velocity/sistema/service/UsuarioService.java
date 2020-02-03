@@ -30,11 +30,12 @@ public class UsuarioService implements Serializable {
     }
 
     public void update(Usuario cadUsuario) {
-            dao.getById(cadUsuario.getIdUsuario());
+             dao.update(cadUsuario);
     }
 
     public void delete(Integer id) {
-            Usuario u = dao.getById(id);
+             
+            Usuario u = dao.getByParametro(" WHERE c.idUsuario=" + id+"");
             dao.delete(u);
     }
 

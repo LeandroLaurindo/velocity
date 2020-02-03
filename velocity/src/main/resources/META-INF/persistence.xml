@@ -2,11 +2,26 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="locadoraPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>br.com.velocity.sistema.entidades.CadCliente</class>
     <class>br.com.velocity.sistema.entidades.CadDocumentos</class>
+    <class>br.com.velocity.sistema.entidades.CadFornecedor</class>
+    <class>br.com.velocity.sistema.entidades.CadEmail</class>
+    <class>br.com.velocity.sistema.entidades.CadEndereco</class>
+    <class>br.com.velocity.sistema.entidades.CadFuncionarios</class>
+    <class>br.com.velocity.sistema.entidades.CadGrupos</class>
+    <class>br.com.velocity.sistema.entidades.CadHabilitacao</class>
+    <class>br.com.velocity.sistema.entidades.CadModeloVeiculo</class>
+    <class>br.com.velocity.sistema.entidades.CadOcorrencias</class>
+    <class>br.com.velocity.sistema.entidades.CadPessoa</class>
+    <class>br.com.velocity.sistema.entidades.CadServicos</class>
+    <class>br.com.velocity.sistema.entidades.CadTelefone</class>
+    <class>br.com.velocity.sistema.entidades.CadVendedor</class>
+    <class>br.com.velocity.sistema.entidades.Perfis</class>
+    <class>br.com.velocity.sistema.entidades.Usuario</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///localeader"/>
-      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.183:5432/localeader"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

@@ -22,7 +22,7 @@ public class AbstractFilter {
     }
 
     protected void doLogin(ServletRequest request, ServletResponse response, HttpServletRequest req) throws ServletException, IOException {
-         req.getContextPath();
+       
         RequestDispatcher dispatcher = req.getRequestDispatcher("/login.xhtml");
         dispatcher.forward(request, response);
     }

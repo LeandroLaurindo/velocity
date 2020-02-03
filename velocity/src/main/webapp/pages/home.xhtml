@@ -1,17 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-
-    <f:view contentType="text/html">
-        <h:head>
-            <f:facet name="first">
-                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>LocaLeader</title>
-            </f:facet>
-            <style type="text/css">
+    <h:head>
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <title>LocaLeader</title>
+        <style type="text/css">
             .ui-layout-north {
                 z-index:1!important;
                 overflow:visible !important;
@@ -25,55 +22,55 @@
                 height: 25px!important;
             }
         </style>
-        <script type="text/javascript"> 
+        <script type="text/javascript">
             PrimeFaces.locales['pt'] = { closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia' };
         </script>
 
-        </h:head>
+    </h:head>
 
-        <h:body>
-            <p:panelGrid columns="1" style="width: 100%!important; overflow: visible!important; z-index: 1!important">
-            <p:layout fullPage="true" >
+    <h:body>
+      
+            <p:layout fullPage="true"  >
 
                 <p:layoutUnit position="north" header="">
-                    
+
                     <p:graphicImage library="img" name="logo.png"  width="100" height="100" style="float: left"/>
                     <h:form>
-                    <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
-                    <p:outputLabel style="float: right; margin: 10px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
+                        <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
+                        <p:outputLabel style="float: right; margin: 10px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
                     </h:form>
-                    
-                    <h:form style="float: left;">
-                         
-                    <p:megaMenu style="margin-top: 20px; margin-left: 20px;">
-                       
-                        <p:submenu label="Sports" icon="pi pi-file">
 
-                            <p:column>
-                                <p:submenu label="Sports.1">
-                                    <p:menuitem value="Sports.1.1" url="#" />
-                                    <p:menuitem value="Sports.1.2" url="#" />
-                                </p:submenu>
-                                <p:submenu label="Sports.2">
-                                    <p:menuitem value="Sports.2.1" url="#" />
-                                    <p:menuitem value="Sports.2.2" url="#" />
-                                    <p:menuitem value="Sports.2.3" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
-                                    <p:menuitem value="Menu" url="#" />
-                                    <p:menuitem value="Menu" url="#" />
-                                    <p:menuitem value="Menu" url="#" />
-                                    <p:menuitem value="Menu" url="#" />
-                                    <p:menuitem value="Menu" url="#" />
-                                    <p:menuitem value="menu" url="#" />
-                                    <p:menuitem value="menu" url="#" />
-                                    <p:menuitem value="menu" url="#" />
-                                    <p:menuitem value="menu" url="#" />
-                                    <p:menuitem value="nenu" url="#" />
-                        
-                    </p:megaMenu>
-                       
+                    <h:form style="float: left;">
+
+                        <p:megaMenu style="margin-top: 20px; margin-left: 20px;">
+
+                            <p:submenu label="Sports" icon="pi pi-file">
+
+                                <p:column>
+                                    <p:submenu label="Sports.1">
+                                        <p:menuitem value="Sports.1.1" url="#" />
+                                        <p:menuitem value="Sports.1.2" url="#" />
+                                    </p:submenu>
+                                    <p:submenu label="Sports.2">
+                                        <p:menuitem value="Sports.2.1" url="#" />
+                                        <p:menuitem value="Sports.2.2" url="#" />
+                                        <p:menuitem value="Sports.2.3" url="#" />
+                                    </p:submenu>
+                                </p:column>
+                            </p:submenu>
+                            <p:menuitem value="Menu" url="#" />
+                            <p:menuitem value="Menu" url="#" />
+                            <p:menuitem value="Menu" url="#" />
+                            <p:menuitem value="Menu" url="#" />
+                            <p:menuitem value="Menu" url="#" />
+                            <p:menuitem value="menu" url="#" />
+                            <p:menuitem value="menu" url="#" />
+                            <p:menuitem value="menu" url="#" />
+                            <p:menuitem value="menu" url="#" />
+                            <p:menuitem value="nenu" url="#" />
+
+                        </p:megaMenu>
+
                     </h:form>
                 </p:layoutUnit>
 
@@ -91,11 +88,11 @@
                                 <p:menuitem value="Emil" outcome="/pages/endereco/lista" icon="ui-icon-triangle-1-e"/>
                                 <p:menuitem value="Telefone" outcome="/pages/telefone/lista" icon="ui-icon-triangle-1-e"/>
                                 <p:menuitem value="Habilitação" outcome="/pages/habilitacao/lista" icon="ui-icon-triangle-1-e"/>
-                                 <p:menuitem value="Fornecedores" url="#" icon="ui-icon-triangle-1-e"/>
-                                  <p:menuitem value="Veiculos" url="#" icon="ui-icon-triangle-1-e"/>
-                                   <p:menuitem value="Funcionarios" url="#" icon="ui-icon-triangle-1-e"/>
-                              
-                                    
+                                <p:menuitem value="Fornecedores" url="#" icon="ui-icon-triangle-1-e"/>
+                                <p:menuitem value="Veiculos" url="#" icon="ui-icon-triangle-1-e"/>
+                                <p:menuitem value="Funcionarios" url="#" icon="ui-icon-triangle-1-e"/>
+
+
 
                             </p:submenu>
                         </p:panelMenu>
@@ -108,9 +105,7 @@
                 </p:layoutUnit>
 
             </p:layout>
-           </p:panelGrid>
-        </h:body>
-
-    </f:view>
+     
+    </h:body>
 </html>
 

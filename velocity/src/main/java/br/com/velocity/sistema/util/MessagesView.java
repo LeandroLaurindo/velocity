@@ -5,6 +5,7 @@
  */
 package br.com.velocity.sistema.util;
 
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -16,7 +17,7 @@ import javax.faces.view.ViewScoped;
  */
 @ManagedBean(name = "mensagens")
 @ViewScoped
-public class MessagesView {
+public class MessagesView implements Serializable{
      
     public void info(String msg) {
         System.out.println("br.com.locadora.util.MessagesView.info()----------------------------------------------------------------------" + msg);

@@ -12,15 +12,16 @@
             <p:messages autoUpdate="true" closable="true" showDetail="true"/>
         </h:form>
         <h:form id="forUsuDado">
-            <p:dialog header="Dados" widgetVar="dlgUsuario" showEffect="explode" hideEffect="bounce">
+            <p:dialog header="Dados" widgetVar="dlgUsuario">
                 <h1><h:outputText value="Dados do usuários"/></h1>
+                <p:inputText value="#{usuario.usuario.idUsuario}" type="hidden"/>
                 <h:panelGrid columns="1">
 
                     <p:outputLabel value="Login:" for="login" />
                     <p:inputText id="login" value="#{usuario.usuario.login}" title="Login" required="true" requiredMessage="O login não pode ser em branco"/>
                     <p:outputLabel value="Senha:" for="senha" />
                     <p:inputText id="senha" value="#{usuario.usuario.senha}" title="Senha" required="true" requiredMessage="A senha não pode ser vazia."/>
-                    <p:outputLabel for="@next" value="Perfil:" />
+                    <p:outputLabel for="advanced" value="Perfil:" />
                     <p:selectOneMenu id="advanced" value="#{usuario.idPerfil}"  panelStyle="width:180px"
                                      effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
                         <f:selectItems value="#{usuario.listaPefis}" var="theme" itemLabel="#{theme.nomePerfil}" itemValue="#{theme.nomePerfil}" />
@@ -40,12 +41,8 @@
 
                     <br />
                     <h:panelGrid columns="2">
-                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{usuario.salvar()}"
-                                         rendered="#{usuario.usuario.idUsuario == null}"
-                                         oncomplete="PF('dlgUsuario').hide();"/>
-                        <p:commandButton value="Atualizar" icon="ui-icon-pencil" actionListener="#{usuario.editar()}"  
-                                         rendered="#{usuario.usuario.idUsuario != null}" ajax="true"/> 
-                        <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()"/> 
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{usuario.salvar()}" />
+                                    <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()"/> 
                     </h:panelGrid>
                 </h:panelGrid>
             </p:dialog>
@@ -84,10 +81,11 @@
         <h:form id="forUsuConf">
             <p:dialog header="Dados" widgetVar="dlgConf" showEffect="explode">
                 <h:panelGrid columns="1">
+                    <p:inputText value="#{usuario.usuario.idUsuario}" type="hidden"/>
                     <h1>Atenção</h1>
                     <h3>Confirmar a remoção?</h3>
                     <h:panelGrid columns="2">
-                        <p:commandButton value="SIM" actionListener="#{usuario.excluir(usuario.usuario.idUsuario)}" oncomplete="PF('dlgConf')hide();"/>
+                        <p:commandButton value="SIM" actionListener="#{usuario.excluir()}" oncomplete="PF('dlgConf')hide();"/>
                         <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
                     </h:panelGrid>
                 </h:panelGrid>
