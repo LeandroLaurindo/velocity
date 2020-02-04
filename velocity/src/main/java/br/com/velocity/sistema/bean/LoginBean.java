@@ -76,7 +76,7 @@ public class LoginBean {
                 return "/pages/home.xhtml";
             }
 
-            mv.warn("Check your login/password");
+            mv.warn("Verifique seu login / senha");
             return null;
         } else {
 

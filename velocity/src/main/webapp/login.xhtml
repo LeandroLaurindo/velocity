@@ -4,36 +4,37 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:view contentType="text/html">
-    <h:head>
-        <f:facet name="first">
-            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>Velocity</title>
-            
-        </f:facet>
-        
-    </h:head>
-    <h:body>
-        <p:panel style="margin: 0 auto; text-align: center; max-width: 400px;  margin-top: 10%;
-                 border-radius: 10px; font-size: 30px; padding: 10px; color: #cc0000; background: #000033;">
-                   
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Velocity</title>
+
+            </f:facet>
+
+        </h:head>
+        <h:body style="background: #cc0000;">
+            <p:panel style="margin: 0 auto; text-align: center; width: 270px;  margin-top: 10%;
+                     border-radius: 10px; font-size: 30px; padding: 5px; background: #000033;">
+
                 <h:form>
-                    <h:panelGrid columns="1">
-                        <p:messages autoUpdate="true" showDetail="true" />
-                        <h:panelGrid columns="2">
-                            <p:outputLabel for="login" value="Login" />
-                            <p:inputText  value="#{loginBean.login}" type="text" rendered="true" requiredMessage="Login não pode ser em branco." id="login" /> 
-                            <p:outputLabel value="Senha:" for="senha" />
-                            <p:password value="#{loginBean.password}" id="senha" />
-                            <p:outputLabel value="" />
+                    <h:panelGrid columns="1" style="text-align: left!important">
+                        <p:messages autoUpdate="true" showDetail="true"  style="font-size: 20px; color: #cc0000; text-transform: capitalize;"/>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel for="login" value="Login" style="color: #ffffff" />
+                            <p:inputText  value="#{loginBean.login}" type="text" rendered="true"
+                                          requiredMessage="Login não pode ser em branco." id="login"
+                                          style="width: 250px; height: 30px;"/> 
+                            <p:outputLabel value="Senha:" for="senha" style="color: #ffffff"/>
+                            <p:password value="#{loginBean.password}" id="senha" style="width: 250px; height: 30px;"/>
                             <p:commandButton value="Entrar" action="#{loginBean.entrar()}" 
-                                             style="padding: 5px; float: right" />
+                                             style="padding: 5px; float: right; font-size: 30px;" />
                         </h:panelGrid>
 
                     </h:panelGrid>
                 </h:form>
 
-        </p:panel>
-    </h:body>
+            </p:panel>
+        </h:body>
     </f:view>    
 </html>
 

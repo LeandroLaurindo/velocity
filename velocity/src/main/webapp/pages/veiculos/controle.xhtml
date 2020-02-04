@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../home.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <f:view>
+
+            <h:form id="formCdCMV">
+
+                <p:dialog header="Dados Veiculo" id="dglVeiculo" widgetVar="dglVeiculo">
+                    <p:messages autoUpdate="true" showDetail="true" />
+                     <p:inputText id="idModelo" value="#{cadModeloVeiculoBean.modeloVeiculo.idModelo}" title="IdModelo"  type="hidden"/>
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Fabricante:" for="fabricante" />
+                        <p:inputText id="fabricante" value="#{cadModeloVeiculoBean.modeloVeiculo.fabricante}" title="Fabricante" 
+                                     required="true" requiredMessage="Fabricante não pode ser vazio."/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Modelo:" for="modelo" />
+                        <p:inputText id="modelo" value="#{cadModeloVeiculoBean.modeloVeiculo.modelo}" title="Modelo" required="true" 
+                                     requiredMessage="Modelo não pode ser vazio."/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Passageiros:" for="passageiros" />
+                        <p:inputText id="passageiros" value="#{cadModeloVeiculoBean.modeloVeiculo.passageiros}" title="Passageiros" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Portas:" for="portas" />
+                        <p:inputText id="portas" value="#{cadModeloVeiculoBean.modeloVeiculo.portas}" title="Portas" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="CroquiFk:" for="croquiFk" />
+                        <p:inputText id="croquiFk" value="#{cadModeloVeiculoBean.modeloVeiculo.croquiFk}" title="CroquiFk" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="ProtecaoFk:" for="protecaoFk" />
+                        <p:inputText id="protecaoFk" value="#{cadModeloVeiculoBean.modeloVeiculo.protecaoFk}" title="ProtecaoFk" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Checklist:" for="checklist" />
+                        <p:inputText id="checklist" value="#{cadModeloVeiculoBean.modeloVeiculo.checklist}" title="Checklist" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Bagagem:" for="bagagem" />
+                        <p:inputText id="bagagem" value="#{cadModeloVeiculoBean.modeloVeiculo.bagagem}" title="Bagagem" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                        <p:outputLabel value="Tanque:" for="tanque" />
+                        <p:inputText id="tanque" value="#{cadModeloVeiculoBean.modeloVeiculo.tanque}" title="Tanque" />
+                         </h:panelGrid>
+                        <h:panelGrid columns="2">
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" iconPos="true" actionListener="#{cadModeloVeiculoBean.salvar()}" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
+
+        <f:view>
+            <h:form id="formCMV">
+                <p:messages autoUpdate="true" showDetail="true" />
+                <p:dataTable  value="#{cadModeloVeiculoBean.listaDeMVeiculos}" var="item"
+                             emptyMessage="Não a dados para exibir" 
+                             paginator="true" rows="10" style="font-size: 13px!important">
+                    <f:facet name="header">
+                        <h3>Lista de Veículos</h3>
+                        <div style="float: right">
+                            <p:commandButton value="Novo" actionListener="#{cadModeloVeiculoBean.limpar()}"  icon="ui ui-icon-plus"/>
+                        </div>
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Modelo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.modelo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fabricante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fabricante}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Passageiros"/>
+                        </f:facet>
+                        <h:outputText value="#{item.passageiros}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Portas"/>
+                        </f:facet>
+                        <h:outputText value="#{item.portas}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="CroquiFk"/>
+                        </f:facet>
+                        <h:outputText value="#{item.croquiFk}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="ProtecaoFk"/>
+                        </f:facet>
+                        <h:outputText value="#{item.protecaoFk}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Checklist"/>
+                        </f:facet>
+                        <h:outputText value="#{item.checklist}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Bagagem"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bagagem}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Tanque"/>
+                        </f:facet>
+                        <h:outputText value="#{item.tanque}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ação" />
+                        </f:facet>
+                        <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{cadModeloVeiculoBean.setarDadosEditar(item)}" />
+                        <p:commandButton value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{cadModeloVeiculoBean.setarDadosDeletar(item)}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+            <h:form id="forCmvConf">
+                <p:dialog header="Dados" widgetVar="dlgConf" showEffect="explode">
+                    <h:panelGrid columns="1">
+                        <p:inputText value="#{cadModeloVeiculoBean.modeloVeiculo.idModelo}" type="hidden"/>
+                        <h1>Atenção</h1>
+                        <h3>Confirmar a remoção?</h3>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="SIM" actionListener="#{cadModeloVeiculoBean.deletar()}" oncomplete="PF('dlgConf')hide();"/>
+                            <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+    </ui:define>
+
+</ui:composition>
