@@ -8,8 +8,6 @@ package br.com.velocity.sistema.bean;
 import br.com.velocity.sistema.entidades.CadCliente;
 import br.com.velocity.sistema.entidades.CadDocumentos;
 import br.com.velocity.sistema.entidades.CadEndereco;
-import br.com.velocity.sistema.entidades.Usuario;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import br.com.velocity.sistema.service.CadDocumentosService;
 import br.com.velocity.sistema.service.CadEnderecoService;
 import br.com.velocity.sistema.service.UsuarioService;

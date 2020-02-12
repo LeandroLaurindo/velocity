@@ -20,7 +20,7 @@ import javax.faces.view.ViewScoped;
 public class MessagesView implements Serializable{
      
     public void info(String msg) {
-        System.out.println("br.com.locadora.util.MessagesView.info()----------------------------------------------------------------------" + msg);
+        //System.out.println("br.com.locadora.util.MessagesView.info()----------------------------------------------------------------------" + msg);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg));
     }
      

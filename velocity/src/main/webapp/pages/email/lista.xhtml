@@ -11,9 +11,9 @@
         <f:view>
             <h:form id="formHabilitacao">
                 <p:messages autoUpdate="true" showDetail="true" />
-                <p:dataTable value="#{cadHabilitacaoBean.listaHabilitacoes}" var="item">
+                <p:dataTable value="#{cadEmailBean.listaEmails}" var="item">
                     <f:facet name="header">
-                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadHabilitacaoBean.setaDocumentos()}"/>
+                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadEmailBean.setaDocumentos()}"/>
                     </f:facet>
                     <p:column sortBy="#{item.documentoFk.pessoaFk.nome}" filterBy="#{item.documentoFk.pessoaFk.nome}">
                         <f:facet name="header">
@@ -21,58 +21,31 @@
                         </f:facet>
                         <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
                     </p:column>
+
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Numero Registro"/>
+                            <h:outputText value="Email"/>
                         </f:facet>
-                        <h:outputText value="#{item.numRegistro}"/>
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                     <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Site"/>
+                        </f:facet>
+                        <h:outputText value="#{item.site}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Validade"/>
+                            <h:outputText value="Observações"/>
                         </f:facet>
-                        <h:outputText value="#{item.validade}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Categoria"/>
-                        </f:facet>
-                        <h:outputText value="#{item.categoria}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Orgao"/>
-                        </f:facet>
-                        <h:outputText value="#{item.orgao}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Emissao"/>
-                        </f:facet>
-                        <h:outputText value="#{item.emissao}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Cnh"/>
-                        </f:facet>
-                        <h:outputText value="#{item.cnh}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="NumSeguranca"/>
-                        </f:facet>
-                        <h:outputText value="#{item.numSeguranca}"/>
+                        <h:outputText value="#{item.observacao}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
                         </f:facet>
-                        <p:commandButton value="" actionListener="#{cadHabilitacaoBean.setarDadosEditar(item)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
-                        <p:commandButton value="" actionListener="#{cadHabilitacaoBean.setarDadosRemover(item)}" icon="ui-icon-trash"  styleClass="botaoIcon" />
+                        <p:commandButton value="" actionListener="#{cadEmailBean.setarDadosEditar(item)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
+                        <p:commandButton value="" actionListener="#{cadEmailBean.setarDadosRemover(item)}" icon="ui-icon-trash"  styleClass="botaoIcon" />
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -80,14 +53,14 @@
         <f:view>
 
             <h:form>
-                <p:dialog header="Dados" widgetVar="removerHab" showEffect="explode" hideEffect="fade">
+                <p:dialog header="Dados" widgetVar="removerHab">
                     <h:panelGrid columns="1">
                         <h3>
                             Atenção!
                         </h3>
                         <p:outputLabel value="Deseja excluir?" />
                         <h:panelGrid columns="2">
-                            <p:commandButton value="OK" actionListener="#{cadHabilitacaoBean.remover()}" />
+                            <p:commandButton value="OK" actionListener="#{cadEmailBean.remover()}" />
                             <p:commandButton value="NÂO" onclick="PF('removerHab').hide()" />
                         </h:panelGrid>
                     </h:panelGrid>
@@ -96,103 +69,63 @@
 
 
             <h:form id="frmdadosH">
-                <p:dialog header="Dados" widgetVar="dlghab" showEffect="explode" hideEffect="fade"
-                          style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadHabilitacaoBean.documentos.idDocumentos != null}">
+                <p:dialog header="Dados" widgetVar="dlghab"
+                          style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadEmailBean.documentos.idDocumentos != null}">
                     <p:panelGrid columns="1">
-                         <p:messages autoUpdate="true" />
-                        <p:outputLabel value="Nome do Cliente : #{cadHabilitacaoBean.documentos.pessoaFk.nome}" />
+                        <p:messages autoUpdate="true" />
+                        <p:outputLabel value="Nome do Cliente : #{cadEmailBean.documentos.pessoaFk.nome}" />
                     </p:panelGrid>
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Registro" for="nRegistro" />
-                        <p:inputText id="nRegistro" value="#{cadHabilitacaoBean.cadHabilitacao.numRegistro}" title="NumRegistro" required="true" requiredMessage="Numero é obrigatório"/>
+                            <p:outputLabel value="Email" for="categoria" />
+                            <p:inputText id="categoria" value="#{cadEmailBean.cadEmail.email}" title="Email" required="true" requiredMessage="Email é obrigatório."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Validade:" for="validade" />
-                        <p:calendar id="validade" value="#{cadHabilitacaoBean.cadHabilitacao.validade}" title="Validade" required="true"  pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Site" for="site" />
+                            <p:inputText id="site" value="#{cadEmailBean.cadEmail.site}" title="Site"/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Categoria:" for="categoria" />
-                        <p:inputText id="categoria" value="#{cadHabilitacaoBean.cadHabilitacao.categoria}" title="Categoria" required="true" requiredMessage="Categoria é obrigatório."/>
+                            <p:outputLabel value="Observações:" for="obs" />
+                            <p:inputText id="obs" value="#{cadEmailBean.cadEmail.observacao}" title="Obs"/>
                         </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Orgão:" for="orgao" />
-                        <p:inputText id="orgao" value="#{cadHabilitacaoBean.cadHabilitacao.orgao}" title="Orgao" required="true" requiredMessage="Orgao é obrigatório"/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Emissão:" for="emissao" />
-                        <p:calendar id="emissao" value="#{cadHabilitacaoBean.cadHabilitacao.emissao}" title="Emissao" required="true" pattern="dd/MM/yyyy" locale="pt" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Cnh:" for="cnh" />
-                        <p:inputText id="cnh" value="#{cadHabilitacaoBean.cadHabilitacao.cnh}" title="Cnh" required="true" requiredMessage="Cnh  é obrigatório."/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Seguranca:" for="numSeguranca" />
-                        <p:inputText id="numSeguranca" value="#{cadHabilitacaoBean.cadHabilitacao.numSeguranca}" title="NumSeguranca" required="true" requiredMessage="Numero de Seguranca  é obrigatório"/>
-                        </h:panelGrid>
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
                         <h:panelGrid columns="2">
-                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvar()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
-                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editar()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadEmailBean.salvar()}" rendered="#{cadEmailBean.cadEmail.idEmail == null}" />
+                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadEmailBean.editar()}" rendered="#{cadEmailBean.cadEmail.idEmail != null}" />
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>
             </h:form>
-            
-             <h:form id="frmdadosH2">
+
+            <h:form id="frmdadosH2">
                 <p:dialog header="Dados" widgetVar="dlghab2" showEffect="explode" hideEffect="fade"
                           style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;">
-                  
+
                     <h:panelGrid columns="1">
-                        
+
                         <p:messages autoUpdate="true" />
                         <p:outputLabel value="Clientes" for="clien_tes" />
-                        <p:selectOneMenu id="clien_tes" value="#{cadHabilitacaoBean.idDocumento}">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <f:selectItems var="t" value="#{cadHabilitacaoBean.listaDocumentos}" itemLabel="#{t.pessoaFk.nome}" itemValue="#{t.idDocumentos}" />
+                        <p:selectOneMenu id="clien_tes" value="#{cadEmailBean.idDocumento}">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems var="t" value="#{cadEmailBean.listaDocumentos}" itemLabel="#{t.pessoaFk.nome}" itemValue="#{t.idDocumentos}" />
                         </p:selectOneMenu>
-                        
+
                     </h:panelGrid>
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Registro" for="nRegistr" />
-                        <p:inputText id="nRegistr" value="#{cadHabilitacaoBean.cadHabilitacao.numRegistro}" title="NumRegistro" required="true" requiredMessage="Numero é obrigatório"/>
+                            <p:outputLabel value="Email" for="email1" />
+                            <p:inputText id="email1" value="#{cadEmailBean.cadEmail.email}" title="Categoria" required="true" requiredMessage="Email é obrigatório."/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Validade:" for="validades" />
-                        <p:calendar id="validades" value="#{cadHabilitacaoBean.cadHabilitacao.validade}" title="Validade" required="true"  pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Site" for="site1" />
+                            <p:inputText id="site1" value="#{cadEmailBean.cadEmail.site}" title="Site"/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Categoria:" for="categorias" />
-                        <p:inputText id="categorias" value="#{cadHabilitacaoBean.cadHabilitacao.categoria}" title="Categoria" required="true" requiredMessage="Categoria é obrigatório."/>
+                            <p:outputLabel value="Observações" for="orgao" />
+                            <p:inputText id="orgao" value="#{cadEmailBean.cadEmail.observacao}" title="obs"/>
                         </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Orgão:" for="orgaos" />
-                        <p:inputText id="orgaos" value="#{cadHabilitacaoBean.cadHabilitacao.orgao}" title="Orgao" required="true" requiredMessage="Orgao é obrigatório"/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Emissão:" for="emissaos" />
-                        <p:calendar id="emissaos" value="#{cadHabilitacaoBean.cadHabilitacao.emissao}" title="Emissao" required="true" pattern="dd/MM/yyyy" locale="pt" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Cnh:" for="cnhs" />
-                        <p:inputText id="cnhs" value="#{cadHabilitacaoBean.cadHabilitacao.cnh}" title="Cnh" required="true" requiredMessage="Cnh  é obrigatório."/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                        <p:outputLabel value="Numero Seguranca:" for="numSegurancas" />
-                        <p:inputText id="numSegurancas" value="#{cadHabilitacaoBean.cadHabilitacao.numSeguranca}" title="NumSeguranca" required="true" requiredMessage="Numero de Seguranca  é obrigatório"/>
-                        </h:panelGrid>
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
-                        <p:spacer width="40" />
                         <h:panelGrid columns="2">
-                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
-                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadEmailBean.salvar()}" rendered="#{cadEmailBean.cadEmail.idEmail == null}" />
+                            <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadEmailBean.editar()}" rendered="#{cadEmailBean.cadEmail.idEmail != null}" />
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>

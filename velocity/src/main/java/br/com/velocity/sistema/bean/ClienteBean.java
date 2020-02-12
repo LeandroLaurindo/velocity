@@ -12,7 +12,6 @@ import br.com.velocity.sistema.entidades.CadEndereco;
 import br.com.velocity.sistema.entidades.CadPessoa;
 import br.com.velocity.sistema.entidades.CadTelefone;
 import br.com.velocity.sistema.entidades.Usuario;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import br.com.velocity.sistema.service.CadClienteService;
 import br.com.velocity.sistema.service.CadDocumentosService;
 import br.com.velocity.sistema.service.CadEmailService;
@@ -28,7 +27,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -40,7 +38,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ClienteBean implements Serializable {
 
-    private SimpleEntityManager manager = new SimpleEntityManager("locadoraPU");
 
     private CadDocumentos documentos;
 
@@ -243,12 +240,8 @@ public class ClienteBean implements Serializable {
     public void urlEndereco(int id){
         Util.rediricionar("endereco/lista.xhtml?id="+id);
     }
-    public SimpleEntityManager getManager() {
-        return manager;
-    }
-
-    public void setManager(SimpleEntityManager manager) {
-        this.manager = manager;
+     public void urlEmail(int id){
+        Util.rediricionar("email/lista.xhtml?id="+id);
     }
 
     public List<CadCliente> getListaClientes() {

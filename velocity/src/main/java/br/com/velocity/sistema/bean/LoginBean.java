@@ -50,7 +50,7 @@ public class LoginBean {
     private Usuario isValidLogin(String login, String password) {
         Usuario user;
 
-        user = new UsuarioService().carregar(" WHERE c.login= '" + login + "'");
+        user = new UsuarioService().carregar(" WHERE c.login= '" + login.toUpperCase() + "'");
 
         if (user == null) {
             return null;

@@ -18,6 +18,7 @@
     <class>br.com.velocity.sistema.entidades.CadVendedor</class>
     <class>br.com.velocity.sistema.entidades.Perfis</class>
     <class>br.com.velocity.sistema.entidades.Usuario</class>
+    <class>br.com.velocity.sistema.entidades.CadImagens</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.183:5432/localeader"/>

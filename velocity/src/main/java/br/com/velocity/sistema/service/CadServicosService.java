@@ -7,7 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.CadServicosDAO;
 import br.com.velocity.sistema.entidades.CadServicos;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,45 +18,31 @@ public class CadServicosService implements Serializable {
 
     private CadServicosDAO dao;
 
-    private SimpleEntityManager simpleEntityManager;
-
-    public CadServicosService(SimpleEntityManager simpleEntityManager) {
-        this.simpleEntityManager = simpleEntityManager;
-        dao = new CadServicosDAO();
-    }
-
     public void save(CadServicos cadServico) {
         try {
-            simpleEntityManager.beginTransaction();
+         
             dao.save(cadServico);
-            simpleEntityManager.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            simpleEntityManager.rollBack();
         }
     }
 
     public void update(CadServicos cadServico) {
         try {
-            simpleEntityManager.beginTransaction();
             dao.getById(cadServico.getIdServico());
             dao.update(cadServico);
-            simpleEntityManager.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            simpleEntityManager.rollBack();
         }
     }
 
     public void delete(CadServicos cadServico) {
         try {
-            simpleEntityManager.beginTransaction();
+           
             CadServicos u = dao.getById(cadServico.getIdServico());
             dao.delete(u);
-            simpleEntityManager.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            simpleEntityManager.rollBack();
         }
     }
 

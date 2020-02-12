@@ -8,7 +8,6 @@ package br.com.velocity.sistema.bean;
 import br.com.velocity.sistema.entidades.CadCliente;
 import br.com.velocity.sistema.entidades.CadDocumentos;
 import br.com.velocity.sistema.entidades.CadHabilitacao;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
 import br.com.velocity.sistema.service.CadClienteService;
 import br.com.velocity.sistema.service.CadDocumentosService;
 import br.com.velocity.sistema.service.CadHabilitacaoService;
@@ -30,8 +29,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "cadHabilitacaoBean")
 @ViewScoped
 public class CadHabilitacaoBean implements Serializable {
-
-    private SimpleEntityManager manager = new SimpleEntityManager("locadoraPU");
 
     private CadHabilitacaoService habilitacaoService = new CadHabilitacaoService();
     
@@ -197,13 +194,7 @@ public class CadHabilitacaoBean implements Serializable {
         
     }
 
-    public SimpleEntityManager getManager() {
-        return manager;
-    }
-
-    public void setManager(SimpleEntityManager manager) {
-        this.manager = manager;
-    }
+   
 
     public CadHabilitacaoService getHabilitacaoService() {
         return habilitacaoService;

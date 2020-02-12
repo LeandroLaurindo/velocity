@@ -42,7 +42,7 @@
                     <br />
                     <h:panelGrid columns="2">
                         <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{usuario.salvar()}" />
-                                    <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()"/> 
+                        <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()"/> 
                     </h:panelGrid>
                 </h:panelGrid>
             </p:dialog>
@@ -72,8 +72,8 @@
                     <h:outputText value="NAO" rendered="#{!item.ativo}"/>
                 </p:column>
                 <p:column>
-                    <p:commandButton id="btneditar" value="Editar" icon="ui-icon-pencil" actionListener="#{usuario.setarDados(item)}"/>
-                    <p:commandButton id="btnexcluir" value="Excluir" icon="ui-icon-trash" actionListener="#{usuario.setarDadosRemover(item)}" />
+                    <p:commandButton id="btneditar" value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{usuario.setarDados(item)}"/>
+                    <p:commandButton id="btnexcluir" value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{usuario.setarDadosRemover(item)}" />
                 </p:column>
 
             </p:dataTable>

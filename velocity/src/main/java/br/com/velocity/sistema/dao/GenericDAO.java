@@ -37,7 +37,14 @@ public class GenericDAO<PK, T> implements Serializable {
     }
 
     public void update(T entity) {
+        try{
+        JPAUtil.getEntityManager().getTransaction().begin();
         JPAUtil.getEntityManager().merge(entity);
+        JPAUtil.getEntityManager().getTransaction().commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            JPAUtil.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public void delete(T entity) {

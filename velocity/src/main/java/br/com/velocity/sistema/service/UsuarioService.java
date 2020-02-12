@@ -7,8 +7,6 @@ package br.com.velocity.sistema.service;
 
 import br.com.velocity.sistema.dao.UsuarioDAO;
 import br.com.velocity.sistema.entidades.Usuario;
-import br.com.velocity.sistema.managers.SimpleEntityManager;
-import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,7 +17,6 @@ import java.util.List;
 public class UsuarioService implements Serializable {
 
     private UsuarioDAO dao;
-    private SimpleEntityManager simpleEntityManager;
 
     public UsuarioService(){
         dao = new UsuarioDAO();

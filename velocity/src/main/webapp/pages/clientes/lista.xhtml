@@ -297,6 +297,13 @@
                         </f:facet>
                          <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlHabilitacao(item.documentoFk.idDocumentos)}" />
                     </p:column>
+                    
+                     <p:column width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Email"/>
+                        </f:facet>
+                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlEmail(item.documentoFk.idDocumentos)}" />
+                    </p:column>
                    
                     <p:column width="100">
                         <f:facet name="header">
@@ -313,7 +320,7 @@
                         <h1>Atenção</h1>
                         <h3>Confirmar a remoção?</h3>
                         <h:panelGrid columns="2">
-                            <p:commandButton value="SIM #{clienteBean.pessoa.idPessoa}" actionListener="#{clienteBean.deletar(clienteBean.pessoa.idPessoa)}" oncomplete="PF('dlgConf')hide();"/>
+                            <p:commandButton value="SIM" actionListener="#{clienteBean.deletar(clienteBean.pessoa.idPessoa)}" oncomplete="PF('dlgConf')hide();"/>
                             <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
                         </h:panelGrid>
                     </h:panelGrid>
