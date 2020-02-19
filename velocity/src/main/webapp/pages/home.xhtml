@@ -37,7 +37,9 @@
                     <p:graphicImage library="img" name="logo.png"  width="100" height="100" style="float: left"/>
                     <h:form>
                         <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
-                        <p:outputLabel style="float: right; margin: 10px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
+                        <p:graphicImage style="float: right; margin: 2px;" value="#{cadImagemBean.buscarImagem(usuarioController.getUsu())}" width="20" height="20" />
+                        <p:outputLabel style="float: right; margin: 2px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
+                         
                     </h:form>
 
                     <h:form style="float: left;">
@@ -91,9 +93,7 @@
                                 <p:menuitem value="Fornecedores" url="#" icon="ui-icon-triangle-1-e"/>
                                 <p:menuitem value="Veículos" outcome="/pages/veiculos/controle" icon="ui-icon-triangle-1-e"/>
                                 <p:menuitem value="Funcionarios" url="#" icon="ui-icon-triangle-1-e"/>
-
-
-
+                                <p:menuitem value="Imagens" outcome="/pages/imagens/contoleImagens" icon="ui-icon-triangle-1-e"/>
                             </p:submenu>
                         </p:panelMenu>
 

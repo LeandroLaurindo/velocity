@@ -8,21 +8,21 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="conteudo">
-        
-         <h:form>
-              <p:messages autoUpdate="true" showDetail="true" closable="true" />
-        </h:form>
-            <h3>
-                Dados Do Cliente
-            </h3>
-        
-            <f:view>
 
-                <h:form id="forCliente">
-                    <p:dialog header="Dados" widgetVar="dlgClientes" showEffect="explode" hideEffect="fade"
-                              style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;
-                              overflow: auto!important ">
-                        <p:messages autoUpdate="true" showDetail="true" closable="true" />
+        <h:form>
+            <p:messages autoUpdate="true" showDetail="true" closable="true" />
+        </h:form>
+        <h3>
+            Dados Do Cliente
+        </h3>
+
+        <f:view>
+
+            <h:form id="forCliente">
+                <p:dialog header="Dados" widgetVar="dlgClientes" showEffect="explode" hideEffect="fade"
+                          style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;
+                          overflow: auto!important ">
+                    <p:messages autoUpdate="true" showDetail="true" closable="true" />
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Nome:" for="nome" />
@@ -185,10 +185,10 @@
                                 <p:inputText id="ddd" value="#{clienteBean.telefone.ddd}" title="Ddd" required="true" requiredMessage="Ddd não pode ser vazio."/>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
-                            <p:outputLabel value="Telefone:" for="telefone" />
-                            <p:inputText id="telefone" value="#{clienteBean.telefone.telefone}" title="Telefone" required="true" requiredMessage="Telefone obrigátorio."/>
+                                <p:outputLabel value="Telefone:" for="telefone" />
+                                <p:inputText id="telefone" value="#{clienteBean.telefone.telefone}" title="Telefone" required="true" requiredMessage="Telefone obrigátorio."/>
                             </h:panelGrid>
-                            </h:panelGrid>
+                        </h:panelGrid>
                         <h:panelGrid columns="2">
                             <p:panelGrid columns="1">
                                 <p:outputLabel value="Whatsapp:" for="whatsapp" />
@@ -200,51 +200,51 @@
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Site:" for="site" />
-                        <p:inputText id="site" value="#{clienteBean.email.site}" title="Site" />
+                            <p:outputLabel value="Site:" for="site" />
+                            <p:inputText id="site" value="#{clienteBean.email.site}" title="Site" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Observação Email:" for="observacaoEmail" />
-                        <p:inputText id="observacaoEmail" style="width: 400px;" value="#{clienteBean.email.observacao}" title="Observacao" />
+                            <p:outputLabel value="Observação Email:" for="observacaoEmail" />
+                            <p:inputText id="observacaoEmail" style="width: 400px;" value="#{clienteBean.email.observacao}" title="Observacao" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                             <p:outputLabel value="Observação Cliente:" for="observacao" />
-                        <p:inputText id="observacao" style="width: 400px;" value="#{clienteBean.cliente.observacao}" title="Observacao" />
+                            <p:outputLabel value="Observação Cliente:" for="observacao" />
+                            <p:inputText id="observacao" style="width: 400px;" value="#{clienteBean.cliente.observacao}" title="Observacao" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                             <p:outputLabel value="VendedorFk:" for="vendedorFk" />
-                        <p:inputText id="vendedorFk" value="#{clienteBean.cliente.vendedorFk}" title="VendedorFk" />
+                            <p:outputLabel value="VendedorFk:" for="vendedorFk" />
+                            <p:inputText id="vendedorFk" value="#{clienteBean.cliente.vendedorFk}" title="VendedorFk" />
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                        <h:panelGrid columns="1">
-                            <p:outputLabel value="Suframa:" for="suframa" />
-                            <p:inputText id="suframa" value="#{clienteBean.documentos.suframa}" title="Suframa" />
-                        </h:panelGrid>
                             <h:panelGrid columns="1">
-                             <p:outputLabel value="Plano Pagto:" for="planoPagto" />
-                        <p:inputText id="planoPagto" value="#{clienteBean.cliente.planoPagto}" title="PlanoPagto" />
+                                <p:outputLabel value="Suframa:" for="suframa" />
+                                <p:inputText id="suframa" value="#{clienteBean.documentos.suframa}" title="Suframa" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Plano Pagto:" for="planoPagto" />
+                                <p:inputText id="planoPagto" value="#{clienteBean.cliente.planoPagto}" title="PlanoPagto" />
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1">
-                                 <p:outputLabel value="TabelaPreco:" for="tabelaPrecoFk" />
-                        <p:inputText id="tabelaPrecoFk" value="#{clienteBean.cliente.tabelaPrecoFk}" title="TabelaPrecoFk" />
+                                <p:outputLabel value="TabelaPreco:" for="tabelaPrecoFk" />
+                                <p:inputText id="tabelaPrecoFk" value="#{clienteBean.cliente.tabelaPrecoFk}" title="TabelaPrecoFk" />
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Segmento:" for="segmentoFk" />
-                        <p:inputText id="segmentoFk" value="#{clienteBean.cliente.segmentoFk}" title="SegmentoFk" />
+                                <p:inputText id="segmentoFk" value="#{clienteBean.cliente.segmentoFk}" title="SegmentoFk" />
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="Classificacao:" for="classificacaoFk" />
-                        <p:inputText id="classificacaoFk" value="#{clienteBean.cliente.classificacaoFk}" title="ClassificacaoFk" />
+                            <p:outputLabel value="Classificacao:" for="classificacaoFk" />
+                            <p:inputText id="classificacaoFk" value="#{clienteBean.cliente.classificacaoFk}" title="ClassificacaoFk" />
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1">
-                        <p:outputLabel value="LimiteCredito:" for="limiteCredito" />
-                        <p:inputText id="limiteCredito" value="#{clienteBean.cliente.limiteCredito}" title="LimiteCredito" />
+                                <p:outputLabel value="LimiteCredito:" for="limiteCredito" />
+                                <p:inputText id="limiteCredito" value="#{clienteBean.cliente.limiteCredito}" title="LimiteCredito" />
                             </h:panelGrid>
-                            
+
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvar()}" rendered="#{clienteBean.cliente.idCliente == null}" />
@@ -252,10 +252,10 @@
                             <p:commandButton value="Cancelar" onclick="PF('dlgClientes').hide()" />
                         </h:panelGrid>
                     </h:panelGrid>
-                    </p:dialog>
-                </h:form>
+                </p:dialog>
+            </h:form>
 
-                <h:form id="fortblcli">
+            <h:form id="fortblcli">
 
                 <p:dataTable id="tblClientes" value="#{clienteBean.listaClientes}" var="item"
                              widgetVar="carsTable2"
@@ -277,7 +277,7 @@
                         <f:facet name="header">
                             <h:outputText value="Razão Social"/>
                         </f:facet>
-                          <h:outputText value="#{item.documentoFk.pessoaFk.razaoSocial}"/>
+                        <h:outputText value="#{item.documentoFk.pessoaFk.razaoSocial}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -285,7 +285,7 @@
                         </f:facet>
                         <h:outputText value="#{item.observacao}"/>
                     </p:column>
-                     <p:column width="100">
+                    <p:column width="100">
                         <f:facet name="header">
                             <h:outputText value="Endereço"/>
                         </f:facet>
@@ -295,16 +295,21 @@
                         <f:facet name="header">
                             <h:outputText value="Habilitação"/>
                         </f:facet>
-                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlHabilitacao(item.documentoFk.idDocumentos)}" />
+                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlHabilitacao(item.documentoFk.idDocumentos)}" />
                     </p:column>
-                    
-                     <p:column width="100">
+
+                    <p:column width="100">
                         <f:facet name="header">
                             <h:outputText value="Email"/>
                         </f:facet>
-                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlEmail(item.documentoFk.idDocumentos)}" />
+                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlEmail(item.documentoFk.idDocumentos)}" />
                     </p:column>
-                   
+                    <p:column width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Imagem"/>
+                        </f:facet>
+                        <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idCliente,'cliente')}" title="foto" />
+                    </p:column>
                     <p:column width="100">
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
@@ -322,6 +327,18 @@
                         <h:panelGrid columns="2">
                             <p:commandButton value="SIM" actionListener="#{clienteBean.deletar(clienteBean.pessoa.idPessoa)}" oncomplete="PF('dlgConf')hide();"/>
                             <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+
+            <h:form id="formImg">
+                <p:dialog header="Dados" widgetVar="dlgImg" showEffect="explode">
+                    <h:panelGrid columns="1">
+
+                        <h:panelGrid columns="1">
+                            <p:graphicImage value="#{clienteBean.caminhoDaImagem}" width="350" height="350"/>
+                            <p:commandButton value="X" onclick="PF('dlgConf')hide();" ajax="true"/>
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>

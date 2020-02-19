@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 template="./../home.xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                 xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <f:view>
+            <h:form>
+                <p:messages autoUpdate="true" showDetail="true" />
+            </h:form>
+        </f:view>
+
+        <f:view>
+            <h:form id="frm1" enctype="multipart/form-data" >
+                <h:panelGrid columns="5">
+                    <h:panelGrid columns="1">
+                        <p:outputLabel for="advanced" value="Clientes" />
+                        <p:selectOneMenu id="advanced" value="#{cadImagemBean.idCliente}" panelStyle="width:180px"
+                                         style="width:160px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{cadImagemBean.listaClientes}" var="cliente" itemLabel="#{cliente.documentoFk.pessoaFk.nome}" itemValue="#{cliente.idCliente}" />
+
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel for="usu" value="Usuários" />
+                        <p:selectOneMenu id="usu" value="#{cadImagemBean.idUsuario}" panelStyle="width:180px" style="width:160px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{cadImagemBean.listaUsuario}" var="user" itemLabel="#{user.login}" itemValue="#{user.idUsuario}" />
+
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel for="cli" value="Veiculo" />
+                        <p:selectOneMenu id="cli" value="#{cadImagemBean.idVeiculo}" panelStyle="width:180px" style="width:160px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{cadImagemBean.listaVeiculos}" var="veiculo" itemLabel="#{veiculo.modelo}" itemValue="#{veiculo.idModelo}" />
+
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel for="hab" value="Habilitação" />
+                        <p:selectOneMenu id="hab" value="#{cadImagemBean.idHabilitacao}" panelStyle="width:180px" style="width:160px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{cadImagemBean.listaHabilitacao}" var="habali" itemLabel="#{habali.documentoFk.pessoaFk.nome}" itemValue="#{habali.idHabilitacao}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:fileUpload value="#{cadImagemBean.file}" 
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                  invalidFileMessage="São permitidas somente imagens (jpeg, jpg e png)"  mode="simple"  id="foto"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadImagemBean.salvar}" ajax="false" />
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+    </ui:define>
+</ui:composition>
+

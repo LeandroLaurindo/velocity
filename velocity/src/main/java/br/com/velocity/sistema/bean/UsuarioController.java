@@ -37,6 +37,11 @@ public class UsuarioController {
     public String getUsuario(){
         return SessionUtil.getUser().getLogin();
     }
+    
+    public String getUsu(){
+        return String.valueOf(SessionUtil.getUser().getIdUsuario()) +"usuario";
+    }
+    
     public String admin(){
         return "/pages/home.xhtml?faces-redirect=true";
     } 

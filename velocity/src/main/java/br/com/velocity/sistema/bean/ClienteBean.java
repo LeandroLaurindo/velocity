@@ -9,6 +9,7 @@ import br.com.velocity.sistema.entidades.CadCliente;
 import br.com.velocity.sistema.entidades.CadDocumentos;
 import br.com.velocity.sistema.entidades.CadEmail;
 import br.com.velocity.sistema.entidades.CadEndereco;
+import br.com.velocity.sistema.entidades.CadImagens;
 import br.com.velocity.sistema.entidades.CadPessoa;
 import br.com.velocity.sistema.entidades.CadTelefone;
 import br.com.velocity.sistema.entidades.Usuario;
@@ -16,12 +17,18 @@ import br.com.velocity.sistema.service.CadClienteService;
 import br.com.velocity.sistema.service.CadDocumentosService;
 import br.com.velocity.sistema.service.CadEmailService;
 import br.com.velocity.sistema.service.CadEnderecoService;
+import br.com.velocity.sistema.service.CadImagensService;
 import br.com.velocity.sistema.service.CadPessoaService;
 import br.com.velocity.sistema.service.CadTelefoneService;
 import br.com.velocity.sistema.service.UsuarioService;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.util.Util;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +36,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -37,7 +45,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "clienteBean")
 @ViewScoped
 public class ClienteBean implements Serializable {
-
 
     private CadDocumentos documentos;
 
@@ -69,6 +76,8 @@ public class ClienteBean implements Serializable {
 
     private MessagesView msg = new MessagesView();
 
+    String caminhoDaImagem = "";
+
     @PostConstruct
     public void init() {
         this.documentos = new CadDocumentos();
@@ -97,7 +106,7 @@ public class ClienteBean implements Serializable {
         }
         if (!validacao) {
             if (!documentos.getCnpj().isEmpty()) {
-                 lista = this.documentosService.findAll("where c.cnpj ='" + this.documentos.getCnpj()+ "'");
+                lista = this.documentosService.findAll("where c.cnpj ='" + this.documentos.getCnpj() + "'");
                 if (lista.size() > 0) {
                     validacao = true;
                 }
@@ -142,7 +151,7 @@ public class ClienteBean implements Serializable {
                 listarDados();
                 Util.executarAcao("PF('dlgClientes').hide()");
                 Util.updateComponente("fortblcli");
-                
+
             } catch (Exception ex) {
                 ex.printStackTrace();
                 this.msg.error("Não foi possivel inserir.");
@@ -150,6 +159,40 @@ public class ClienteBean implements Serializable {
         } else {
             msg.warn("Este cliente já esta cadastrado!");
 
+        }
+    }
+
+    public void exibirImagem(Integer id, String setar) {
+
+        try {
+            CadImagens imagem = new CadImagensService().carregar(" WHERE c.nomeImagem='" + String.valueOf(id) + "" + setar + "'");
+            if (imagem.getIdImagem() != null) {
+
+                Path path = Paths.get(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/") + "resources/img");
+
+                System.err.println(path);
+                if (!Files.exists(path)) {
+                    Files.createDirectories(path);
+                }
+
+                path = Paths.get(path.toRealPath() + "/" + imagem.getNomeImagem() + "." + imagem.getTipo());
+                if (!Files.exists(path)) {
+                    FileOutputStream fos = new FileOutputStream(path.toString());
+                    fos.write(imagem.getImagem());
+                    fos.close();
+                }
+
+                //imagemDoCarroSelecionado = "../temp/carro/"+carroSelecionado.getCodigo() + ".jpg";
+                caminhoDaImagem = "/resources/img/" + imagem.getNomeImagem() + "." + imagem.getTipo();
+                Util.executarAcao("PF('dlgImg').show()");
+                Util.updateComponente("formImg");
+            } else {
+
+                caminhoDaImagem = null;
+
+            }
+        } catch (IOException e) {
+            caminhoDaImagem = null;
         }
     }
 
@@ -172,7 +215,7 @@ public class ClienteBean implements Serializable {
             this.endereco.setDataAlteracao(new Date());
             this.endereco.setDocumentoFk(documentos);
             this.enderecoService.update(endereco);
-            
+
             msg.info("Editado com sucesso.");
             Util.executarAcao("PF('dlgClientes').hide()");
             listarDados();
@@ -222,7 +265,6 @@ public class ClienteBean implements Serializable {
 
     }
 
-    
     public void novo() {
         this.cliente = new CadCliente();
         this.telefone = new CadTelefone();
@@ -234,14 +276,17 @@ public class ClienteBean implements Serializable {
         Util.updateComponente("forCliente");
 
     }
-    public void urlHabilitacao(int id){
-        Util.rediricionar("habilitacao/lista.xhtml?id="+id);
+
+    public void urlHabilitacao(int id) {
+        Util.rediricionar("habilitacao/lista.xhtml?id=" + id);
     }
-    public void urlEndereco(int id){
-        Util.rediricionar("endereco/lista.xhtml?id="+id);
+
+    public void urlEndereco(int id) {
+        Util.rediricionar("endereco/lista.xhtml?id=" + id);
     }
-     public void urlEmail(int id){
-        Util.rediricionar("email/lista.xhtml?id="+id);
+
+    public void urlEmail(int id) {
+        Util.rediricionar("email/lista.xhtml?id=" + id);
     }
 
     public List<CadCliente> getListaClientes() {
@@ -362,6 +407,14 @@ public class ClienteBean implements Serializable {
 
     public void setMsg(MessagesView msg) {
         this.msg = msg;
+    }
+
+    public String getCaminhoDaImagem() {
+        return caminhoDaImagem;
+    }
+
+    public void setCaminhoDaImagem(String caminhoDaImagem) {
+        this.caminhoDaImagem = caminhoDaImagem;
     }
 
 }

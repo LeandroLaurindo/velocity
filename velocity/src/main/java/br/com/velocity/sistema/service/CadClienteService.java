@@ -52,7 +52,7 @@ public class CadClienteService implements Serializable {
     public List<CadCliente> findAll(String parametros) {
         return dao.findAll(parametros);
     }
-
+    
     public CadClienteDAO getDao() {
         return dao;
     }

@@ -39,14 +39,19 @@ public class CadImagens implements Serializable {
     private Integer idImagem;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 50)
     @Column(name = "nome_imagem")
     private String nomeImagem;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    //@Lob
     @Column(name = "imagem")
     private byte[] imagem;
+    @Column(name = "id_fk")
+    private Integer idFk;
+    @Size(max = 50)
+    @Column(name = "tipo")
+    private String tipo;
 
     public CadImagens() {
     }
@@ -83,6 +88,22 @@ public class CadImagens implements Serializable {
 
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getIdFk() {
+        return idFk;
+    }
+
+    public void setIdFk(Integer idFk) {
+        this.idFk = idFk;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override

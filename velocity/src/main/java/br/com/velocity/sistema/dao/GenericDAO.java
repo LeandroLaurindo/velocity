@@ -6,6 +6,7 @@
 package br.com.velocity.sistema.dao;
 
 import br.com.velocity.sistema.util.JPAUtil;
+import br.com.velocity.sistema.util.MessagesView;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -15,7 +16,8 @@ import javax.persistence.EntityManager;
 @SuppressWarnings("unchecked")
 public class GenericDAO<PK, T> implements Serializable {
 
-    
+    MessagesView mv = new MessagesView();
+
     //private EntityManager entityManager;
 
     /*  public GenericDAO(EntityManager entityManager) {
@@ -31,30 +33,43 @@ public class GenericDAO<PK, T> implements Serializable {
     }
 
     public void save(T entity) {
-        JPAUtil.getEntityManager().getTransaction().begin();
-        JPAUtil.getEntityManager().persist(entity);
-         JPAUtil.getEntityManager().getTransaction().commit();
+        try {
+            JPAUtil.getEntityManager().getTransaction().begin();
+            JPAUtil.getEntityManager().persist(entity);
+            JPAUtil.getEntityManager().getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mv.error("Não foi possivel salvar!");
+            JPAUtil.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public void update(T entity) {
-        try{
-        JPAUtil.getEntityManager().getTransaction().begin();
-        JPAUtil.getEntityManager().merge(entity);
-        JPAUtil.getEntityManager().getTransaction().commit();
-        }catch(Exception e){
+        try {
+            JPAUtil.getEntityManager().getTransaction().begin();
+            JPAUtil.getEntityManager().merge(entity);
+            JPAUtil.getEntityManager().getTransaction().commit();
+        } catch (Exception e) {
             e.printStackTrace();
+            mv.error("Não foi possivel atualizar!");
             JPAUtil.getEntityManager().getTransaction().rollback();
         }
     }
 
     public void delete(T entity) {
-        JPAUtil.getEntityManager().getTransaction().begin();
-        JPAUtil.getEntityManager().remove(entity);
-        JPAUtil.getEntityManager().getTransaction().commit();
+        try {
+            JPAUtil.getEntityManager().getTransaction().begin();
+            JPAUtil.getEntityManager().remove(entity);
+            JPAUtil.getEntityManager().getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mv.error("Não foi possivel remover!");
+            JPAUtil.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public List<T> findAll() {
-        
+
         return JPAUtil.getEntityManager().createQuery(("FROM " + getTypeClass().getName()))
                 .getResultList();
     }

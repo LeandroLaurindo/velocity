@@ -68,6 +68,12 @@
                         </f:facet>
                         <h:outputText value="#{item.numSeguranca}"/>
                     </p:column>
+                    <p:column width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Imagem"/>
+                        </f:facet>
+                        <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idHabilitacao, 'habilitacao')}" title="foto" />
+                    </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
@@ -194,6 +200,17 @@
                         <h:panelGrid columns="2">
                             <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.salvarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao == null}" />
                             <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{cadHabilitacaoBean.editarN()}" rendered="#{cadHabilitacaoBean.cadHabilitacao.idHabilitacao != null}" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+            <h:form id="formImg">
+                <p:dialog header="Dados" widgetVar="dlgImg" showEffect="explode">
+                    <h:panelGrid columns="1">
+
+                        <h:panelGrid columns="1">
+                            <p:graphicImage value="#{clienteBean.caminhoDaImagem}" width="350" height="350"/>
+                            <p:commandButton value="X" onclick="PF('dlgConf')hide();" ajax="true"/>
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>
