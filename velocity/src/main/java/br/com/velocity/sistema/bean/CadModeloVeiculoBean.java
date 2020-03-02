@@ -94,6 +94,18 @@ public class CadModeloVeiculoBean implements Serializable {
         Util.updateComponente("formCMV");
     }
 
+    public void urlImagem(Integer id) {
+        String nome = String.valueOf(id);
+        nome += "novaveiculo";
+        Util.rediricionar("imagens/contoleImagensVeiculos.xhtml?id=" + nome);
+    }
+   
+    public void urlEditaImagem(Integer id) {
+        String nome = String.valueOf(id);
+        nome += "veiculo";
+        Util.rediricionar("imagens/contoleImagensVeiculos.xhtml?id=" + nome);
+    }
+    
     public CadModeloVeiculoService getVeiculoService() {
         return veiculoService;
     }

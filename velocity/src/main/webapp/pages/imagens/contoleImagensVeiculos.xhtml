@@ -19,23 +19,7 @@
         <f:view>
             <h:form id="frm1" enctype="multipart/form-data" >
                 <h:panelGrid columns="1">
-                    <h:panelGrid columns="1">
-                        <p:outputLabel for="advanced" value="Clientes" />
-                        <p:selectOneMenu id="advanced" value="#{cadImagemBean.idCliente}" panelStyle="width:180px"
-                                         style="width:160px">
-                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{cadImagemBean.listaClientes}" var="cliente" itemLabel="#{cliente.documentoFk.pessoaFk.nome}" itemValue="#{cliente.idCliente}" />
-
-                        </p:selectOneMenu>
-                    </h:panelGrid>
-                    <h:panelGrid columns="1">
-                        <p:outputLabel for="usu" value="Usuários" />
-                        <p:selectOneMenu id="usu" value="#{cadImagemBean.idUsuario}" panelStyle="width:180px" style="width:160px">
-                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{cadImagemBean.listaUsuario}" var="user" itemLabel="#{user.login}" itemValue="#{user.idUsuario}" />
-
-                        </p:selectOneMenu>
-                    </h:panelGrid>
+                      <p:graphicImage value="#{cadImagemBean.buscarImagem(cadImagemBean.imagensAux.nomeImagem)}" width="250" height="150" rendered="#{cadImagemBean.imagensAux.idImagem != null}"/>
                     <h:panelGrid columns="1">
                         <p:outputLabel for="cli" value="Veiculo" />
                         <p:selectOneMenu id="cli" value="#{cadImagemBean.idVeiculo}" panelStyle="width:180px" style="width:160px">
@@ -44,13 +28,7 @@
 
                         </p:selectOneMenu>
                     </h:panelGrid>
-                    <h:panelGrid columns="1">
-                        <p:outputLabel for="hab" value="Habilitação" />
-                        <p:selectOneMenu id="hab" value="#{cadImagemBean.idHabilitacao}" panelStyle="width:180px" style="width:160px">
-                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{cadImagemBean.listaHabilitacao}" var="habali" itemLabel="#{habali.documentoFk.pessoaFk.nome}" itemValue="#{habali.idHabilitacao}" />
-                        </p:selectOneMenu>
-                    </h:panelGrid>
+                    
                     <p:fileUpload value="#{cadImagemBean.file}" 
                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                   invalidFileMessage="São permitidas somente imagens (jpeg, jpg e png)"   mode="simple" skinSimple="true"  id="foto" 

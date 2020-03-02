@@ -9,70 +9,44 @@
 
     <ui:define name="conteudo">
         <f:view>
-            <h:form id="formHabilitacao">
-                <p:messages autoUpdate="true" showDetail="true" />
-                <p:dataTable value="#{cadHabilitacaoBean.listaHabilitacoes}" var="item">
+            <h:form id="formTelefone">
+                <p:messages showDetail="true">
+                    <p:autoUpdate />
+                </p:messages>
+                <p:dataTable value="#{cadTelefoneBean.listaTelefones}" var="item">
                     <f:facet name="header">
-                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadHabilitacaoBean.setaDocumentos()}"/>
+                        <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadTelefoneBean.setaTelefones}"/>
                     </f:facet>
                     <p:column sortBy="#{item.documentoFk.pessoaFk.nome}" filterBy="#{item.documentoFk.pessoaFk.nome}">
                         <f:facet name="header">
-                            <h:outputText value="Nome do cliente"/>
+                            <h:outputText value="Nome"/>
                         </f:facet>
                         <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Numero Registro"/>
+                            <h:outputText value="DDD"/>
                         </f:facet>
-                        <h:outputText value="#{item.numRegistro}"/>
+                        <h:outputText value="#{item.ddd}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Validade"/>
+                            <h:outputText value="Telefone"/>
                         </f:facet>
-                        <h:outputText value="#{item.validade}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                        <h:outputText value="#{item.telefone}" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Categoria"/>
+                            <h:outputText value="Whatsapp"/>
                         </f:facet>
-                        <h:outputText value="#{item.categoria}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Orgao"/>
-                        </f:facet>
-                        <h:outputText value="#{item.orgao}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Emissao"/>
-                        </f:facet>
-                        <h:outputText value="#{item.emissao}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Cnh"/>
-                        </f:facet>
-                        <h:outputText value="#{item.cnh}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="NumSeguranca"/>
-                        </f:facet>
-                        <h:outputText value="#{item.numSeguranca}"/>
+                        <h:outputText value="#{cadTelefoneBean.retornoWhatsapp(item.whatsapp)}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
                         </f:facet>
-                        <p:commandButton value="" actionListener="#{cadHabilitacaoBean.setarDadosEditar(item)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
-                        <p:commandButton value="" actionListener="#{cadHabilitacaoBean.setarDadosRemover(item)}" icon="ui-icon-trash"  styleClass="botaoIcon" />
+                        <p:commandButton value="" actionListener="#{cadTelefoneBean.setarDadosEditar(item)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
+                        <p:commandButton value="" actionListener="#{cadTelefoneBean.setarDadosRemover(item)}" icon="ui-icon-trash"  styleClass="botaoIcon" />
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -80,15 +54,15 @@
         <f:view>
 
             <h:form>
-                <p:dialog header="Dados" widgetVar="removerHab" showEffect="explode" hideEffect="fade">
+                <p:dialog header="Dados" widgetVar="removerTele" showEffect="explode" hideEffect="fade">
                     <h:panelGrid columns="1">
                         <h3>
                             Atenção!
                         </h3>
                         <p:outputLabel value="Deseja excluir?" />
                         <h:panelGrid columns="2">
-                            <p:commandButton value="OK" actionListener="#{cadHabilitacaoBean.remover()}" />
-                            <p:commandButton value="NÂO" onclick="PF('removerHab').hide()" />
+                            <p:commandButton value="OK" actionListener="#{cadTelefoneBean.remover()}" />
+                            <p:commandButton value="NÂO" onclick="PF('removerTele').hide()" />
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>
@@ -96,10 +70,12 @@
 
 
             <h:form id="frmdadosH">
-                <p:dialog header="Dados" widgetVar="dlghab" showEffect="explode" hideEffect="fade"
+                <p:dialog header="Dados" widgetVar="dlgtele" showEffect="explode" hideEffect="fade"
                           style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadHabilitacaoBean.documentos.idDocumentos != null}">
                     <p:panelGrid columns="1">
-                         <p:messages autoUpdate="true" />
+                        <p:messages>
+                            <p:autoUpdate />
+                        </p:messages>
                         <p:outputLabel value="Nome do Cliente : #{cadHabilitacaoBean.documentos.pessoaFk.nome}" />
                     </p:panelGrid>
                     <h:panelGrid columns="3">
@@ -149,7 +125,9 @@
                   
                     <h:panelGrid columns="1">
                         
-                        <p:messages autoUpdate="true" />
+                        <p:messages>
+                            <p:autoUpdate />
+                        </p:messages>
                         <p:outputLabel value="Clientes" for="clien_tes" />
                         <p:selectOneMenu id="clien_tes" value="#{cadHabilitacaoBean.idDocumento}">
                         <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />

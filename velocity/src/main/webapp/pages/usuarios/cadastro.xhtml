@@ -9,7 +9,9 @@
 
     <ui:define name="conteudo">
         <h:form>
-            <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+            <p:messages closable="true" showDetail="true">
+                <p:autoUpdate />
+            </p:messages>
         </h:form>
         <h:form id="forUsuDado">
             <p:dialog header="Dados" widgetVar="dlgUsuario">
@@ -71,6 +73,15 @@
                     <h:outputText value="SIM" rendered="#{item.ativo}"/>
                     <h:outputText value="NAO" rendered="#{!item.ativo}"/>
                 </p:column>
+                <p:column width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Imagem"/>
+                    </f:facet>
+                    <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idUsuario ,'usuario')}" title="foto" />
+                    <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{usuario.urlImagem()}" title="Nova" />
+                    <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{usuario.urlEditaImagem(item.idUsuario)}" title="Editar" />
+
+                </p:column>
                 <p:column>
                     <p:commandButton id="btneditar" value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{usuario.setarDados(item)}"/>
                     <p:commandButton id="btnexcluir" value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{usuario.setarDadosRemover(item)}" />
@@ -91,6 +102,17 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
+         <h:form id="formImg">
+                <p:dialog header="Dados" widgetVar="dlgImg" showEffect="explode">
+                    <h:panelGrid columns="1">
+
+                        <h:panelGrid columns="1">
+                            <p:graphicImage value="#{clienteBean.caminhoDaImagem}" width="350" height="350"/>
+                            <p:commandButton value="X" onclick="PF('dlgConf')hide();" ajax="true"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
     </ui:define>
 
 </ui:composition>

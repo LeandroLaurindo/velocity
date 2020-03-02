@@ -16,12 +16,13 @@
         <div style="margin: 0 auto; text-align: center;">
             <p:graphicImage library="img" name="logo.png" width="300" height="200" style="border-radius: 5%;"/>
            <br />
-           <p:graphicImage library="img" name="acessonegado.jpg"  width="300"/>
+           <p:graphicImage library="img" name="error.png"  width="300"/>
+            <br />
+            <span style="font-size: 20px; color: #000033; font-style: italic; font-weight: bold;">Erro 404 entre em contato com os desenvolvedores:</span>
             <br />
             <p:linkButton outcome="/pages/home.xhtml" value="Voltar Pagina Incial" style="width: 300px" icon="ui-icon-arrowreturnthick-1-w"/>
-            <h:form>
-                 <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
-            </h:form>
+             <p:linkButton outcome="/login.xhtml" value="Login" style="width: 300px" icon="ui-icon-arrowreturnthick-1-w"/>
+         
         </div>
     </h:body>
 </html>

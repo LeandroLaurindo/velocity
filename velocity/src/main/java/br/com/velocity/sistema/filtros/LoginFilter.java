@@ -26,7 +26,7 @@ import javax.websocket.Session;
  *
  * @author Leandro Laurindo
  */
-@WebFilter(urlPatterns = "/*", servletNames = "{Faces Servlet}")
+@WebFilter(urlPatterns = "/", servletNames = "{Faces Servlet}")
 public class LoginFilter extends AbstractFilter implements Filter {
 
     @Override

@@ -10,14 +10,16 @@
     <ui:define name="conteudo">
         <f:view>
             <h:form id="formHabilitacao">
-                <p:messages autoUpdate="true" showDetail="true" />
+                <p:messages showDetail="true" >
+                    <p:autoUpdate />
+                </p:messages>
                 <p:dataTable value="#{cadEmailBean.listaEmails}" var="item">
                     <f:facet name="header">
                         <p:commandButton value="Novo" icon="ui-icon-plus"  actionListener="#{cadEmailBean.setaDocumentos()}"/>
                     </f:facet>
                     <p:column sortBy="#{item.documentoFk.pessoaFk.nome}" filterBy="#{item.documentoFk.pessoaFk.nome}">
                         <f:facet name="header">
-                            <h:outputText value="Nome do cliente"/>
+                            <h:outputText value="Nome"/>
                         </f:facet>
                         <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
                     </p:column>
@@ -28,7 +30,7 @@
                         </f:facet>
                         <h:outputText value="#{item.email}"/>
                     </p:column>
-                     <p:column>
+                    <p:column>
                         <f:facet name="header">
                             <h:outputText value="Site"/>
                         </f:facet>
@@ -72,7 +74,9 @@
                 <p:dialog header="Dados" widgetVar="dlghab"
                           style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadEmailBean.documentos.idDocumentos != null}">
                     <p:panelGrid columns="1">
-                        <p:messages autoUpdate="true" />
+                        <p:messages >
+                            <p:autoUpdate />
+                        </p:messages>
                         <p:outputLabel value="Nome do Cliente : #{cadEmailBean.documentos.pessoaFk.nome}" />
                     </p:panelGrid>
                     <h:panelGrid columns="3">
@@ -102,7 +106,9 @@
 
                     <h:panelGrid columns="1">
 
-                        <p:messages autoUpdate="true" />
+                        <p:messages >
+                            <p:autoUpdate />
+                        </p:messages>
                         <p:outputLabel value="Clientes" for="clien_tes" />
                         <p:selectOneMenu id="clien_tes" value="#{cadEmailBean.idDocumento}">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />

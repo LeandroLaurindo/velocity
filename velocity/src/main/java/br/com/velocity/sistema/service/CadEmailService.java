@@ -17,7 +17,7 @@ import javax.inject.Inject;
  */
 public class CadEmailService implements Serializable {
    
-    @Inject
+    
     private CadEmailDAO dao;
 
     public CadEmailService() {

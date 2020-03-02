@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Leandro Laurindo
  */
-@WebFilter(urlPatterns = {"/pages/*","/pages/clientes/*", "/pages/email/*","/pages/endereco/*","/pages/habilitacao/*","/pages/telefone/*","/pages/usuarios/*"}, servletNames = "{Faces Servlet}")
+@WebFilter(urlPatterns = {"/pages/*"}, servletNames = "{Faces Servlet}")
 public class FiltroProtecao extends AbstractFilter implements Filter {
 
     @Override
@@ -34,13 +34,31 @@ public class FiltroProtecao extends AbstractFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) sr;
 
         Usuario user = (Usuario) request.getSession(true).getAttribute("user");
+       try{
         if(user.getIdUsuario() == null){
             doLogin(sr, sr1, request);
         }
-        if (!user.getPerfilFk().getNomePerfil().trim().equalsIgnoreCase("MASTER")) {
+       
+         
+        if (user.getPerfilFk().getIdPerfil() <= 3) {
+             
+           // String viewId = FacesContext.getCurrentInstance().getViewRoot().getId();
+           if(!request.getRequestURI().contains("contato") && user.getPerfilFk().getIdPerfil() == 1){
+                
             accessDenied(sr, sr1, request);
-            return;
+             return;
+            }
+           
+           
+            if(request.getRequestURI().contains("usuarios")){
+                
+            accessDenied(sr, sr1, request);
+             return;
+            } 
         }
+        }catch(Exception ex){
+            doLogin(sr, sr1, request);
+       }
         fc.doFilter(sr, sr1);
 
     }

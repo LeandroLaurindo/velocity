@@ -8,6 +8,7 @@ package br.com.velocity.sistema.bean;
 import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.util.SessionUtil;
 import static br.com.velocity.sistema.util.SessionUtil.getRequest;
+import br.com.velocity.sistema.util.Util;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -28,10 +29,9 @@ public class UsuarioController {
         this.user = user;
     }
     
-    public String logOut(){
+    public void logOut(){
         getRequest().getSession().invalidate();
-        System.out.println("br.com.velocity.sistema.bean.UsuarioController.logOut()");
-        return "/login.xhtml";
+        Util.rediricionar("login.xhtml");
     } 
     
     public String getUsuario(){

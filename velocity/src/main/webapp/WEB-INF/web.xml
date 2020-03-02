@@ -31,7 +31,12 @@
         <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
     <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/pages/erro.xhtml</location>
+    </error-page>
+    <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/login.xhtml</location>
     </error-page>
+    
 </web-app>

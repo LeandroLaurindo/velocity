@@ -28,7 +28,7 @@ public class Util {
      * @param id
      */
     public static void updateComponente(String id) {
-        org.primefaces.context.RequestContext.getCurrentInstance().update(id);
+        org.primefaces.PrimeFaces.current().ajax().update(id);
     }
 
     /**
@@ -36,7 +36,7 @@ public class Util {
      * @param id
      */
     public static void executarAcao(String id) {
-        org.primefaces.context.RequestContext.getCurrentInstance().execute(id);
+        org.primefaces.PrimeFaces.current().executeScript(id);
     }
 
     public static void rediricionar(String destino) {

@@ -156,7 +156,20 @@ public class UsuarioBean implements Serializable {
             this.msg.error("Não foi possivel remover!");
         }
     }
-
+   public void urlImagem() {
+        Util.rediricionar("imagens/contoleImagensUsuarios.xhtml");
+    }
+   
+    public void urlEditaImagem(Integer id) {
+        String nome = String.valueOf(id);
+        nome += "usuario";
+        Util.rediricionar("imagens/contoleImagensUsuarios.xhtml?id=" + nome);
+    }
+    
+    public void voltarParaHome(){
+        System.out.println("Chamou");
+        Util.rediricionar("home.xhtml");
+    }
     public void perfis() {
         this.listaPefis = this.perfisService.findAll();
     }

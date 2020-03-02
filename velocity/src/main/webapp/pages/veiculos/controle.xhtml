@@ -13,7 +13,9 @@
             <h:form id="formCdCMV">
 
                 <p:dialog header="Dados Veiculo" id="dglVeiculo" widgetVar="dglVeiculo">
-                    <p:messages autoUpdate="true" showDetail="true" />
+                    <p:messages showDetail="true">
+                        <p:autoUpdate />
+                    </p:messages>
                      <p:inputText id="idModelo" value="#{cadModeloVeiculoBean.modeloVeiculo.idModelo}" title="IdModelo"  type="hidden"/>
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
@@ -35,7 +37,7 @@
                         <p:inputText id="portas" value="#{cadModeloVeiculoBean.modeloVeiculo.portas}" title="Portas" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="CroquiFk:" for="croquiFk" />
+                        <p:outputLabel value="Croqui:" for="croquiFk" />
                         <p:inputText id="croquiFk" value="#{cadModeloVeiculoBean.modeloVeiculo.croquiFk}" title="CroquiFk" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
@@ -64,7 +66,9 @@
 
         <f:view>
             <h:form id="formCMV">
-                <p:messages autoUpdate="true" showDetail="true" />
+                <p:messages  showDetail="true">
+                    <p:autoUpdate />
+                </p:messages>
                 <p:dataTable  value="#{cadModeloVeiculoBean.listaDeMVeiculos}" var="item"
                              emptyMessage="Não a dados para exibir" 
                              paginator="true" rows="10" style="font-size: 13px!important">
@@ -98,11 +102,13 @@
                         </f:facet>
                         <h:outputText value="#{item.portas}"/>
                     </p:column>
-                    <p:column>
+                    <p:column width="100">
                         <f:facet name="header">
-                            <h:outputText value="CroquiFk"/>
+                            <h:outputText value="Croqui"/>
                         </f:facet>
-                        <h:outputText value="#{item.croquiFk}"/>
+                        <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idModelo, 'veiculo')}" title="foto" />
+                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{cadModeloVeiculoBean.urlImagem(item.idModelo)}" title="Nova" />
+                        <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{cadModeloVeiculoBean.urlEditaImagem(item.idModelo)}" title="Editar" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -147,6 +153,17 @@
                         <h:panelGrid columns="2">
                             <p:commandButton value="SIM" actionListener="#{cadModeloVeiculoBean.deletar()}" oncomplete="PF('dlgConf')hide();"/>
                             <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        <h:form id="formImg">
+                <p:dialog header="Dados" widgetVar="dlgImg" showEffect="explode">
+                    <h:panelGrid columns="1">
+
+                        <h:panelGrid columns="1">
+                            <p:graphicImage value="#{clienteBean.caminhoDaImagem}" width="650" height="450"/>
+                            <p:commandButton value="X" onclick="PF('dlgConf')hide();" ajax="true"/>
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>

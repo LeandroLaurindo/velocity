@@ -187,12 +187,13 @@ public class ClienteBean implements Serializable {
                 Util.executarAcao("PF('dlgImg').show()");
                 Util.updateComponente("formImg");
             } else {
-
+                  
                 caminhoDaImagem = null;
 
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             caminhoDaImagem = null;
+            msg.warn("Não há imagem cadastrada!");
         }
     }
 
@@ -287,6 +288,16 @@ public class ClienteBean implements Serializable {
 
     public void urlEmail(int id) {
         Util.rediricionar("email/lista.xhtml?id=" + id);
+    }
+    public void urlImagem(Integer id) {
+        String nome = String.valueOf(id);
+        nome += "novacliente";
+        Util.rediricionar("imagens/contoleImagensClientes.xhtml?id=" + nome);
+    }
+    public void urlEditaImagem(Integer id) {
+        String nome = String.valueOf(id);
+        nome += "cliente";
+        Util.rediricionar("imagens/contoleImagensClientes.xhtml?id=" + nome);
     }
 
     public List<CadCliente> getListaClientes() {

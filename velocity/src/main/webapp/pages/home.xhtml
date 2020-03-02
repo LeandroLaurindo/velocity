@@ -22,6 +22,7 @@
                 height: 25px!important;
             }
         </style>
+
         <script type="text/javascript">
             PrimeFaces.locales['pt'] = { closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia' };
         </script>
@@ -29,83 +30,58 @@
     </h:head>
 
     <h:body>
-      
-            <p:layout fullPage="true"  >
 
-                <p:layoutUnit position="north" header="">
+        <p:layout fullPage="true"  >
 
-                    <p:graphicImage library="img" name="logo.png"  width="100" height="100" style="float: left"/>
+            <p:layoutUnit position="north" header="">
+                <p:graphicImage library="img" name="logo.png"  width="50" height="50" 
+                                style="margin: 0 auto; float: left; margin-left: 5px; margin-top: 5px; text-align: center; border-radius: 5%; padding: 10px;box-shadow: -5px -2px 10px  5px #999999;" />
+                <h:form>
+                    <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
+                    <p:graphicImage style="float: right; margin: 2px;" value="#{cadImagemBean.buscarImagem(usuarioController.getUsu())}" width="20" height="20" />
+                    <p:outputLabel style="float: right; margin: 2px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+                <f:view>
                     <h:form>
-                        <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
-                        <p:graphicImage style="float: right; margin: 2px;" value="#{cadImagemBean.buscarImagem(usuarioController.getUsu())}" width="20" height="20" />
-                        <p:outputLabel style="float: right; margin: 2px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
-                         
+                        <h:panelGrid columns="1" style="margin: 0 auto; text-align: center;">
+                            <h:outputText value="TODOS DIREITOS RESERVADOS : &copy; VELOCITY RENT A CAR 2020.  " />
+                           
+                            <h:outputText value="Desenvolvido por:  ELM Soluções." />
+                        </h:panelGrid>
                     </h:form>
+                </f:view>
 
-                    <h:form style="float: left;">
+            </p:layoutUnit>
 
-                        <p:megaMenu style="margin-top: 20px; margin-left: 20px;">
+            <p:layoutUnit position="west" size="250" header="Menu Cadastro" collapsible="true">
+                <h:form>
+                    <p:panelMenu>
+                        <p:submenu label="Cadastro">
+                            <p:menuitem value="Usuários" outcome="/pages/usuarios/cadastro" icon="ui-icon-triangle-1-e" />
+                            <p:menuitem value="Clientes" outcome="/pages/clientes/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Endereço" outcome="/pages/endereco/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Email" outcome="/pages/email/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Telefone" outcome="/pages/telefone/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Habilitação" outcome="/pages/habilitacao/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Fornecedores" outcome="/pages/fornecedor/controle" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Veículos" outcome="/pages/veiculos/controle" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Funcionarios" outcome="/pages/funcionario/controle" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Imagens" outcome="/pages/imagens/contoleImagens" icon="ui-icon-triangle-1-e"/>
+                        </p:submenu>
+                    </p:panelMenu>
 
-                            <p:submenu label="Sports" icon="pi pi-file">
+                </h:form>
+            </p:layoutUnit>
 
-                                <p:column>
-                                    <p:submenu label="Sports.1">
-                                        <p:menuitem value="Sports.1.1" url="#" />
-                                        <p:menuitem value="Sports.1.2" url="#" />
-                                    </p:submenu>
-                                    <p:submenu label="Sports.2">
-                                        <p:menuitem value="Sports.2.1" url="#" />
-                                        <p:menuitem value="Sports.2.2" url="#" />
-                                        <p:menuitem value="Sports.2.3" url="#" />
-                                    </p:submenu>
-                                </p:column>
-                            </p:submenu>
-                            <p:menuitem value="Menu" url="#" />
-                            <p:menuitem value="Menu" url="#" />
-                            <p:menuitem value="Menu" url="#" />
-                            <p:menuitem value="Menu" url="#" />
-                            <p:menuitem value="Menu" url="#" />
-                            <p:menuitem value="menu" url="#" />
-                            <p:menuitem value="menu" url="#" />
-                            <p:menuitem value="menu" url="#" />
-                            <p:menuitem value="menu" url="#" />
-                            <p:menuitem value="nenu" url="#" />
+            <p:layoutUnit position="center" style="background: none!important">
+                <ui:insert name="conteudo" />
+            </p:layoutUnit>
 
-                        </p:megaMenu>
+        </p:layout>
 
-                    </h:form>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
-                    <ui:insert name="rodape" />
-                </p:layoutUnit>
-
-                <p:layoutUnit position="west" size="250" header="Menu Cadastro" collapsible="true">
-                    <h:form>
-                        <p:panelMenu>
-                            <p:submenu label="Cadastro">
-                                <p:menuitem value="Usuários" outcome="/pages/usuarios/cadastro" icon="ui-icon-triangle-1-e" />
-                                <p:menuitem value="Clientes" outcome="/pages/clientes/lista" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Endereço" outcome="/pages/endereco/lista" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Email" outcome="/pages/email/lista" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Telefone" outcome="/pages/telefone/lista" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Habilitação" outcome="/pages/habilitacao/lista" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Fornecedores" url="#" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Veículos" outcome="/pages/veiculos/controle" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Funcionarios" url="#" icon="ui-icon-triangle-1-e"/>
-                                <p:menuitem value="Imagens" outcome="/pages/imagens/contoleImagens" icon="ui-icon-triangle-1-e"/>
-                            </p:submenu>
-                        </p:panelMenu>
-
-                    </h:form>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center" style="background: none!important">
-                    <ui:insert name="conteudo" />
-                </p:layoutUnit>
-
-            </p:layout>
-     
     </h:body>
 </html>
 

@@ -10,7 +10,9 @@
     <ui:define name="conteudo">
         <f:view>
             <h:form id="formHabilitacao">
-                <p:messages autoUpdate="true" showDetail="true" />
+                <p:messages showDetail="true" >
+                    <p:autoUpdate />
+                </p:messages>
                 <p:dataTable value="#{cadHabilitacaoBean.listaHabilitacoes}" var="item">
                     <f:facet name="header">
                         <p:commandButton style="float: right;" value="Nova" icon="ui-icon-plus"  actionListener="#{cadHabilitacaoBean.setaDocumentos()}"/>
@@ -73,6 +75,8 @@
                             <h:outputText value="Imagem"/>
                         </f:facet>
                         <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idHabilitacao, 'habilitacao')}" title="foto" />
+                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{cadHabilitacaoBean.urlImagem(item.idHabilitacao)}" title="Nova" />
+                        <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{cadHabilitacaoBean.urlEditaImagem(item.idHabilitacao)}" title="Editar" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -106,7 +110,9 @@
                 <p:dialog header="Dados" widgetVar="dlghab" showEffect="explode" hideEffect="fade"
                           style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" visible="#{cadHabilitacaoBean.documentos.idDocumentos != null}">
                     <p:panelGrid columns="1">
-                        <p:messages autoUpdate="true" />
+                        <p:messages >
+                            <p:autoUpdate />
+                        </p:messages>
                         <p:outputLabel value="Nome do Cliente : #{cadHabilitacaoBean.documentos.pessoaFk.nome}" />
                     </p:panelGrid>
                     <h:panelGrid columns="3">
@@ -156,7 +162,9 @@
 
                     <h:panelGrid columns="1">
 
-                        <p:messages autoUpdate="true" />
+                        <p:messages >
+                            <p:autoUpdate />
+                        </p:messages>
                         <p:outputLabel value="Clientes" for="clien_tes" />
                         <p:selectOneMenu id="clien_tes" value="#{cadHabilitacaoBean.idDocumento}">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />

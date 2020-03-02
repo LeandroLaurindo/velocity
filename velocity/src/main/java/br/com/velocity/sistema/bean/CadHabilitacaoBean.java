@@ -194,7 +194,16 @@ public class CadHabilitacaoBean implements Serializable {
         
     }
 
-   
+   public void urlImagem(Integer id) {
+       String nome = String.valueOf(id);
+        nome += "novahabilitacao";
+         Util.rediricionar("imagens/contoleImagensHabilitacao.xhtml?id=" + nome);
+    }
+    public void urlEditaImagem(Integer id) {
+        String nome = String.valueOf(id);
+        nome += "habilitacao";
+        Util.rediricionar("imagens/contoleImagensHabilitacao.xhtml?id=" + nome);
+    }
 
     public CadHabilitacaoService getHabilitacaoService() {
         return habilitacaoService;
