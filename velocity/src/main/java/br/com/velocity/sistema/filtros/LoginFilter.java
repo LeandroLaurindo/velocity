@@ -6,10 +6,7 @@
 package br.com.velocity.sistema.filtros;
 
 import br.com.velocity.sistema.entidades.Usuario;
-import br.com.velocity.sistema.util.SessionUtil;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,7 +17,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 /**
  *

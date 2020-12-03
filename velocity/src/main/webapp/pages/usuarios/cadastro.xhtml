@@ -44,7 +44,7 @@
                     <br />
                     <h:panelGrid columns="2">
                         <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{usuario.salvar()}" />
-                        <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()"/> 
+                        <p:commandButton value="Cancelar"  onclick="PF('dlgUsuario').hide()" process="@this"/> 
                     </h:panelGrid>
                 </h:panelGrid>
             </p:dialog>

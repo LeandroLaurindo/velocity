@@ -61,6 +61,9 @@ public class CadModeloVeiculo implements Serializable {
     private Integer bagagem;
     @Column(name = "tanque")
     private Integer tanque;
+    @Size(max = 8)
+    @Column(name = "placa")
+    private String placa;
 
     public CadModeloVeiculo() {
     }
@@ -155,6 +158,14 @@ public class CadModeloVeiculo implements Serializable {
         this.tanque = tanque;
     }
 
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -179,5 +190,5 @@ public class CadModeloVeiculo implements Serializable {
     public String toString() {
         return "br.com.locadora.entidades.CadModeloVeiculo[ idModelo=" + idModelo + " ]";
     }
-    
+
 }

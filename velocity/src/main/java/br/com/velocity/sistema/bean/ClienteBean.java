@@ -24,7 +24,6 @@ import br.com.velocity.sistema.service.UsuarioService;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.util.Util;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,6 +74,8 @@ public class ClienteBean implements Serializable {
     private UsuarioService usuarioService = new UsuarioService();
 
     private MessagesView msg = new MessagesView();
+
+    private String tipoPessoa = "";
 
     String caminhoDaImagem = "";
 
@@ -187,7 +188,7 @@ public class ClienteBean implements Serializable {
                 Util.executarAcao("PF('dlgImg').show()");
                 Util.updateComponente("formImg");
             } else {
-                  
+
                 caminhoDaImagem = null;
 
             }
@@ -230,6 +231,7 @@ public class ClienteBean implements Serializable {
         try {
             this.documentos = documentos;
             this.pessoa = this.pessoaService.carregar(documentos.getPessoaFk().getIdPessoa());
+            this.tipoPessoa = this.pessoa.getTipoPessoa();
 
             this.cliente = this.clienteService.carregar("where c.documentoFk.idDocumentos =" + documentos.getIdDocumentos() + "");
 
@@ -272,9 +274,11 @@ public class ClienteBean implements Serializable {
         this.email = new CadEmail();
         this.endereco = new CadEndereco();
         this.pessoa = new CadPessoa();
+        this.pessoa.setTipoPessoa(tipoPessoa);
         this.documentos = new CadDocumentos();
-        Util.executarAcao("PF('dlgClientes').show()");
+        Util.executarAcao("PF('dlgTipoPessoa').hide()");
         Util.updateComponente("forCliente");
+        Util.executarAcao("PF('dlgClientes').show()");
 
     }
 
@@ -289,11 +293,13 @@ public class ClienteBean implements Serializable {
     public void urlEmail(int id) {
         Util.rediricionar("email/lista.xhtml?id=" + id);
     }
+
     public void urlImagem(Integer id) {
         String nome = String.valueOf(id);
         nome += "novacliente";
         Util.rediricionar("imagens/contoleImagensClientes.xhtml?id=" + nome);
     }
+
     public void urlEditaImagem(Integer id) {
         String nome = String.valueOf(id);
         nome += "cliente";
@@ -426,6 +432,14 @@ public class ClienteBean implements Serializable {
 
     public void setCaminhoDaImagem(String caminhoDaImagem) {
         this.caminhoDaImagem = caminhoDaImagem;
+    }
+
+    public String getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(String tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 
 }

@@ -6,9 +6,7 @@
 package br.com.velocity.sistema.dao;
 
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
-import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
-import javax.persistence.EntityManager;
 
 /**
  *

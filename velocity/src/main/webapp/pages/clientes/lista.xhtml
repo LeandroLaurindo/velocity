@@ -28,41 +28,41 @@
                         <p:autoUpdate />
                     </p:messages>
                     <h:panelGrid columns="3">
-                        <h:panelGrid columns="1">
+                        <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Fisica'}">
                             <p:outputLabel value="Nome:" for="nome" />
                             <p:inputText id="nome" value="#{clienteBean.pessoa.nome}" 
                                          style="width: 400px;" 
                                          title="Nome" required="true" 
                                          requiredMessage="Nome não pode ser em branco."
-                                         onfocus="true"/>
+                                         onfocus="true" />
                         </h:panelGrid>
-                        <h:panelGrid columns="1">
+                        <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Juridica'}">
                             <p:outputLabel value="Razão Social:" for="razaoSocial" />
                             <p:inputText id="razaoSocial" style="width: 400px;" value="#{clienteBean.pessoa.razaoSocial}" title="RazaoSocial" />
                         </h:panelGrid>
 
-                        <h:panelGrid columns="1">
+                        <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Fisica'}">
                             <p:outputLabel value="Cpf:" for="cpf" />
                             <p:inputText id="cpf" value="#{clienteBean.documentos.cpf}" title="Cpf" />
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <h:panelGrid columns="1">
+                            <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Juridica'}">
                                 <p:outputLabel value="Cnpj:" for="cnpj" />
                                 <p:inputText id="cnpj" value="#{clienteBean.documentos.cnpj}" title="Cnpj" />
                             </h:panelGrid>
-                            <h:panelGrid>
+                            <h:panelGrid rendered="#{clienteBean.tipoPessoa == 'Fisica'}">
                                 <p:outputLabel value="Rg:" for="rg" />
                                 <p:inputText id="rg" value="#{clienteBean.documentos.rg}" title="Rg" />
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <h:panelGrid columns="1">
+                            <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Juridica'}" >
                                 <p:outputLabel value="Inscrição Estudal:" for="inscricaoEstudal" />
                                 <p:inputText id="inscricaoEstudal" value="#{clienteBean.documentos.inscricaoEstudal}" title="InscricaoEstudal" />
                             </h:panelGrid>
-                            <h:panelGrid columns="1">
+                            <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Juridica'}">
                                 <p:outputLabel value="Inscrição Municipal:" for="inscricaoMunicipal" />
-                                <p:inputText id="inscricaoMunicipal" value="#{clienteBean.documentos.inscricaoMunicipal}" title="InscricaoMunicipal" />
+                                <p:inputText id="inscricaoMunicipal" value="#{clienteBean.documentos.inscricaoMunicipal}" title="InscricaoMunicipal"  />
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
@@ -250,15 +250,30 @@
                             </h:panelGrid>
 
                         </h:panelGrid>
-                        <h:panelGrid columns="2">
+                       
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" style="margin: 0 auto; margin-top: 20px; text-align: center!important;">
                             <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvar()}" rendered="#{clienteBean.cliente.idCliente == null}" />
                             <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{clienteBean.editar()}" rendered="#{clienteBean.cliente.idCliente != null}" />
-                            <p:commandButton value="Cancelar" onclick="PF('dlgClientes').hide()" />
+                            <p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('dlgClientes').hide()" process="@this"/>
                         </h:panelGrid>
-                    </h:panelGrid>
                 </p:dialog>
             </h:form>
 
+            <h:form id="forCliente2">
+                <p:dialog header="" widgetVar="dlgTipoPessoa" id="dlgTipoPessoa" showEffect="explode" hideEffect="fade"
+                          style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;" closable="true">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Tipo Pessoa:" for="tpessoa" />
+                        <p:selectOneMenu id="tpessoa" value="#{clienteBean.tipoPessoa}" >
+                             <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                            <f:selectItem itemLabel="Física" itemValue="Fisica" />
+                            <f:selectItem itemLabel="Jurídica" itemValue="Juridica" />
+                            <p:ajax  process="tpessoa" event="change" listener="#{clienteBean.novo()}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
             <h:form id="fortblcli">
 
                 <p:dataTable id="tblClientes" value="#{clienteBean.listaClientes}" var="item"
@@ -268,7 +283,7 @@
                     <f:facet name="header">
 
                         <div style="float: right">
-                            <p:commandButton value="Novo" actionListener="#{clienteBean.novo()}"  icon="ui ui-icon-plus"/>
+                            <p:commandButton value="Novo" onclick="PF('dlgTipoPessoa').show()"  icon="ui ui-icon-plus"/>
                         </div>
                     </f:facet>
                     <p:column filterBy="#{item.documentoFk.pessoaFk.nome}" sortBy="#{item.documentoFk.pessoaFk.nome}">
@@ -315,7 +330,7 @@
                         <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idCliente,'cliente')}" title="foto" />
                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlImagem(item.idCliente)}" title="Nova" />
                         <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{clienteBean.urlEditaImagem(item.idCliente)}" title="Editar" />
-                      
+
                     </p:column>
                     <p:column width="100">
                         <f:facet name="header">

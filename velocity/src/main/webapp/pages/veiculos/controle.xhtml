@@ -9,10 +9,8 @@
 
     <ui:define name="conteudo">
         <f:view>
-
             <h:form id="formCdCMV">
-
-                <p:dialog header="Dados Veiculo" id="dglVeiculo" widgetVar="dglVeiculo">
+                <p:dialog header="Dados Veiculo" id="dglVeiculo" widgetVar="dglVeiculo" closable="true">
                     <p:messages showDetail="true">
                         <p:autoUpdate />
                     </p:messages>
@@ -21,12 +19,12 @@
                         <h:panelGrid columns="1">
                         <p:outputLabel value="Fabricante:" for="fabricante" />
                         <p:inputText id="fabricante" value="#{cadModeloVeiculoBean.modeloVeiculo.fabricante}" title="Fabricante" 
-                                     required="true" requiredMessage="Fabricante não pode ser vazio."/>
+                                     required="true" requiredMessage="Fabricante não pode ser vazio." onkeyup="value = value.toUpperCase()" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                         <p:outputLabel value="Modelo:" for="modelo" />
                         <p:inputText id="modelo" value="#{cadModeloVeiculoBean.modeloVeiculo.modelo}" title="Modelo" required="true" 
-                                     requiredMessage="Modelo não pode ser vazio."/>
+                                     requiredMessage="Modelo não pode ser vazio." onkeyup="value = value.toUpperCase()" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                         <p:outputLabel value="Passageiros:" for="passageiros" />
@@ -41,25 +39,30 @@
                         <p:inputText id="croquiFk" value="#{cadModeloVeiculoBean.modeloVeiculo.croquiFk}" title="CroquiFk" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                        <p:outputLabel value="ProtecaoFk:" for="protecaoFk" />
+                        <p:outputLabel value="Protecao:" for="protecaoFk" />
                         <p:inputText id="protecaoFk" value="#{cadModeloVeiculoBean.modeloVeiculo.protecaoFk}" title="ProtecaoFk" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                         <p:outputLabel value="Checklist:" for="checklist" />
-                        <p:inputText id="checklist" value="#{cadModeloVeiculoBean.modeloVeiculo.checklist}" title="Checklist" />
+                        <p:inputText id="checklist" value="#{cadModeloVeiculoBean.modeloVeiculo.checklist}" title="Checklist" onkeyup="value = value.toUpperCase()" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                         <p:outputLabel value="Bagagem:" for="bagagem" />
-                        <p:inputText id="bagagem" value="#{cadModeloVeiculoBean.modeloVeiculo.bagagem}" title="Bagagem" />
+                        <p:inputText id="bagagem" value="#{cadModeloVeiculoBean.modeloVeiculo.bagagem}" title="Bagagem"/>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                         <p:outputLabel value="Tanque:" for="tanque" />
                         <p:inputText id="tanque" value="#{cadModeloVeiculoBean.modeloVeiculo.tanque}" title="Tanque" />
                          </h:panelGrid>
-                        <h:panelGrid columns="2">
-                        <p:commandButton value="Salvar" icon="ui-icon-disk" iconPos="true" actionListener="#{cadModeloVeiculoBean.salvar()}" />
+                        <h:panelGrid columns="1">
+                         <p:outputLabel value="Placa:" for="placa" />
+                         <p:inputText id="placa" value="#{cadModeloVeiculoBean.modeloVeiculo.placa}" title="placa"  onkeyup="value = value.toUpperCase()" />
                         </h:panelGrid>
                     </h:panelGrid>
+                     <h:panelGrid columns="2" style="margin: 0 auto; margin-top:  20px; text-align: center!important;">
+                          <p:commandButton value="Salvar" icon="ui-icon-disk" iconPos="true" actionListener="#{cadModeloVeiculoBean.salvar()}" />
+                          <p:commandButton value="Fechar" icon="ui-icon-cancel" process="@this" iconPos="true" actionListener="#{cadModeloVeiculoBean.salvar()}" />
+                         </h:panelGrid>
                 </p:dialog>
             </h:form>
         </f:view>
@@ -133,6 +136,12 @@
                             <h:outputText value="Tanque"/>
                         </f:facet>
                         <h:outputText value="#{item.tanque}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Placa"/>
+                        </f:facet>
+                        <h:outputText value="#{item.placa}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">

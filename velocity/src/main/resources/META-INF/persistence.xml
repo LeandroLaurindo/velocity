@@ -21,7 +21,7 @@
     <class>br.com.velocity.sistema.entidades.CadImagens</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///localeader"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///"/>
       <property name="javax.persistence.jdbc.user" value=""/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>
