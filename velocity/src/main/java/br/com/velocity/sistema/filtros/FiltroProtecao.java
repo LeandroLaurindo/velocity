@@ -56,7 +56,7 @@ public class FiltroProtecao extends AbstractFilter implements Filter {
              return;
             } 
         }
-        }catch(Exception ex){
+        }catch(Throwable ex){
             doLogin(sr, sr1, request);
        }
         fc.doFilter(sr, sr1);

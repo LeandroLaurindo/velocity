@@ -17,9 +17,7 @@
         <h3>
             Dados Do Cliente
         </h3>
-
         <f:view>
-
             <h:form id="forCliente">
                 <p:dialog header="Dados" widgetVar="dlgClientes" showEffect="explode" hideEffect="fade"
                           style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;
@@ -250,13 +248,13 @@
                             </h:panelGrid>
 
                         </h:panelGrid>
-                       
+
                     </h:panelGrid>
                     <h:panelGrid columns="3" style="margin: 0 auto; margin-top: 20px; text-align: center!important;">
-                            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvar()}" rendered="#{clienteBean.cliente.idCliente == null}" />
-                            <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{clienteBean.editar()}" rendered="#{clienteBean.cliente.idCliente != null}" />
-                            <p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('dlgClientes').hide()" process="@this"/>
-                        </h:panelGrid>
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvar()}" rendered="#{clienteBean.cliente.idCliente == null}" />
+                        <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{clienteBean.editar()}" rendered="#{clienteBean.cliente.idCliente != null}" />
+                        <p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('dlgClientes').hide()" process="@this"/>
+                    </h:panelGrid>
                 </p:dialog>
             </h:form>
 
@@ -266,7 +264,7 @@
                     <h:panelGrid columns="2">
                         <p:outputLabel value="Tipo Pessoa:" for="tpessoa" />
                         <p:selectOneMenu id="tpessoa" value="#{clienteBean.tipoPessoa}" >
-                             <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                            <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
                             <f:selectItem itemLabel="Física" itemValue="Fisica" />
                             <f:selectItem itemLabel="Jurídica" itemValue="Juridica" />
                             <p:ajax  process="tpessoa" event="change" listener="#{clienteBean.novo()}"/>
@@ -290,13 +288,17 @@
                         <f:facet name="header">
                             <h:outputText value="Nome cliente"/>
                         </f:facet>
-                        <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
+                        <p:commandLink id="ajax"  actionListener="#{clienteBean.setarEditar(item.documentoFk)}">
+                            <h:outputText value="#{item.documentoFk.pessoaFk.nome}"/>
+                        </p:commandLink>
                     </p:column>
                     <p:column filterBy="#{item.documentoFk.pessoaFk.razaoSocial}" sortBy="#{item.documentoFk.pessoaFk.razaoSocial}">
                         <f:facet name="header">
                             <h:outputText value="Razão Social"/>
                         </f:facet>
-                        <h:outputText value="#{item.documentoFk.pessoaFk.razaoSocial}"/>
+                        <p:commandLink id="ajax2"  actionListener="#{clienteBean.setarEditar(item.documentoFk)}">
+                            <h:outputText value="#{item.documentoFk.pessoaFk.razaoSocial}"/>
+                        </p:commandLink>
                     </p:column>
                     <p:column>
                         <f:facet name="header">

@@ -9,6 +9,7 @@ import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.util.SessionUtil;
 import static br.com.velocity.sistema.util.SessionUtil.getRequest;
 import br.com.velocity.sistema.util.Util;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -18,7 +19,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "usuarioController")
 @SessionScoped
-public class UsuarioController {
+public class UsuarioController implements Serializable{
     private Usuario user;
 
     public Usuario getUser() {
@@ -38,8 +39,12 @@ public class UsuarioController {
         return SessionUtil.getUser().getLogin();
     }
     
-    public String getUsu(){
+    public String getUsu(){    
+        try{
         return String.valueOf(SessionUtil.getUser().getIdUsuario()) +"usuario";
+        }catch(Throwable e){
+            return null;
+        }
     }
     
     public String admin(){
