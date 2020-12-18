@@ -11,8 +11,6 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 @SuppressWarnings("unchecked")
 public class GenericDAO<PK, T> implements Serializable {
 
@@ -80,8 +78,7 @@ public class GenericDAO<PK, T> implements Serializable {
     }
 
     private Class<?> getTypeClass() {
-        Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[1];
+        Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         return clazz;
     }
 }

@@ -99,6 +99,12 @@ public class CadModeloVeiculoBean implements Serializable {
         nome += "novaveiculo";
         Util.rediricionar("imagens/contoleImagensVeiculos.xhtml?id=" + nome);
     }
+    
+    
+     public void urlControleVeiculos(Integer id) {
+        String nome = String.valueOf(id);
+        Util.rediricionar("controleveiculos/controleVeiculos.xhtml?idv=" + nome);
+    }
    
     public void urlEditaImagem(Integer id) {
         String nome = String.valueOf(id);

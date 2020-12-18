@@ -281,6 +281,11 @@ public class ClienteBean implements Serializable {
         Util.executarAcao("PF('dlgClientes').show()");
 
     }
+    
+      public void urlControleVeiculos(Integer id) {
+        String nome = String.valueOf(id);
+        Util.rediricionar("controleveiculos/controleVeiculos.xhtml?idc=" + nome);
+    }
 
     public void urlHabilitacao(int id) {
         Util.rediricionar("habilitacao/lista.xhtml?id=" + id);

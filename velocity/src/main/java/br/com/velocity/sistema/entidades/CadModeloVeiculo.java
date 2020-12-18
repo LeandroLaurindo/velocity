@@ -6,7 +6,9 @@
 package br.com.velocity.sistema.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,6 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CadModeloVeiculo.findAll", query = "SELECT c FROM CadModeloVeiculo c")})
 public class CadModeloVeiculo implements Serializable {
+
+   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,6 +70,10 @@ public class CadModeloVeiculo implements Serializable {
     @Size(max = 8)
     @Column(name = "placa")
     private String placa;
+     @Column(name = "disponivel")
+    private Boolean disponivel;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "veiculoFk")
+    private Collection<ControleVeiculos> controleVeiculosCollection;
 
     public CadModeloVeiculo() {
     }
@@ -165,6 +175,23 @@ public class CadModeloVeiculo implements Serializable {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
+    
+     @XmlTransient
+    public Collection<ControleVeiculos> getControleVeiculosCollection() {
+        return controleVeiculosCollection;
+    }
+
+    public void setControleVeiculosCollection(Collection<ControleVeiculos> controleVeiculosCollection) {
+        this.controleVeiculosCollection = controleVeiculosCollection;
+    }
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
+    }
 
     @Override
     public int hashCode() {
@@ -190,5 +217,6 @@ public class CadModeloVeiculo implements Serializable {
     public String toString() {
         return "br.com.locadora.entidades.CadModeloVeiculo[ idModelo=" + idModelo + " ]";
     }
+
 
 }

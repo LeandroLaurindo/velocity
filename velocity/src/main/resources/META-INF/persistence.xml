@@ -19,10 +19,11 @@
     <class>br.com.velocity.sistema.entidades.Perfis</class>
     <class>br.com.velocity.sistema.entidades.Usuario</class>
     <class>br.com.velocity.sistema.entidades.CadImagens</class>
+    <class>br.com.velocity.sistema.entidades.ControleVeiculos</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///"/>
-      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://177.131.11.190:46869/localeader"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

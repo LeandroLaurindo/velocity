@@ -24,9 +24,34 @@
         </style>
 
         <script type="text/javascript">
-            PrimeFaces.locales['pt'] = { closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia' };
-        </script>
+            PrimeFaces.locales['pt'] = {closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia'};
 
+            function mascara(o, f) {
+                v_obj = o;
+                v_fun = f;
+                setTimeout("execmascara()", 1);
+            }
+
+            function execmascara() {
+                v_obj.value = v_fun(v_obj.value);
+            }
+
+            function valor(v) {
+                v = v.replace(/\D/g, "");
+                v = v.replace(/[0-9]{15}/, "invÃ¡lido");
+                v = v.replace(/(\d{1})(\d{12})$/, "$1.$2"); // coloca ponto antes dos
+                // Ãºltimos 11 digitos
+                v = v.replace(/(\d{1})(\d{9})$/, "$1.$2"); // coloca ponto antes dos
+                // Ãºltimos 8 digitos
+                v = v.replace(/(\d{1})(\d{6})$/, "$1.$2"); // coloca ponto antes dos
+                // Ãºltimos 5 digitos
+                v = v.replace(/(\d{1})(\d{1,3})$/, "$1,$2"); // coloca virgula antes dos
+                // Ãºltimos 3 digitos
+                return v;
+
+            }
+
+        </script>
     </h:head>
 
     <h:body>
@@ -43,36 +68,36 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+            <p:layoutUnit position="south" size="100" closable="false" collapsible="false" resizable="false">
                 <f:view>
                     <h:form>
-                        <h:panelGrid columns="1" style="margin: 0 auto; text-align: center;">
-                            <h:outputText value="TODOS DIREITOS RESERVADOS : &copy; VELOCITY RENT A CAR 2020.  " />
-                           
-                            <h:outputText value="Desenvolvido por:  ELM Soluções." />
+                        <h:panelGrid columns="3" style="margin: 0 auto; text-align: center;">
+                            <h:outputText value="TODOS DIREITOS RESERVADOS : &copy; VELOCITY RENT A CAR .  " />
+                            <p:clock pattern="yyyy" mode="server" />
+                            <h:outputText value=". Desenvolvido por:  ELM Soluções." />
                         </h:panelGrid>
                     </h:form>
                 </f:view>
 
             </p:layoutUnit>
 
-            <p:layoutUnit position="west" size="250" header="Menu Cadastro" collapsible="true">
+            <p:layoutUnit position="west" size="150" header="Menu Cadastro" collapsible="true" style="font-size: 10px!important;">
                 <h:form>
                     <p:panelMenu>
                         <p:submenu label="Cadastro">
-                            <p:menuitem value="Usuários" outcome="/pages/usuarios/cadastro" icon="ui-icon-triangle-1-e" />
                             <p:menuitem value="Clientes" outcome="/pages/clientes/lista" icon="ui-icon-triangle-1-e"/>
-                            <p:menuitem value="Endereço" outcome="/pages/endereco/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Controle De Veículos" outcome="/pages/controleveiculos/controleVeiculos" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Email" outcome="/pages/email/lista" icon="ui-icon-triangle-1-e"/>
-                            <p:menuitem value="Telefone" outcome="/pages/telefone/lista" icon="ui-icon-triangle-1-e"/>
-                            <p:menuitem value="Habilitação" outcome="/pages/habilitacao/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Endereço" outcome="/pages/endereco/lista" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Fornecedores" outcome="/pages/fornecedor/controle" icon="ui-icon-triangle-1-e"/>
-                            <p:menuitem value="Veículos" outcome="/pages/veiculos/controle" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Funcionarios" outcome="/pages/funcionario/controle" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Habilitação" outcome="/pages/habilitacao/lista" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Imagens" outcome="/pages/imagens/contoleImagens" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Telefone" outcome="/pages/telefone/lista" icon="ui-icon-triangle-1-e"/>
+                            <p:menuitem value="Usuários" outcome="/pages/usuarios/cadastro" icon="ui-icon-triangle-1-e" />                         
+                            <p:menuitem value="Veículos" outcome="/pages/veiculos/controle" icon="ui-icon-triangle-1-e"/>
                         </p:submenu>
                     </p:panelMenu>
-
                 </h:form>
             </p:layoutUnit>
 

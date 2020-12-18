@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../home.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+
+        <f:view>
+            <h:form id="formCadCV">
+                <p:dialog closable="true" header="Controle" widgetVar="dglVControle" id="dglVControle"  
+                          style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;
+                          overflow: auto!important">
+                    <p:messages showDetail="true">
+                        <p:autoUpdate />
+                    </p:messages> 
+
+                    <h:panelGrid columns="2">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Cliente" for="cliente" />
+                            <p:selectOneMenu id="cliente" value="#{controleVeiculosBean.cadCliente}" converter="cadClienteConverter" panelStyle="width:180px"
+                                             effect="fade" var="t" style="width:280px" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{controleVeiculosBean.listaCadClientes}" var="clie" itemValue="#{clie}"  itemLabel="#{clie.documentoFk.pessoaFk.nome}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome"/>
+                                    </f:facet>
+                                    <h:outputText value="#{t.documentoFk.pessoaFk.nome}" />
+                                </p:column>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Veículo" for="veiculo" />
+                            <p:selectOneMenu id="veiculo" value="#{controleVeiculosBean.veiculo}" converter="cadModeloVeiculosConverter" panelStyle="width:180px"
+                                             effect="fade" var="t2" style="width:280px" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{controleVeiculosBean.listaModeloVeiculos}" var="veic"  itemValue="#{veic}" itemLabel="#{veic.modelo}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Veículo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{t2.modelo}" />
+                                </p:column>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Data Hora Saida:" for="dataHoraSaida" />
+                            <p:calendar id="dataHoraSaida" value="#{controleVeiculosBean.controleVeiculos.dataHoraSaida}" locale="pt" navigator="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Data Prevista Retorno:" for="dataHoraPrevistaRetorno" />
+                            <p:calendar id="dataHoraPrevistaRetorno" value="#{controleVeiculosBean.controleVeiculos.dataHoraPrevistaRetorno}" locale="pt" navigator="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Data Retorno:" for="dataHoraRetorno" />
+                            <p:calendar id="dataHoraRetorno" value="#{controleVeiculosBean.controleVeiculos.dataHoraRetorno}" locale="pt" navigator="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <h:panelGrid columns="1">
+                            <p:fieldset legend="Condições Veículo Saida"  style="max-width: 500px;">
+                                <p:inputTextarea rows="5" cols="31" id="condicoesVeiculoSaida" value="#{controleVeiculosBean.controleVeiculos.condicoesVeiculoSaida}"
+                                                 counter="entradaum" 
+                                                 maxlength="5000" 
+                                                 counterTemplate="{0} caracteres restantes." 
+                                                 autoResize="false" />
+                                 <br />
+                                <h:outputText id="entradaum" />
+                            </p:fieldset>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1">
+                            <p:fieldset legend="Condições Veículo Retorno:" style="max-width: 250px;">
+                                <p:inputTextarea rows="5" cols="31" id="condicoesVeiculoRetorno" value="#{controleVeiculosBean.controleVeiculos.condicoesVeiculoRetorno}"
+                                                 counter="entradadois" 
+                                                 maxlength="5000" 
+                                                 counterTemplate="{0} caracteres restantes." 
+                                                 autoResize="false" />
+                                <br />
+                                <h:outputText id="entradadois" />
+                            </p:fieldset>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Data Proximos Reparos:" for="agendamentoProximosReparos" />
+                            <p:calendar id="agendamentoProximosReparos"  value="#{controleVeiculosBean.controleVeiculos.dataHoraSaida}" locale="pt" navigator="true" pattern="MM/dd/yyyy" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Km Saida:" for="kmSaida" />
+                            <p:inputText id="kmSaida" value="#{controleVeiculosBean.controleVeiculos.kmSaida}" title="KmSaida" onkeypress="mascara(this, valor);" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Km Retorno:" for="kmRetorno" />
+                            <p:inputText id="kmRetorno" value="#{controleVeiculosBean.controleVeiculos.kmRetorno}" title="KmSaida" onkeypress="mascara(this, valor);" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+
+                        <p:fieldset legend="Outras Observações">
+                            <p:inputTextarea rows="5" cols="65" id="outrasObservacoes" value="#{controleVeiculosBean.controleVeiculos.outrasObservacoes}"
+                                             counter="entradatres" 
+                                             maxlength="5000" 
+                                             counterTemplate="{0} caracteres restantes." 
+                                             autoResize="false" />
+                            <br />
+                            <h:outputText id="entradatres" />
+                        </p:fieldset>
+                    </h:panelGrid>
+                    <h:panelGrid style="margin: 0 auto; text-align: center; margin-top: 20px;" columns="2">
+                    <p:commandButton value="Salvar" actionListener="#{controleVeiculosBean.salvar()}" oncomplete="PF('dglVControle').hide()" />
+                    <p:commandButton value="fechar" process="@this" onclick="PF('dglVControle').hide()" />
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
+        <f:view>
+            <h:form id="formCV">
+                <p:dataTable value="#{controleVeiculosBean.lista}" var="item"
+                             emptyMessage="Não a dados para exibir" 
+                             paginator="true" rows="10" style="font-size: 13px!important">
+                    <f:facet name="header">
+                        <h3>Controle de Veículos</h3>
+                        <div style="float: right">
+                            <p:commandButton value="Novo" actionListener="#{controleVeiculosBean.limpar()}"  icon="ui ui-icon-plus"/>
+                        </div>
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Veiculo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.veiculoFk.modelo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data Hora Saida"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dataHoraSaida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data Hora Prevista Retorno"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dataHoraPrevistaRetorno}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="DataHoraRetorno"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dataHoraRetorno}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Condições Veiculo Saida"/>
+                        </f:facet>
+                        <h:outputText value="#{item.condicoesVeiculoSaida}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Condições Veiculo Retorno"/>
+                        </f:facet>
+                        <h:outputText value="#{item.condicoesVeiculoRetorno}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Resposavel Pelo Veiculo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.resposavelPeloVeiculo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="HistoricoReparosFk"/>
+                        </f:facet>
+                        <h:outputText value="#{item.historicoReparosFk}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Agendamento Proximos Reparos"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agendamentoProximosReparos}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Veiculo Disponível"/>
+                        </f:facet>
+                        <h:outputText value="#{controleVeiculosBean.disponivelV(item.veiculoFk.disponivel)}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="KmSaida"/>
+                        </f:facet>
+                        <h:outputText value="#{item.kmSaida}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="KmRetorno"/>
+                        </f:facet>
+                        <h:outputText value="#{item.kmRetorno}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="OutrasObservacoes"/>
+                        </f:facet>
+                        <h:outputText value="#{item.outrasObservacoes}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </f:view>
+        <h:form id="forCmvConfCV">
+            <p:dialog header="Dados" widgetVar="dlgConfCv" showEffect="explode">
+                <h:panelGrid columns="1">
+                    <h1>Atenção</h1>
+                    <h3>Confirmar a remoção?</h3>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="SIM" actionListener="#{cadModeloVeiculoBean.deletar()}" oncomplete="PF('dlgConfCv')hide();"/>
+                        <p:commandButton value="NÃO" onclick="PF('dlgConfCv').hide();" process="@this"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

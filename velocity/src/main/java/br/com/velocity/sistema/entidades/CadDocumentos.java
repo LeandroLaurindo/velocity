@@ -6,8 +6,10 @@
 package br.com.velocity.sistema.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -36,6 +40,9 @@ import org.hibernate.validator.constraints.br.CPF;
 @NamedQueries({
     @NamedQuery(name = "CadDocumentos.findAll", query = "SELECT c FROM CadDocumentos c")})
 public class CadDocumentos implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
+    private Collection<CadCliente> cadClienteCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -226,6 +233,15 @@ public class CadDocumentos implements Serializable {
     @Override
     public String toString() {
         return "br.com.velocity.sistema.entidades.CadDocumentos[ idDocumentos=" + idDocumentos + " ]";
+    }
+
+    @XmlTransient
+    public Collection<CadCliente> getCadClienteCollection() {
+        return cadClienteCollection;
+    }
+
+    public void setCadClienteCollection(Collection<CadCliente> cadClienteCollection) {
+        this.cadClienteCollection = cadClienteCollection;
     }
     
 }
