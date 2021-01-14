@@ -40,6 +40,10 @@ public class CadModeloVeiculoService implements Serializable {
         return dao.getById(id);
     }
     
+     public CadModeloVeiculo carregarPorparametro(String paramentros){
+        return dao.getByParametro(paramentros);
+    }
+    
     public List<CadModeloVeiculo> findAll() {
         return dao.findAll();
     }

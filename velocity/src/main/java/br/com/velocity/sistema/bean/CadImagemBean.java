@@ -1,13 +1,9 @@
 package br.com.velocity.sistema.bean;
 
 import br.com.velocity.sistema.entidades.CadCliente;
+import br.com.velocity.sistema.entidades.CadFornecedor;
 import br.com.velocity.sistema.entidades.CadFuncionarios;
 import br.com.velocity.sistema.entidades.CadHabilitacao;
-import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import org.primefaces.model.UploadedFile;
 import br.com.velocity.sistema.entidades.CadImagens;
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
 import br.com.velocity.sistema.entidades.Usuario;
@@ -15,14 +11,18 @@ import br.com.velocity.sistema.service.*;
 import br.com.velocity.sistema.util.MessagesView;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.io.IOUtils;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -40,6 +40,7 @@ public class CadImagemBean implements Serializable {
     private CadFuncionariosService funcionariosService = new CadFuncionariosService();
     private UsuarioService usuarioService = new UsuarioService();
     private CadHabilitacaoService habilitacaoService = new CadHabilitacaoService();
+    private CadFornecedorService fornecedorService = new CadFornecedorService();
     private CadCliente cliente = new CadCliente();
     private Usuario usuario = new Usuario();
     private CadModeloVeiculo veiculo = new CadModeloVeiculo();
@@ -47,9 +48,11 @@ public class CadImagemBean implements Serializable {
     private String caminhoDaImagem = "";
     private List<Usuario> listaUsuario = new ArrayList<>();
     private List<CadCliente> listaClientes = new ArrayList<>();
+    private List<CadFornecedor> listaFornecedores = new ArrayList<>();
     private List<CadModeloVeiculo> listaVeiculos = new ArrayList<>();
     private List<CadHabilitacao> listaHabilitacao = new ArrayList<>();
     private Integer idCliente;
+    private Integer idFornecedor;
     private Integer idUsuario;
     private Integer idVeiculo;
     private Integer idHabilitacao;
@@ -66,6 +69,9 @@ public class CadImagemBean implements Serializable {
             idImagem = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
             if (null != idImagem) {
                 if (idImagem.contains("nova")) {
+                    if (idImagem.contains("fornecedor")) {
+                        this.idFornecedor = Integer.parseInt(idImagem.substring(0, 1));
+                    }
                     if (idImagem.contains("cliente")) {
                         this.idCliente = Integer.parseInt(idImagem.substring(0, 1));
                     }
@@ -83,6 +89,10 @@ public class CadImagemBean implements Serializable {
                     }
                 } else {
                     this.imagensAux = this.service.carregar("WHERE c.nomeImagem='" + idImagem + "'");
+
+                    if (idImagem.contains("fornecedor")) {
+                        this.idFornecedor = Integer.parseInt(idImagem.substring(0, 1));
+                    }
                     if (idImagem.contains("cliente")) {
                         this.idCliente = Integer.parseInt(idImagem.substring(0, 1));
                     }
@@ -101,12 +111,13 @@ public class CadImagemBean implements Serializable {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         this.listar();
     }
 
     public void listar() {
+        this.listaFornecedores = fornecedorService.findAll(" ORDER BY c.documentoFk.pessoaFk.nome");
         this.listaClientes = clienteService.findAll(" ORDER BY c.documentoFk.pessoaFk.nome");
         this.listaVeiculos = veiculoService.findAll(" ORDER BY c.modelo");
         this.listaUsuario = usuarioService.findAll(" ORDER BY c.login");
@@ -137,6 +148,12 @@ public class CadImagemBean implements Serializable {
             this.imagem.setNomeImagem(String.valueOf(idHabilitacao) + "habilitacao");
             salvarImagem();
         }
+        
+         if (idFornecedor != null) {
+            this.imagem.setIdFk(idFornecedor);
+            this.imagem.setNomeImagem(String.valueOf(idFornecedor) + "fornecedor");
+            salvarImagem();
+        }
 
     }
 
@@ -149,9 +166,9 @@ public class CadImagemBean implements Serializable {
                 }
                 this.imagem.setImagem(IOUtils.toByteArray(file.getInputstream()));
                 this.imagem.setTipo(file.getContentType().substring(6, 9));
-                System.out.println(imagem.getNomeImagem());
-                System.out.println(imagem.getTipo());
-                System.out.println(imagem.getIdFk());
+//                System.out.println(imagem.getNomeImagem());
+//                System.out.println(imagem.getTipo());
+//                System.out.println(imagem.getIdFk());
                 this.service.save(imagem);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -417,4 +434,21 @@ public class CadImagemBean implements Serializable {
         this.idFuncionario = idFuncionario;
     }
 
+    public List<CadFornecedor> getListaFornecedores() {
+        return listaFornecedores;
+    }
+
+    public void setListaFornecedores(List<CadFornecedor> listaFornecedores) {
+        this.listaFornecedores = listaFornecedores;
+    }
+
+    public Integer getIdFornecedor() {
+        return idFornecedor;
+    }
+
+    public void setIdFornecedor(Integer idFornecedor) {
+        this.idFornecedor = idFornecedor;
+    }
+    
+    
 }

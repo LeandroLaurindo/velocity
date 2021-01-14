@@ -26,7 +26,7 @@ public class GenericDAO<PK, T> implements Serializable {
     }
 
     public T getByParametro(String p) {
-        System.out.println("SELECT c FROM " + getTypeClass().getSimpleName() + " c " + p + "");
+        //System.out.println("SELECT c FROM " + getTypeClass().getSimpleName() + " c " + p + "");
         return (T) JPAUtil.getEntityManager().createQuery("SELECT c FROM " + getTypeClass().getSimpleName() + " c " + p + "").setMaxResults(1).getSingleResult();
     }
 
@@ -35,6 +35,7 @@ public class GenericDAO<PK, T> implements Serializable {
             JPAUtil.getEntityManager().getTransaction().begin();
             JPAUtil.getEntityManager().persist(entity);
             JPAUtil.getEntityManager().getTransaction().commit();
+            mv.info("Salvo com sucesso!");
         } catch (Exception ex) {
             ex.printStackTrace();
             mv.error("Não foi possivel salvar!");
@@ -47,6 +48,7 @@ public class GenericDAO<PK, T> implements Serializable {
             JPAUtil.getEntityManager().getTransaction().begin();
             JPAUtil.getEntityManager().merge(entity);
             JPAUtil.getEntityManager().getTransaction().commit();
+            mv.info("Atualizado com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
             mv.error("Não foi possivel atualizar!");
@@ -59,6 +61,7 @@ public class GenericDAO<PK, T> implements Serializable {
             JPAUtil.getEntityManager().getTransaction().begin();
             JPAUtil.getEntityManager().remove(entity);
             JPAUtil.getEntityManager().getTransaction().commit();
+            mv.info("Removido com sucesso");
         } catch (Exception ex) {
             ex.printStackTrace();
             mv.error("Não foi possivel remover!");

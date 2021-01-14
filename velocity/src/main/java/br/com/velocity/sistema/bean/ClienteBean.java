@@ -116,11 +116,20 @@ public class ClienteBean implements Serializable {
         if (!validacao) {
             Calendar calendar = Calendar.getInstance();
             Usuario usuario = this.usuarioService.carregar(3);
-            System.out.println(usuario.getLogin());
+            //System.out.println(usuario.getLogin());
             try {
                 this.pessoa.setDataInsercao(calendar.getTime());
                 this.pessoa.setDataAlteracao(calendar.getTime());
                 this.pessoa.setUsuarioFk(usuario);
+                if (this.tipoPessoa.equalsIgnoreCase("Fisica")) {
+                    if (pessoa.getNome() != null) {
+                        this.pessoa.setRazaoSocial(pessoa.getNome());
+                    }
+                } else {
+                    if (pessoa.getRazaoSocial() != null) {
+                        this.pessoa.setNome(pessoa.getRazaoSocial());
+                    }
+                }
                 this.pessoaService.save(this.pessoa);
                 this.documentos.setDataInsercao(calendar.getTime());
                 this.documentos.setDataAlteracao(calendar.getTime());
@@ -154,7 +163,7 @@ public class ClienteBean implements Serializable {
                 Util.updateComponente("fortblcli");
 
             } catch (Exception ex) {
-                ex.printStackTrace();
+                // ex.printStackTrace();
                 this.msg.error("Não foi possivel inserir.");
             }
         } else {
@@ -162,6 +171,8 @@ public class ClienteBean implements Serializable {
 
         }
     }
+    
+   
 
     public void exibirImagem(Integer id, String setar) {
 
@@ -202,6 +213,15 @@ public class ClienteBean implements Serializable {
         System.out.println("chamou editar");
         try {
             this.pessoa.setDataAlteracao(new Date());
+            if (this.tipoPessoa.equalsIgnoreCase("Fisica")) {
+                if (pessoa.getNome() != null) {
+                    this.pessoa.setRazaoSocial(pessoa.getNome());
+                }
+            } else {
+                if (pessoa.getRazaoSocial() != null) {
+                    this.pessoa.setNome(pessoa.getRazaoSocial());
+                }
+            }
             this.pessoaService.update(pessoa);
             this.documentos.setPessoaFk(pessoa);
             this.documentos.setDataAlteracao(new Date());
@@ -281,8 +301,8 @@ public class ClienteBean implements Serializable {
         Util.executarAcao("PF('dlgClientes').show()");
 
     }
-    
-      public void urlControleVeiculos(Integer id) {
+
+    public void urlControleVeiculos(Integer id) {
         String nome = String.valueOf(id);
         Util.rediricionar("controleveiculos/controleVeiculos.xhtml?idc=" + nome);
     }

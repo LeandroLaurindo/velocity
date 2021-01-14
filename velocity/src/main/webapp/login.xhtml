@@ -29,7 +29,7 @@
                             <p:outputLabel value="Senha:" for="senha"/>
                             <p:password value="#{loginBean.password}" id="senha" style="width: 300px;"/>
                             <br />
-                            <p:commandButton value="Entrar" action="#{loginBean.entrar()}"  icon="ui-icon-power" iconPos="true" style="width: 300px;"/>
+                            <p:commandButton value="Entrar" action="#{loginBean.entrar()}" ajax="false" icon="ui-icon-power" iconPos="true" style="width: 300px;"/>
                         </h:panelGrid>
 
                     </h:panelGrid>

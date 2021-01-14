@@ -1,10 +1,14 @@
 package br.com.velocity.sistema.bean;
 
 import br.com.velocity.sistema.entidades.CadCliente;
+import br.com.velocity.sistema.entidades.CadFornecedor;
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
+import br.com.velocity.sistema.entidades.CadServicos;
 import br.com.velocity.sistema.entidades.ControleVeiculos;
 import br.com.velocity.sistema.service.CadClienteService;
+import br.com.velocity.sistema.service.CadFornecedorService;
 import br.com.velocity.sistema.service.CadModeloVeiculoService;
+import br.com.velocity.sistema.service.CadServicosService;
 import br.com.velocity.sistema.service.ControleVeiculosService;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.util.Util;
@@ -27,6 +31,7 @@ public class ControleVeiculosBean implements Serializable {
     private CadClienteService clienteService;
     private ControleVeiculosService service;
     private CadModeloVeiculoService veiculoService;
+    private CadServicosService cadServicosService;
     private List<String> listaVeiculos;
     private List<String> listaClientes;
     private CadModeloVeiculo veiculo;
@@ -34,15 +39,22 @@ public class ControleVeiculosBean implements Serializable {
     private List<ControleVeiculos> lista;
     private List<CadModeloVeiculo> listaModeloVeiculos;
     private List<CadCliente> listaCadClientes;
+    private List<CadServicos> listaCadServicos;
+    private CadServicos cadServicos;
     private MessagesView msg;
     private String idV = "";
     private String idC = "";
     private CadCliente cadCliente;
     private Integer idCarro;
     private Integer idCliente;
+    private List<CadFornecedor> listaFornecedores;
+    private CadFornecedorService fornecedorService = new CadFornecedorService();
 
     @PostConstruct
     public void init() {
+        this.cadServicosService = new CadServicosService();
+        this.listaCadServicos = new ArrayList<>();
+        this.cadServicos = new CadServicos();
         this.listaCadClientes = new ArrayList<>();
         this.clienteService = new CadClienteService();
         this.veiculoService = new CadModeloVeiculoService();
@@ -53,7 +65,7 @@ public class ControleVeiculosBean implements Serializable {
         idV = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idv");
         idC = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idC");
         if (valido(idC)) {
-             idCliente =  Integer.valueOf(idC);     
+            idCliente = Integer.valueOf(idC);
             carregarCliente();
         } else {
             if (valido(idV)) {
@@ -63,6 +75,7 @@ public class ControleVeiculosBean implements Serializable {
         }
         listarVeiculos();
         listarClientes();
+        listarFornecedor();
 
         this.controleVeiculos = new ControleVeiculos();
         this.lista = new ArrayList<>();
@@ -84,6 +97,17 @@ public class ControleVeiculosBean implements Serializable {
         this.veiculo = new CadModeloVeiculo();
         this.veiculo = veiculoService.carregar(idCarro);
         this.controleVeiculos.setVeiculoFk(veiculo);
+    }
+
+    public void carregarVeiculoServico() {
+        this.veiculo = new CadModeloVeiculo();
+        this.veiculo = veiculoService.carregar(idCarro);
+    }
+
+    public void listarFornecedor() {
+        this.listaFornecedores = new ArrayList<>();
+        this.listaFornecedores = this.fornecedorService.findAll("where c.documentoFk.pessoaFk.situacao ='SIM' ORDER BY c.documentoFk.pessoaFk.nome, c.documentoFk.pessoaFk.razaoSocial ASC");
+
     }
 
     public void listarVeiculos() {
@@ -114,6 +138,26 @@ public class ControleVeiculosBean implements Serializable {
         }
     }
 
+    public boolean veiculoNaoEnull(CadModeloVeiculo cadModeloVeiculo) {
+        return cadModeloVeiculo != null && cadModeloVeiculo.getIdModelo() != null;
+    }
+
+    public void salvarServico() {
+
+        if (this.cadServicos.getIdServico() == null) {
+            if (veiculoNaoEnull(this.veiculo)) {
+                this.cadServicos.setVeiculo(this.veiculo.getIdModelo());
+            }
+            this.cadServicosService.save(this.cadServicos);
+            this.msg.info("Salvo com sucesso.");
+            //listar();
+            this.cadServicos = new CadServicos();
+        } else {
+            this.cadServicosService.update(cadServicos);
+            this.cadServicos = new CadServicos();
+        }
+    }
+
     public void editar() {
         this.service.update(this.controleVeiculos);
         this.msg.info("Editado com sucesso.");
@@ -129,19 +173,33 @@ public class ControleVeiculosBean implements Serializable {
         this.controleVeiculos = new ControleVeiculos();
     }
 
+    public void deletarCadServico() {
+        this.cadServicosService.delete(this.cadServicos);
+        this.msg.info("Removido com sucesso.");
+        //listar();
+        this.cadServicos = new CadServicos();
+    }
+
     public void limpar() {
         listarVeiculos();
         listarClientes();
         this.controleVeiculos = new ControleVeiculos();
         Util.updateComponente("formCadCV");
         Util.executarAcao("PF('dglVControle').show()");
-       
+
     }
 
     public void novoServico() {
         this.controleVeiculos = new ControleVeiculos();
         Util.executarAcao("PF('dglVControle').show()");
         Util.updateComponente("formCadCV");
+    }
+
+    public void novoCadServico() {
+        this.cadServicos = new CadServicos();
+        Util.updateComponente("formServicos");
+        Util.executarAcao("PF('dgServico').show()");
+
     }
 
     public void novoAluguel() {
@@ -161,10 +219,30 @@ public class ControleVeiculosBean implements Serializable {
         Util.updateComponente("formCadCV");
     }
 
+    public void setarServicos(CadServicos cmv) {
+        this.cadServicos = cmv;
+        if (cmv.getVeiculo() == null) {
+            Util.updateComponente("formServicos2");
+            Util.executarAcao("PF('dgServico2').show()");
+        } else {
+            this.idCarro = cmv.getVeiculo();
+            carregarVeiculo();
+            Util.updateComponente("formServicos");
+            Util.executarAcao("PF('dgServico').show()");
+        }
+
+    }
+
     public void setarDadosDeletar(ControleVeiculos cmv) {
         this.controleVeiculos = cmv;
         Util.updateComponente("forCmvConf");
         Util.executarAcao("PF('dlgConfCv').show()");
+    }
+
+    public void setarServicosDeletar(CadServicos cmv) {
+        this.cadServicos = cmv;
+        Util.updateComponente("formDeletarServico");
+        Util.executarAcao("PF('dlgConfServico').show()");
     }
 
     public String disponivelV(Boolean d) {
@@ -265,6 +343,30 @@ public class ControleVeiculosBean implements Serializable {
 
     public void setListaCadClientes(List<CadCliente> listaCadClientes) {
         this.listaCadClientes = listaCadClientes;
+    }
+
+    public List<CadServicos> getListaCadServicos() {
+        return listaCadServicos;
+    }
+
+    public void setListaCadServicos(List<CadServicos> listaCadServicos) {
+        this.listaCadServicos = listaCadServicos;
+    }
+
+    public CadServicos getCadServicos() {
+        return cadServicos;
+    }
+
+    public void setCadServicos(CadServicos cadServicos) {
+        this.cadServicos = cadServicos;
+    }
+
+    public List<CadFornecedor> getListaFornecedores() {
+        return listaFornecedores;
+    }
+
+    public void setListaFornecedores(List<CadFornecedor> listaFornecedores) {
+        this.listaFornecedores = listaFornecedores;
     }
 
 }

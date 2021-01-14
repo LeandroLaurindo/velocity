@@ -39,6 +39,10 @@ public class CadFornecedorService implements Serializable {
         return dao.getById(id);
     }
     
+     public CadFornecedor carregarPorParamentro(String paramentro) {
+        return dao.getByParametro(paramentro);
+    }
+    
     public List<CadFornecedor> findAll() {
         return dao.findAll();
     }

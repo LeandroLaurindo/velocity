@@ -18,9 +18,13 @@ public class CadServicosService implements Serializable {
 
     private CadServicosDAO dao;
 
+    public CadServicosService() {
+        dao = new CadServicosDAO();
+    }
+
+    
     public void save(CadServicos cadServico) {
-        try {
-         
+        try { 
             dao.save(cadServico);
         } catch (Exception e) {
             e.printStackTrace();

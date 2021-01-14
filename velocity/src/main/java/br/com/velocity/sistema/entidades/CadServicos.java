@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.com.velocity.sistema.entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,9 +48,24 @@ public class CadServicos implements Serializable {
     @Size(max = 30)
     @Column(name = "nome_servico")
     private String nomeServico;
-    @Size(max = 150)
+    @Size(max = 500)
     @Column(name = "descricao")
     private String descricao;
+    @Column(name = "data_servico")
+    @Temporal(TemporalType.DATE)
+    private Date dataServico;
+    @Size(max = 10)
+    @Column(name = "situacao")
+    private String situacao;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "valor_servico")
+    private BigDecimal valorServico;
+    @Column(name = "prestador_servico")
+    private Integer prestadorServico;
+    @Column(name = "veiculo")
+    private Integer veiculo;
+    @Column(name = "usuario")
+    private Integer usuario;
 
     public CadServicos() {
     }
@@ -94,6 +114,54 @@ public class CadServicos implements Serializable {
         this.descricao = descricao;
     }
 
+    public Date getDataServico() {
+        return dataServico;
+    }
+
+    public void setDataServico(Date dataServico) {
+        this.dataServico = dataServico;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
+    public BigDecimal getValorServico() {
+        return valorServico;
+    }
+
+    public void setValorServico(BigDecimal valorServico) {
+        this.valorServico = valorServico;
+    }
+
+    public Integer getPrestadorServico() {
+        return prestadorServico;
+    }
+
+    public void setPrestadorServico(Integer prestadorServico) {
+        this.prestadorServico = prestadorServico;
+    }
+
+    public Integer getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Integer veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    public Integer getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Integer usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -116,7 +184,7 @@ public class CadServicos implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.locadora.entidades.CadServicos[ idServico=" + idServico + " ]";
+        return "br.com.velocity.sistema.entidades.CadServicos[ idServico=" + idServico + " ]";
     }
-    
+
 }

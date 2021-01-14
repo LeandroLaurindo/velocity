@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../home.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <p:panel header="Painel controle de serviços">
+            <f:view>
+                <h:form>
+                    <p:messages closable="true" >
+                        <p:autoUpdate />
+                    </p:messages>
+                </h:form>
+            </f:view>
+
+            <f:view>
+                <h:form id="forServicos">
+                    <p:dialog closable="true" widgetVar="dialogoServico" id="dialogoServico" >
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Veiculo:" for="veiculo" />
+                            <p:selectOneMenu id="veiculo" value="#{servicosBean.nomeV}"  panelStyle="width:180px"
+                                             effect="fade"  style="width:280px" filter="true" filterMatchMode="startsWith">
+                                <p:ajax update="veiculo" event="change" listener="#{servicosBean.setarIdVeiculo()}" process="@this"/>
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{servicosBean.listaNomeVeiculo}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Prestador Servico:" for="prestadorServico" />
+                            <p:selectOneMenu id="prestadorServico" value="#{servicosBean.nomePrestador}"  panelStyle="width:180px"
+                                             effect="fade" style="width:280px" filter="true" filterMatchMode="startsWith">
+                                <p:ajax update="prestadorServico" event="change" listener="#{servicosBean.setarIdFornecedor()}" process="@this"/>
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{servicosBean.listaNomePrestador}"/>
+
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tipo Servico:" for="tipoServico" />
+                            <p:inputText id="tipoServico" value="#{servicosBean.cadServicos.tipoServico}" title="TipoServico" />
+                            <p:outputLabel value="Codigo Servico:" for="codigoServico" />
+                            <p:inputText id="codigoServico" value="#{servicosBean.cadServicos.codigoServico}" title="CodigoServico" />
+                            <p:outputLabel value="Nome Servico:" for="nomeServico" />
+                            <p:inputText id="nomeServico" value="#{servicosBean.cadServicos.nomeServico}" title="NomeServico" />
+                            <p:outputLabel value="Descricao:" for="descricao" />
+                            <p:inputText id="descricao" value="#{servicosBean.cadServicos.descricao}" title="Descricao" />
+                            <p:outputLabel value="Data Servico:" for="dataServico" />
+                            <p:calendar id="dataServico"  value="#{servicosBean.cadServicos.dataServico}" title="DataServico" pattern="dd/MM/yyyy" locale="pt" />
+                            <p:outputLabel value="Situação:" for="situacao" />
+                            <p:selectOneMenu id="situacao" value="#{servicosBean.cadServicos.situacao}" label="Situação" style="width: 200px;">
+                                <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                                <f:selectItem itemLabel="Aberto" itemValue="Aberto" />
+                                <f:selectItem itemLabel="Pago" itemValue="Pago" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Valor Serviço:" for="valorServico" />
+                            <p:inputText id="valorServico" value="#{servicosBean.valorDoServico}" onkeyup="mascara(this, valor)" title="ValorServico" />
+                        </h:panelGrid>
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" iconPos="true" actionListener="#{servicosBean.salvarServico()}" rendered="#{servicosBean.cadServicos.idServico == null}" />
+                        <p:commandButton value="Editar" icon="ui-icon-pencil" iconPos="true" actionListener="#{servicosBean.editarServico()}" rendered="#{servicosBean.cadServicos.idServico != null}" />
+                    </p:dialog>
+                </h:form>
+            </f:view>
+            <f:view>
+                <h:form id="forTabelaServicos">
+                    <p:dataTable id="tbServicos" value="#{servicosBean.listaCadServicos}" var="item"
+                                 widgetVar="carsTable4"
+                                 emptyMessage="Não ha dados para exibir" 
+                                 paginator="true" rows="10" style="font-size: 13px!important">
+                        <f:facet name="header">
+                            <h:outputText value="Lista de serviços" />
+                            <p:commandButton value="Novo Serviço" icon="ui-icon-plus" iconPos="true" actionListener="#{servicosBean.novoServico()}" 
+                                             style="float: right; margin-right:  20px!important;"/>
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="PrestadorServico"/>
+                            </f:facet>
+                            <h:outputText value="#{servicosBean.mostrarPrestador(item.prestadorServico)}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Veiculo"/>
+                            </f:facet>
+                            <h:outputText value="#{servicosBean.mostrarVeiculo(item.veiculo)}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="TipoServico"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoServico}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CodigoServico"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoServico}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="NomeServico"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomeServico}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descricao"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descricao}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="DataServico"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dataServico}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Situacao"/>
+                            </f:facet>
+                            <h:outputText value="#{item.situacao}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ValorServico"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorServico}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ação"/>
+                            </f:facet>
+                            <p:commandButton id="btneditar" value="" icon="ui-icon-pencil"  styleClass="botaoIcon" actionListener="#{servicosBean.setarParaEditar(item)}"/>
+                            <p:commandButton id="btnexcluir" value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{servicosBean.setarParaDeletar(item.idServico)}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+            <h:form id="forServConf">
+                <p:dialog header="Dados" widgetVar="dlgConfI" showEffect="explode">
+                    <h:panelGrid columns="1">
+                        <h1>Atenção</h1>
+                        <h3>Confirmar a remoção?</h3>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="SIM" actionListener="#{servicosBean.deletarServico()}" oncomplete="PF('dlgConfI')hide();"/>
+                            <p:commandButton value="NÃO" onclick="PF('dlgConfI')hide();" process="@this"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>
+

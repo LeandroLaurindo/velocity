@@ -51,6 +51,13 @@
                             <f:selectItems value="#{cadImagemBean.listaHabilitacao}" var="habali" itemLabel="#{habali.documentoFk.pessoaFk.nome}" itemValue="#{habali.idHabilitacao}" />
                         </p:selectOneMenu>
                     </h:panelGrid>
+                     <h:panelGrid columns="1">
+                        <p:outputLabel for="forne" value="Fornecedor" />
+                        <p:selectOneMenu id="forne" value="#{cadImagemBean.idFornecedor}" panelStyle="width:180px" style="width:160px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{cadImagemBean.listaFornecedores}" var="fornece" itemLabel="#{fornece.documentoFk.pessoaFk.nome}" itemValue="#{fornece.idFornecedor}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
                     <p:fileUpload value="#{cadImagemBean.file}" 
                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                   invalidFileMessage="São permitidas somente imagens (jpeg, jpg e png)"   mode="simple" skinSimple="true"  id="foto" 

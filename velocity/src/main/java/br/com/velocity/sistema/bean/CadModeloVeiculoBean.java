@@ -7,8 +7,8 @@ package br.com.velocity.sistema.bean;
 
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
 import br.com.velocity.sistema.service.CadModeloVeiculoService;
-import br.com.velocity.sistema.util.Util;
 import br.com.velocity.sistema.util.MessagesView;
+import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +111,12 @@ public class CadModeloVeiculoBean implements Serializable {
         nome += "veiculo";
         Util.rediricionar("imagens/contoleImagensVeiculos.xhtml?id=" + nome);
     }
+    
+     public void urlControleServicos(Integer id) {
+        String nome = String.valueOf(id);
+        Util.rediricionar("servicos/controleServicos.xhtml?idVeiculo=" + nome);
+    }
+    
     
     public CadModeloVeiculoService getVeiculoService() {
         return veiculoService;
