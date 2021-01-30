@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../home.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="IdControleVeiculo:" for="idControleVeiculo" />
+                    <p:inputText id="idControleVeiculo" value="#{controleVeiculosBean.controleVeiculos.idControleVeiculo}" title="IdControleVeiculo" required="true" requiredMessage="The IdControleVeiculo field is required."/>
+                    <p:outputLabel value="DataHoraSaida:" for="dataHoraSaida" />
+                    <p:inputText id="dataHoraSaida" value="#{controleVeiculosBean.controleVeiculos.dataHoraSaida}" title="DataHoraSaida" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="DataHoraPrevistaRetorno:" for="dataHoraPrevistaRetorno" />
+                    <p:inputText id="dataHoraPrevistaRetorno" value="#{controleVeiculosBean.controleVeiculos.dataHoraPrevistaRetorno}" title="DataHoraPrevistaRetorno" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="DataHoraRetorno:" for="dataHoraRetorno" />
+                    <p:inputText id="dataHoraRetorno" value="#{controleVeiculosBean.controleVeiculos.dataHoraRetorno}" title="DataHoraRetorno" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="CondicoesVeiculoSaida:" for="condicoesVeiculoSaida" />
+                    <p:inputText id="condicoesVeiculoSaida" value="#{controleVeiculosBean.controleVeiculos.condicoesVeiculoSaida}" title="CondicoesVeiculoSaida" />
+                    <p:outputLabel value="CondicoesVeiculoRetorno:" for="condicoesVeiculoRetorno" />
+                    <p:inputText id="condicoesVeiculoRetorno" value="#{controleVeiculosBean.controleVeiculos.condicoesVeiculoRetorno}" title="CondicoesVeiculoRetorno" />
+                    <p:outputLabel value="ResposavelPeloVeiculo:" for="resposavelPeloVeiculo" />
+                    <p:inputText id="resposavelPeloVeiculo" value="#{controleVeiculosBean.controleVeiculos.resposavelPeloVeiculo}" title="ResposavelPeloVeiculo" />
+                    <p:outputLabel value="HistoricoReparosFk:" for="historicoReparosFk" />
+                    <p:inputText id="historicoReparosFk" value="#{controleVeiculosBean.controleVeiculos.historicoReparosFk}" title="HistoricoReparosFk" />
+                    <p:outputLabel value="AgendamentoProximosReparos:" for="agendamentoProximosReparos" />
+                    <p:inputText id="agendamentoProximosReparos" value="#{controleVeiculosBean.controleVeiculos.agendamentoProximosReparos}" title="AgendamentoProximosReparos" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="KmSaida:" for="kmSaida" />
+                    <p:inputText id="kmSaida" value="#{controleVeiculosBean.controleVeiculos.kmSaida}" title="KmSaida" />
+                    <p:outputLabel value="KmRetorno:" for="kmRetorno" />
+                    <p:inputText id="kmRetorno" value="#{controleVeiculosBean.controleVeiculos.kmRetorno}" title="KmRetorno" />
+                    <p:outputLabel value="OutrasObservacoes:" for="outrasObservacoes" />
+                    <p:inputText id="outrasObservacoes" value="#{controleVeiculosBean.controleVeiculos.outrasObservacoes}" title="OutrasObservacoes" />
+                    <p:outputLabel value="ClienteFk:" for="clienteFk" />
+                    <p:selectOneMenu id="clienteFk" value="#{controleVeiculosBean.controleVeiculos.clienteFk}" >
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="VeiculoFk:" for="veiculoFk" />
+                    <p:selectOneMenu id="veiculoFk" value="#{controleVeiculosBean.controleVeiculos.veiculoFk}" required="true" requiredMessage="The VeiculoFk field is required.">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="AlugueloReserva:" for="alugueloReserva" />
+                    <p:inputText id="alugueloReserva" value="#{controleVeiculosBean.controleVeiculos.alugueloReserva}" title="AlugueloReserva" required="true" requiredMessage="The AlugueloReserva field is required."/>
+                </p:panelGrid>
+            </h:form>
+        </f:view>
+
+    </ui:define>
+
+</ui:composition>

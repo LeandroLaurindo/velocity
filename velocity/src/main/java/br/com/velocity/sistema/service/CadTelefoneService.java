@@ -22,18 +22,26 @@ public class CadTelefoneService implements Serializable {
         dao = new CadTelefoneDAO();
     }
 
-    public void save(CadTelefone telefone) {
-        dao.save(telefone);
+    public boolean save(CadTelefone telefone) {
+        return dao.save(telefone);
     }
 
-    public void update(CadTelefone telefone) {
-        dao.getById(telefone.getIdTelefone());
-        dao.update(telefone);
+    public boolean update(CadTelefone telefone) {
+        try {
+            dao.getById(telefone.getIdTelefone());
+            return dao.update(telefone);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
-    public void delete(CadTelefone telefone) {
-        CadTelefone u = dao.getById(telefone.getIdTelefone());
-        dao.delete(u);
+    public boolean delete(CadTelefone telefone) {
+        try {
+            CadTelefone u = dao.getById(telefone.getIdTelefone());
+            return dao.delete(u);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
     public CadTelefone carregar(Integer id) {

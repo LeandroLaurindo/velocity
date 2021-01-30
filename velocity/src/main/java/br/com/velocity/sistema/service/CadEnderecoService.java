@@ -22,18 +22,26 @@ public class CadEnderecoService implements Serializable {
         dao = new CadEnderecoDAO();
     }
 
-    public void save(CadEndereco endereco) {
-        dao.save(endereco);
+    public boolean save(CadEndereco endereco) {
+        return dao.save(endereco);
     }
 
-    public void update(CadEndereco endereco) {
+    public boolean update(CadEndereco endereco) {
+        try{
         dao.getById(endereco.getIdEndereco());
-        dao.update(endereco);
+        return dao.update(endereco);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
-    public void delete(CadEndereco endereco) {
+    public boolean delete(CadEndereco endereco) {
+        try{
         CadEndereco u = dao.getById(endereco.getIdEndereco());
-        dao.delete(u);
+        return dao.delete(u);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
     public CadEndereco carregar(Integer id) {

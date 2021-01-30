@@ -32,21 +32,22 @@
                                          style="width: 400px;" 
                                          title="Nome" required="true" 
                                          requiredMessage="Nome não pode ser em branco."
-                                         onfocus="true" />
+                                         onfocus="true" maxlength="150" onkeyup="value = value.toUpperCase()"/>
                         </h:panelGrid>
                         <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Juridica'}">
                             <p:outputLabel value="Razão Social:" for="razaoSocial" />
-                            <p:inputText id="razaoSocial" style="width: 400px;" value="#{clienteBean.pessoa.razaoSocial}" title="RazaoSocial" />
+                            <p:inputText id="razaoSocial" style="width: 400px;" value="#{clienteBean.pessoa.razaoSocial}" title="RazaoSocial" 
+                                         onkeyup="value = value.toUpperCase()" />
                         </h:panelGrid>
 
                         <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Fisica'}">
                             <p:outputLabel value="Cpf:" for="cpf" />
-                            <p:inputText id="cpf" value="#{clienteBean.documentos.cpf}" title="Cpf" />
+                            <p:inputText id="cpf" value="#{clienteBean.documentos.cpf}" title="Cpf" maxlength="14"  onkeyup="formatarCampo(this)"/>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1" rendered="#{clienteBean.tipoPessoa == 'Juridica'}">
                                 <p:outputLabel value="Cnpj:" for="cnpj" />
-                                <p:inputText id="cnpj" value="#{clienteBean.documentos.cnpj}" title="Cnpj" />
+                                <p:inputText id="cnpj" value="#{clienteBean.documentos.cnpj}" title="Cnpj" onkeyup="formatarCampo(this)" maxlength="18"/>
                             </h:panelGrid>
                             <h:panelGrid rendered="#{clienteBean.tipoPessoa == 'Fisica'}">
                                 <p:outputLabel value="Rg:" for="rg" />
@@ -74,6 +75,7 @@
                                     <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
                                     <f:selectItem itemLabel="Masculino" itemValue="M" />
                                     <f:selectItem itemLabel="Feminino" itemValue="F" />
+                                    <f:selectItem itemLabel="Outros" itemValue="O" />
                                 </p:selectOneMenu>
                             </h:panelGrid> 
                             <h:panelGrid columns="1">
@@ -93,21 +95,21 @@
                             <p:spacer  width="100"/>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Estado Civil:" for="estadoCivil" />
-                                <p:inputText id="estadoCivil" value="#{clienteBean.pessoa.estadoCivil}" title="EstadoCivil" />
+                                <p:inputText id="estadoCivil" value="#{clienteBean.pessoa.estadoCivil}" title="EstadoCivil" onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Profissão:" for="profissao" />
-                            <p:inputText id="profissao" value="#{clienteBean.pessoa.profissao}" title="Profissao" />
+                            <p:inputText id="profissao" value="#{clienteBean.pessoa.profissao}" title="Profissao" onkeyup="value = value.toUpperCase()"/>
                         </h:panelGrid>
                         <h:panelGrid columns="3">
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Conjuge:" for="conjuge" />
-                                <p:inputText id="conjuge" value="#{clienteBean.pessoa.conjuge}" title="Conjuge" />
+                                <p:inputText id="conjuge" value="#{clienteBean.pessoa.conjuge}" title="Conjuge" onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Passaporte:" for="passaporte" />
-                                <p:inputText id="passaporte" value="#{clienteBean.documentos.passaporte}" title="Passaporte" />
+                                <p:inputText id="passaporte" value="#{clienteBean.documentos.passaporte}" title="Passaporte" onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
@@ -119,7 +121,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Nacionalidade:" for="nacionalidade" />
-                                <p:inputText id="nacionalidade" value="#{clienteBean.pessoa.nacionalidade}" title="Nacionalidade" />
+                                <p:inputText id="nacionalidade" value="#{clienteBean.pessoa.nacionalidade}" title="Nacionalidade" onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
@@ -132,30 +134,34 @@
                         </h:panelGrid>
                         <h:panelGrid columns="1">    
                             <p:outputLabel value="Endereço" for="logradouro" />
-                            <p:inputText id="logradouro" style="width: 400px;" value="#{clienteBean.endereco.logradouro}" title="Logradouro" required="true" requiredMessage="The Logradouro field is required."/>
+                            <p:inputText id="logradouro" style="width: 400px;" value="#{clienteBean.endereco.logradouro}" title="Logradouro" required="true" 
+                                         requiredMessage="O campo Endereço  não pode ser em vazio!" onkeyup="value = value.toUpperCase()"/>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Numero:" for="numero" />
-                                <p:inputText id="numero" value="#{clienteBean.endereco.numero}" title="Numero" required="true" requiredMessage="The Numero field is required."/>
+                                <p:inputText id="numero" value="#{clienteBean.endereco.numero}" title="Numero" required="true" requiredMessage="O campo Número não pode ser em vazio!"/>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Bairro:" for="bairro" />
-                                <p:inputText id="bairro" value="#{clienteBean.endereco.bairro}" title="Bairro" required="true" requiredMessage="The Bairro field is required."/>
+                                <p:inputText id="bairro" value="#{clienteBean.endereco.bairro}" title="Bairro" required="true" requiredMessage="O campo Bairro não pode ser em vazio!"
+                                             onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Complemento:" for="complemento" />
-                            <p:inputText id="complemento" value="#{clienteBean.endereco.complemento}" title="Complemento" />
+                            <p:inputText id="complemento" value="#{clienteBean.endereco.complemento}" title="Complemento" onkeyup="value = value.toUpperCase()"/>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Cidade:" for="cidade" />
-                                <p:inputText id="cidade" value="#{clienteBean.endereco.cidade}" title="Cidade" required="true" requiredMessage="The Cidade field is required."/>
+                                <p:inputText id="cidade" value="#{clienteBean.endereco.cidade}" title="Cidade" required="true" requiredMessage="O campo Cidade  não pode ser em vazio!"
+                                             onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
-                                <p:outputLabel value="Cep:" for="cep" />
-                                <p:inputText id="cep" value="#{clienteBean.endereco.cep}" title="Cep" required="true" requiredMessage="The Cep field is required."/>
+                                <p:outputLabel value="CEP:" for="cep" />
+                                <p:inputText id="cep" value="#{clienteBean.endereco.cep}" title="Cep" required="true" requiredMessage="O campo CEP não pode ser em vazio!"
+                                             onkeyup="formatarCampoCep(this)"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
@@ -173,7 +179,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Pais:" for="pais" />
-                                <p:inputText id="pais" value="#{clienteBean.pessoa.pais}" title="Pais" />
+                                <p:inputText id="pais" value="#{clienteBean.pessoa.pais}" title="Pais" onkeyup="value = value.toUpperCase()"/>
                             </h:panelGrid>
                         </h:panelGrid>
 
@@ -184,11 +190,13 @@
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Ddd:" for="ddd" />
-                                <p:inputText id="ddd" value="#{clienteBean.telefone.ddd}" title="Ddd" required="true" requiredMessage="Ddd não pode ser vazio."/>
+                                <p:inputMask id="ddd" value="#{clienteBean.ddd}" title="Ddd" required="true" requiredMessage="Ddd não pode ser vazio." 
+                                             maxlength="5" mask="(999)"/>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Telefone:" for="telefone" />
-                                <p:inputText id="telefone" value="#{clienteBean.telefone.telefone}" title="Telefone" required="true" requiredMessage="Telefone obrigátorio."/>
+                                <p:inputText id="telefone" value="#{clienteBean.telefone.telefone}" title="Telefone" required="true" requiredMessage="Telefone obrigátorio."
+                                              maxlength="10"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
@@ -198,7 +206,7 @@
                             </p:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="Email:" for="email" />
-                                <p:inputText id="email" style="width: 300px;" value="#{clienteBean.email.email}" title="Email" required="true" requiredMessage="Email não pode ser em branco"/>
+                                <p:inputText id="email" style="width: 300px;" value="#{clienteBean.email.email}" title="Email" required="true" requiredMessage="Email não pode ser em branco" type="email"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="1">
@@ -213,42 +221,6 @@
                             <p:outputLabel value="Observação Cliente:" for="observacao" />
                             <p:inputText id="observacao" style="width: 400px;" value="#{clienteBean.cliente.observacao}" title="Observacao" />
                         </h:panelGrid>
-                        <h:panelGrid columns="1">
-                            <p:outputLabel value="VendedorFk:" for="vendedorFk" />
-                            <p:inputText id="vendedorFk" value="#{clienteBean.cliente.vendedorFk}" title="VendedorFk" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="2">
-                            <h:panelGrid columns="1">
-                                <p:outputLabel value="Suframa:" for="suframa" />
-                                <p:inputText id="suframa" value="#{clienteBean.documentos.suframa}" title="Suframa" />
-                            </h:panelGrid>
-                            <h:panelGrid columns="1">
-                                <p:outputLabel value="Plano Pagto:" for="planoPagto" />
-                                <p:inputText id="planoPagto" value="#{clienteBean.cliente.planoPagto}" title="PlanoPagto" />
-                            </h:panelGrid>
-                        </h:panelGrid>
-                        <h:panelGrid columns="2">
-                            <h:panelGrid columns="1">
-                                <p:outputLabel value="TabelaPreco:" for="tabelaPrecoFk" />
-                                <p:inputText id="tabelaPrecoFk" value="#{clienteBean.cliente.tabelaPrecoFk}" title="TabelaPrecoFk" />
-                            </h:panelGrid>
-                            <h:panelGrid columns="1">
-                                <p:outputLabel value="Segmento:" for="segmentoFk" />
-                                <p:inputText id="segmentoFk" value="#{clienteBean.cliente.segmentoFk}" title="SegmentoFk" />
-                            </h:panelGrid>
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
-                            <p:outputLabel value="Classificacao:" for="classificacaoFk" />
-                            <p:inputText id="classificacaoFk" value="#{clienteBean.cliente.classificacaoFk}" title="ClassificacaoFk" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="2">
-                            <h:panelGrid columns="1">
-                                <p:outputLabel value="LimiteCredito:" for="limiteCredito" />
-                                <p:inputText id="limiteCredito" value="#{clienteBean.cliente.limiteCredito}" title="LimiteCredito" />
-                            </h:panelGrid>
-
-                        </h:panelGrid>
-
                     </h:panelGrid>
                     <h:panelGrid columns="3" style="margin: 0 auto; margin-top: 20px; text-align: center!important;">
                         <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvar()}" rendered="#{clienteBean.cliente.idCliente == null}" />
@@ -263,7 +235,7 @@
                           style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;" closable="true">
                     <h:panelGrid columns="2">
                         <p:outputLabel value="Tipo Pessoa:" for="tpessoa" />
-                        <p:selectOneMenu id="tpessoa" value="#{clienteBean.tipoPessoa}" >
+                        <p:selectOneMenu id="tpessoa" value="#{clienteBean.tipoPessoaAux}" >
                             <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
                             <f:selectItem itemLabel="Física" itemValue="Fisica" />
                             <f:selectItem itemLabel="Jurídica" itemValue="Juridica" />
@@ -281,7 +253,7 @@
                     <f:facet name="header">
 
                         <div style="float: right">
-                            <p:commandButton value="Novo" onclick="PF('dlgTipoPessoa').show()"  icon="ui ui-icon-plus"/>
+                            <p:commandButton value="Novo" actionListener="#{clienteBean}" oncomplete="PF('dlgTipoPessoa').show()"  icon="ui ui-icon-plus"/>
                         </div>
                     </f:facet>
                     <p:column filterBy="#{item.documentoFk.pessoaFk.nome}" sortBy="#{item.documentoFk.pessoaFk.nome}">
@@ -308,32 +280,41 @@
                     </p:column>
                     <p:column width="100">
                         <f:facet name="header">
+                            <h:outputText value="Imagem Cliente"/>
+                        </f:facet>
+                        <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idCliente,'cliente')}" title="foto" />
+                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.setarImagemCli(item.idCliente)}" title="Nova" />
+                        <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{clienteBean.setarImagemCli(item.idCliente)}" title="Editar" />
+
+                    </p:column>
+                    <p:column width="100">
+                        <f:facet name="header">
                             <h:outputText value="Endereço"/>
                         </f:facet>
                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlEndereco(item.documentoFk.idDocumentos)}" />
                     </p:column>
                     <p:column width="100">
                         <f:facet name="header">
-                            <h:outputText value="Habilitação"/>
+                            <h:outputText value="CNH"/>
                         </f:facet>
-                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlHabilitacao(item.documentoFk.idDocumentos)}" />
+                        <p:commandButton value="" icon="ui-icon-plus" title="Nova CNH" styleClass="botaoIcon" actionListener="#{clienteBean.urlHabilitacao(item.documentoFk)}" />
+                        <p:commandButton value="" title="Editar CNH" actionListener="#{clienteBean.setarDadosEditar(item.documentoFk.idDocumentos)}" icon="ui-icon-pencil" styleClass="botaoIcon" />
                     </p:column>
-
+                    <p:column width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Imagem CNH"/>
+                        </f:facet>
+                        <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagemHabilitacao(item.documentoFk.idDocumentos)}" title="Exibir Imagem" />
+                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.setarImagemH(item.documentoFk.idDocumentos)}" title="Nova Imagem"/>
+                        <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{clienteBean.setarImagemH(item.documentoFk.idDocumentos)}" title="Edtar Imagem"/>
+                    </p:column>
                     <p:column width="100">
                         <f:facet name="header">
                             <h:outputText value="Email"/>
                         </f:facet>
                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlEmail(item.documentoFk.idDocumentos)}" />
                     </p:column>
-                    <p:column width="100">
-                        <f:facet name="header">
-                            <h:outputText value="Imagem"/>
-                        </f:facet>
-                        <p:commandButton value="" icon="ui-icon-image" styleClass="botaoIcon" actionListener="#{clienteBean.exibirImagem(item.idCliente,'cliente')}" title="foto" />
-                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{clienteBean.urlImagem(item.idCliente)}" title="Nova" />
-                        <p:commandButton value="" icon="ui-icon-pencil" styleClass="botaoIcon" actionListener="#{clienteBean.urlEditaImagem(item.idCliente)}" title="Editar" />
 
-                    </p:column>
                     <p:column width="100">
                         <f:facet name="header">
                             <h:outputText value="Ação"/>
@@ -363,6 +344,87 @@
                         <h:panelGrid columns="1">
                             <p:graphicImage value="#{clienteBean.caminhoDaImagem}" width="350" height="350"/>
                             <p:commandButton value="X" onclick="PF('dlgConf')hide();" ajax="true"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
+        <h:form id="frmdadosH">
+            <p:dialog header="Dados" widgetVar="dlghab" showEffect="explode" hideEffect="fade"
+                      style="margin-top:130px!important; max-height: 100%!important; z-index: 2!important;" >
+                <p:panelGrid columns="1">
+                    <p:messages >
+                        <p:autoUpdate />
+                    </p:messages>
+                    <p:outputLabel value="Nome do Cliente : #{clienteBean.documentos.pessoaFk.nome}" />
+                </p:panelGrid>
+                <h:panelGrid columns="3">
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Numero Registro" for="nRegistro" />
+                        <p:inputText id="nRegistro" value="#{clienteBean.cadHabilitacao.numRegistro}" title="NumRegistro" required="true" requiredMessage="Numero é obrigatório"
+                                     onkeyup="value = value.toUpperCase()" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Validade:" for="validade" />
+                        <p:calendar id="validade" value="#{clienteBean.cadHabilitacao.validade}" title="Validade" required="true"  pattern="dd/MM/yyyy" locale="pt" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Categoria:" for="categoria" />
+                        <p:inputText id="categoria" value="#{clienteBean.cadHabilitacao.categoria}" title="Categoria" required="true" requiredMessage="Categoria é obrigatório." onkeyup="value = value.toUpperCase()"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Orgão:" for="orgao" />
+                        <p:inputText id="orgao" value="#{clienteBean.cadHabilitacao.orgao}" title="Orgao" required="true" requiredMessage="Orgao é obrigatório" onkeyup="value = value.toUpperCase()"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Emissão:" for="emissao" />
+                        <p:calendar id="emissao" value="#{cadHabilitacaoBean.cadHabilitacao.emissao}" title="Emissao" required="true" pattern="dd/MM/yyyy" locale="pt" />
+                    </h:panelGrid>
+                    <p:spacer width="40" />
+                    <p:spacer width="40" />
+                    <p:spacer width="40" />
+                    <p:spacer width="40" />
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{clienteBean.salvarCadhabilitacao()}" rendered="#{clienteBean.cadHabilitacao.idHabilitacao == null}" />
+                        <p:commandButton value="Editar" icon="ui-icon-disk" actionListener="#{clienteBean.editarHabilitacao()}" rendered="#{clienteBean.cadHabilitacao.idHabilitacao != null}" />
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <f:view>
+            <h:form id="formImgCli" enctype="multipart/form-data" >
+                <p:dialog header="Imagem" widgetVar="dlgImgCli" id="dlgImgCli" closable="true">
+                    <h:panelGrid columns="1">
+                        <p:graphicImage value="#{clienteBean.buscarImagem(clienteBean.imagensAux.nomeImagem)}" width="150" height="150" rendered="#{clienteBean.imagensAux.idImagem != null}"/>
+                        <h:panelGrid columns="1">
+                            <p:fileUpload value="#{clienteBean.file}" 
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          invalidFileMessage="São permitidas somente imagens (jpeg, jpg e png)"   mode="simple" skinSimple="true"  id="foto" 
+                                          label="Escolher imagem"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="Salvar" id="botaoSalvar" action="#{clienteBean.salvarImagem}" ajax="false" />
+                            <p:commandButton value="Fechar"  onclick="PF('dlgImgCli').hide()" process="@this"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
+        <f:view>
+            <h:form id="frmImagH" enctype="multipart/form-data" >
+                <p:dialog header="Imagem" widgetVar="dlgImgHab">
+                    <h:panelGrid columns="1">
+                        <p:graphicImage value="#{clienteBean.buscarImagem(clienteBean.imagensAux.nomeImagem)}" width="250" height="150" rendered="#{clienteBean.imagensAux.idImagem != null}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <p:fileUpload value="#{clienteBean.file}" 
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                      invalidFileMessage="São permitidas somente imagens (jpeg, jpg e png)"   mode="simple" skinSimple="true"  id="foto" 
+                                      label="Escolher imagem"/>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="Salvar" id="botaoSalvar" action="#{clienteBean.salvarImagem}" ajax="false" />
+                            <p:commandButton value="Fechar"  onclick="PF('dlgImgCli').hide()" process="@this"/>
                         </h:panelGrid>
                     </h:panelGrid>
                 </p:dialog>

@@ -159,6 +159,11 @@ public class ServicosBean implements Serializable {
         this.valorDoServico = valorDoServico.replaceAll("\\,", ".");
         this.cadServicos.setValorServico(new BigDecimal(this.valorDoServico));
         this.cadServicosService.save(this.cadServicos);
+        CadModeloVeiculo modeloVeiculo2 = this.veiculoService.carregar(this.cadServicos.getVeiculo());
+        modeloVeiculo2.setDisponivel(false);
+        modeloVeiculo2.setMotivo("SERVICO");
+        modeloVeiculo2.setMotivo(this.cadServicos.getNomeServico());
+        this.veiculoService.update(modeloVeiculo2);
         limparServico();
         listarServicos();
         Util.updateComponente("forServicos");
@@ -197,6 +202,12 @@ public class ServicosBean implements Serializable {
         this.valorDoServico = valorDoServico.replaceAll("\\,", ".");
         this.cadServicos.setValorServico(new BigDecimal(this.valorDoServico));
         this.cadServicosService.update(this.cadServicos);
+         if(this.cadServicos.getSituacao().equalsIgnoreCase("Pago") || this.cadServicos.getSituacao().equalsIgnoreCase("Fechado")){
+            CadModeloVeiculo cadModeloVeiculo = this.veiculoService.carregar(this.cadServicos.getVeiculo());
+            cadModeloVeiculo.setDisponivel(true);
+            cadModeloVeiculo.setMotivo("");
+            this.veiculoService.update(modeloVeiculo);
+        }
         listarServicos();
         Util.updateComponente("forServicos");
         Util.updateComponente("forTabelaServicos");

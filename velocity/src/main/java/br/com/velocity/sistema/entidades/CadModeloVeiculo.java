@@ -34,6 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CadModeloVeiculo.findAll", query = "SELECT c FROM CadModeloVeiculo c")})
 public class CadModeloVeiculo implements Serializable {
 
+    @Size(max = 50, message = "O campo Motivo deve ter entre 1 e 50 caracteres")
+    @Column(name = "motivo")
+    private String motivo;
+
    
 
     private static final long serialVersionUID = 1L;
@@ -44,12 +48,12 @@ public class CadModeloVeiculo implements Serializable {
     private Integer idModelo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 100, message = "O campo Modelo deve ter entre 1 e 100 caracteres")
     @Column(name = "modelo")
     private String modelo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 100, message = "O campo Fabricante deve ter entre 1 e 100 caracteres")
     @Column(name = "fabricante")
     private String fabricante;
     @Column(name = "passageiros")
@@ -67,7 +71,7 @@ public class CadModeloVeiculo implements Serializable {
     private Integer bagagem;
     @Column(name = "tanque")
     private Integer tanque;
-    @Size(max = 8)
+    @Size(max = 8, message = "O campo Placa deve ter entre 1 e 50 caracteres")
     @Column(name = "placa")
     private String placa;
      @Column(name = "disponivel")
@@ -216,6 +220,14 @@ public class CadModeloVeiculo implements Serializable {
     @Override
     public String toString() {
         return "br.com.locadora.entidades.CadModeloVeiculo[ idModelo=" + idModelo + " ]";
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 
 

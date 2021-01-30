@@ -280,7 +280,7 @@ public class CadFornecedorBean implements Serializable {
         Util.updateComponente("forUsuConf");
     }
 
-    public void deletar(Integer id) {
+    public void deletar(CadPessoa id) {
         try {
             this.pessoaService.update(id);
             msg.info("Deletado com Sucesso.");

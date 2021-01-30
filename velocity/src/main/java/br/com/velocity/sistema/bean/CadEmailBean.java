@@ -8,7 +8,6 @@ package br.com.velocity.sistema.bean;
 import br.com.velocity.sistema.entidades.CadCliente;
 import br.com.velocity.sistema.entidades.CadDocumentos;
 import br.com.velocity.sistema.entidades.CadEmail;
-import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.service.CadClienteService;
 import br.com.velocity.sistema.service.CadDocumentosService;
 import br.com.velocity.sistema.service.CadEmailService;
@@ -62,7 +61,7 @@ public class CadEmailBean implements Serializable {
         try {
             String pessoa = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
             if (null != pessoa) {
-                this.documentos = this.documentosService.carregar("WHERE c.idDocumentos=" + pessoa + "");
+                this.documentos = this.documentosService.carregar("WHERE c.idDocumentos=" + pessoa + " c.documentoFk.pessoaFk.situacao ='SIM'");
                 setarDocumentos();
 
             } else {

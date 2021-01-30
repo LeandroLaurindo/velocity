@@ -27,8 +27,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -41,6 +39,9 @@ import org.hibernate.validator.constraints.br.CPF;
     @NamedQuery(name = "CadDocumentos.findAll", query = "SELECT c FROM CadDocumentos c")})
 public class CadDocumentos implements Serializable {
 
+    @OneToMany(mappedBy = "documentoFk")
+    private Collection<CadHabilitacao> cadHabilitacaoCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoFk")
     private Collection<CadCliente> cadClienteCollection;
 
@@ -50,25 +51,25 @@ public class CadDocumentos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_documentos")
     private Integer idDocumentos;
-    @Size(max = 11)
+    @Size(max = 11, message = "O campo CPF deve ter entre 1 e 11 caracteres")
     @Column(name = "cpf")
     private String cpf;
-    @Size(max = 15)
+    @Size(max = 15, message = "O campo CNPJ deve ter entre 1 e 100 caracteres")
     @Column(name = "cnpj")
     private String cnpj;
-    @Size(max = 20)
+    @Size(max = 20, message = "O campo RG deve ter entre 1 e 20 caracteres")
     @Column(name = "rg")
     private String rg;
-    @Size(max = 30)
+    @Size(max = 30, message = "O campo Inscricao Estudal deve ter entre 1 e 30 caracteres")
     @Column(name = "inscricao_estudal")
     private String inscricaoEstudal;
-    @Size(max = 30)
+    @Size(max = 30, message = "O campo Inscricao Minicipal deve ter entre 1 e 30 caracteres")
     @Column(name = "inscricao_municipal")
     private String inscricaoMunicipal;
-    @Size(max = 30)
+    @Size(max = 30, message = "O campo Sufra deve ter entre 1 e 30 caracteres")
     @Column(name = "suframa")
     private String suframa;
-    @Size(max = 30)
+    @Size(max = 30, message = "O campo Passaporte deve ter entre 1 e 30 caracteres")
     @Column(name = "passaporte")
     private String passaporte;
     @Column(name = "validade_passaporte")
@@ -242,6 +243,15 @@ public class CadDocumentos implements Serializable {
 
     public void setCadClienteCollection(Collection<CadCliente> cadClienteCollection) {
         this.cadClienteCollection = cadClienteCollection;
+    }
+
+    @XmlTransient
+    public Collection<CadHabilitacao> getCadHabilitacaoCollection() {
+        return cadHabilitacaoCollection;
+    }
+
+    public void setCadHabilitacaoCollection(Collection<CadHabilitacao> cadHabilitacaoCollection) {
+        this.cadHabilitacaoCollection = cadHabilitacaoCollection;
     }
     
 }

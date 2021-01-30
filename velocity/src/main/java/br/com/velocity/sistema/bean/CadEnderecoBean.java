@@ -62,7 +62,7 @@ public class CadEnderecoBean implements Serializable {
         try {
             String pessoa = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
             if (null != pessoa) {
-                this.documentos = this.documentosService.carregar("WHERE c.idDocumentos=" + pessoa + "");
+                this.documentos = this.documentosService.carregar("WHERE c.idDocumentos=" + pessoa + " c.documentoFk.pessoaFk.situacao ='SIM'");
                 setarEnderecos();
 
             } else {

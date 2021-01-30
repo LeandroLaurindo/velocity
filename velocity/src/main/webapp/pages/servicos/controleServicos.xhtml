@@ -49,7 +49,8 @@
                             <p:outputLabel value="Situação:" for="situacao" />
                             <p:selectOneMenu id="situacao" value="#{servicosBean.cadServicos.situacao}" label="Situação" style="width: 200px;">
                                 <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
-                                <f:selectItem itemLabel="Aberto" itemValue="Aberto" />
+                                <f:selectItem itemLabel="Incio Serviço" itemValue="Aberto" />
+                                <f:selectItem itemLabel="Terminou Serviço" itemValue="Fechado" />
                                 <f:selectItem itemLabel="Pago" itemValue="Pago" />
                             </p:selectOneMenu>
                             <p:outputLabel value="Valor Serviço:" for="valorServico" />
@@ -132,7 +133,7 @@
                                 <h:outputText value="Ação"/>
                             </f:facet>
                             <p:commandButton id="btneditar" value="" icon="ui-icon-pencil"  styleClass="botaoIcon" actionListener="#{servicosBean.setarParaEditar(item)}"/>
-                            <p:commandButton id="btnexcluir" value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{servicosBean.setarParaDeletar(item.idServico)}" />
+                            <p:commandButton id="btnexcluir" value="" icon="ui-icon-trash" styleClass="botaoIcon" actionListener="#{servicosBean.setarParaDeletar(item.prestadorServico)}" />
                         </p:column>
 
                     </p:dataTable>

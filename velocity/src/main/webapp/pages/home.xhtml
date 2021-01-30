@@ -23,35 +23,7 @@
             }
         </style>
 
-        <script type="text/javascript">
-            PrimeFaces.locales['pt'] = {closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia'};
-
-            function mascara(o, f) {
-                v_obj = o;
-                v_fun = f;
-                setTimeout("execmascara()", 1);
-            }
-
-            function execmascara() {
-                v_obj.value = v_fun(v_obj.value);
-            }
-
-            function valor(v) {
-                v = v.replace(/\D/g, "");
-                v = v.replace(/[0-9]{15}/, "inválido");
-                v = v.replace(/(\d{1})(\d{11})$/, "$1.$2"); // coloca ponto antes dos
-                // Ãºltimos 11 digitos
-                v = v.replace(/(\d{1})(\d{8})$/, "$1.$2"); // coloca ponto antes dos
-                // Ãºltimos 8 digitos
-                v = v.replace(/(\d{1})(\d{5})$/, "$1.$2"); // coloca ponto antes dos
-                // Ãºltimos 5 digitos
-                v = v.replace(/(\d{1})(\d{1,2})$/, "$1,$2"); // coloca virgula antes dos
-                // Ãºltimos 3 digitos
-                return v;
-
-            }
-
-        </script>
+        <h:outputScript library="js" name="sistema.js" />
     </h:head>
 
     <h:body>
@@ -88,8 +60,6 @@
                             <p:menuitem value="Endereço" outcome="/pages/endereco/lista" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Fornecedores" outcome="/pages/fornecedor/controleFornecedor" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Funcionarios" outcome="/pages/funcionario/controle" icon="ui-icon-triangle-1-e"/>
-                            <p:menuitem value="Habilitação" outcome="/pages/habilitacao/lista" icon="ui-icon-triangle-1-e"/>
-                            <p:menuitem value="Imagens" outcome="/pages/imagens/contoleImagens" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Serviços" outcome="/pages/servicos/controleServicos" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Telefone" outcome="/pages/telefone/lista" icon="ui-icon-triangle-1-e"/>
                             <p:menuitem value="Usuários" outcome="/pages/usuarios/cadastro" icon="ui-icon-triangle-1-e" />                         

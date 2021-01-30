@@ -5,13 +5,13 @@
  */
 package br.com.velocity.sistema.bean;
 
-import br.com.velocity.sistema.util.Util;
-import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.entidades.Perfis;
 import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.service.CadGruposService;
 import br.com.velocity.sistema.service.PerfisService;
 import br.com.velocity.sistema.service.UsuarioService;
+import br.com.velocity.sistema.util.MessagesView;
+import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +104,7 @@ public class UsuarioBean implements Serializable {
             Perfis perfis = this.perfisService.carregar("WHERE c.nomePerfil ='" + idPerfil + "'");
             this.usuario.setPerfilFk(perfis);
             this.usuario.setSenha(Util.hashPassword(this.usuario.getSenha()));
+            this.usuario.setLogin(transformar(this.usuario.getLogin()));
             this.serviceUsuario.save(this.usuario);
             listarUsuarios();
             this.msg.info("Inserido com sucesso!");
@@ -116,6 +117,15 @@ public class UsuarioBean implements Serializable {
         }else{
             editar();
         }
+    }
+    
+    public String transformar(String texto){
+        if(texto != null){
+            if(!texto.isEmpty()){
+            return texto.toUpperCase();
+            }
+        }
+        return "";
     }
 
     public void editar() {
@@ -133,6 +143,7 @@ public class UsuarioBean implements Serializable {
              Usuario u = serviceUsuario.carregar(" WHERE c.idUsuario=" +usuario.getIdUsuario()+"");
              this.usuario.setSenha(u.getSenha());
             }
+            this.usuario.setLogin(transformar(this.usuario.getLogin()));
             this.serviceUsuario.update(this.usuario);
             this.listarUsuarios();
             this.msg.info("Atualizado com sucesso!");

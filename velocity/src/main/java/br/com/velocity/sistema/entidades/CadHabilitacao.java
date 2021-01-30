@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.com.velocity.sistema.entidades;
 
 import java.io.Serializable;
@@ -66,16 +67,6 @@ public class CadHabilitacao implements Serializable {
     @Column(name = "emissao")
     @Temporal(TemporalType.DATE)
     private Date emissao;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "cnh")
-    private String cnh;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "num_seguranca")
-    private String numSeguranca;
     @JoinColumn(name = "documento_fk", referencedColumnName = "id_documentos")
     @ManyToOne
     private CadDocumentos documentoFk;
@@ -87,15 +78,13 @@ public class CadHabilitacao implements Serializable {
         this.idHabilitacao = idHabilitacao;
     }
 
-    public CadHabilitacao(Integer idHabilitacao, String numRegistro, Date validade, String categoria, String orgao, Date emissao, String cnh, String numSeguranca) {
+    public CadHabilitacao(Integer idHabilitacao, String numRegistro, Date validade, String categoria, String orgao, Date emissao) {
         this.idHabilitacao = idHabilitacao;
         this.numRegistro = numRegistro;
         this.validade = validade;
         this.categoria = categoria;
         this.orgao = orgao;
         this.emissao = emissao;
-        this.cnh = cnh;
-        this.numSeguranca = numSeguranca;
     }
 
     public Integer getIdHabilitacao() {
@@ -146,22 +135,6 @@ public class CadHabilitacao implements Serializable {
         this.emissao = emissao;
     }
 
-    public String getCnh() {
-        return cnh;
-    }
-
-    public void setCnh(String cnh) {
-        this.cnh = cnh;
-    }
-
-    public String getNumSeguranca() {
-        return numSeguranca;
-    }
-
-    public void setNumSeguranca(String numSeguranca) {
-        this.numSeguranca = numSeguranca;
-    }
-
     public CadDocumentos getDocumentoFk() {
         return documentoFk;
     }
@@ -192,7 +165,7 @@ public class CadHabilitacao implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.locadora.entidades.CadHabilitacao[ idHabilitacao=" + idHabilitacao + " ]";
+        return "br.com.velocity.sistema.entidades.CadHabilitacao[ idHabilitacao=" + idHabilitacao + " ]";
     }
-    
+
 }

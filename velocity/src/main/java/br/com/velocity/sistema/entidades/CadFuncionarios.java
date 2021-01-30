@@ -44,10 +44,10 @@ public class CadFuncionarios implements Serializable {
     private Integer idFuncionario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "O campo Tipo Funcionario deve ter entre 1 e 50 caracteres")
     @Column(name = "tipo_funcionario")
     private String tipoFuncionario;
-    @Size(max = 25)
+    @Size(max = 25, message = "O campo Codigo deve ter entre 1 e 50 caracteres")
     @Column(name = "codigo")
     private String codigo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

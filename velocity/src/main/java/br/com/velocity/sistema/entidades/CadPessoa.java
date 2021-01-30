@@ -12,12 +12,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -54,10 +52,10 @@ public class CadPessoa implements Serializable {
     private String tipoPessoa;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 150)
+    @Size(min = 1, max = 150, message = "O campo Nome deve ter entre 1 e 150 caracteres")
     @Column(name = "nome")
     private String nome;
-    @Size(max = 150)
+    @Size(max = 150, message = "O campo Cidade deve ter entre 1 e 150 caracteres")
     @Column(name = "razao_social")
     private String razaoSocial;
     @Column(name = "data_nascimento")
@@ -65,26 +63,26 @@ public class CadPessoa implements Serializable {
     private Date dataNascimento;
     @Column(name = "sexo")
     private Character sexo;
-    @Size(max = 50)
+    @Size(max = 50, message = "O campo Estado Civil deve ter entre 1 e 30 caracteres")
     @Column(name = "estado_civil")
     private String estadoCivil;
-    @Size(max = 100)
+    @Size(max = 100, message = "O campo Profisão deve ter entre 1 e 100 caracteres")
     @Column(name = "profissao")
     private String profissao;
-    @Size(max = 150)
+    @Size(max = 150, message = "O campo Cidade deve ter entre 1 e 30 caracteres")
     @Column(name = "conjuge")
     private String conjuge;
     @Column(name = "estrangeiro")
     private Boolean estrangeiro;
-    @Size(max = 100)
+    @Size(max = 100, message = "O campo Pais deve ter entre 1 e 100 caracteres")
     @Column(name = "pais")
     private String pais;
-    @Size(max = 100)
+    @Size(max = 100, message = "O campo Nacionalidade deve ter entre 1 e 100 caracteres")
     @Column(name = "nacionalidade")
     private String nacionalidade;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 30, message = "O campo Siatução deve ter entre 1 e 30 caracteres")
     @Column(name = "situacao")
     private String situacao;
     @Basic(optional = false)

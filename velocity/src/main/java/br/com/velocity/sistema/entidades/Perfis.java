@@ -41,7 +41,7 @@ public class Perfis implements Serializable {
     private Integer idPerfil;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "O campo Nome Perfil deve ter entre 1 e 50 caracteres")
     @Column(name = "nome_perfil")
     private String nomePerfil;
     @OneToMany(mappedBy = "perfilFk")

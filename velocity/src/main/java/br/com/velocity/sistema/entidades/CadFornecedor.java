@@ -45,10 +45,10 @@ public class CadFornecedor implements Serializable {
     private Integer segmentoFk;
     @Column(name = "banco")
     private Integer banco;
-    @Size(max = 5)
+    @Size(max = 5, message = "O campo Agecia deve ter entre 1 e 5 caracteres")
     @Column(name = "agencia")
     private String agencia;
-    @Size(max = 15)
+    @Size(max = 15, message = "O campo conta deve ter entre 1 e 50 caracteres")
     @Column(name = "conta")
     private String conta;
     @Basic(optional = false)

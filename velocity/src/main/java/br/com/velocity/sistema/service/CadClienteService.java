@@ -22,19 +22,26 @@ public class CadClienteService implements Serializable {
     public CadClienteService() {
         dao = new CadClienteDAO();
    }
-    public void save(CadCliente cliente) {
-        dao.save(cliente);
-
+    public boolean save(CadCliente cliente) {
+       return dao.save(cliente);
     }
 
-    public void update(CadCliente cliente) {
+    public boolean update(CadCliente cliente) {
+        try{
         dao.getById(cliente.getIdCliente());
-        dao.update(cliente);
+       return dao.update(cliente);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
-    public void delete(CadCliente cliente) {
+    public boolean delete(CadCliente cliente) {
+        try{
         CadCliente u = dao.getById(cliente.getIdCliente());
-        dao.delete(u);
+        return dao.delete(u);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
     public CadCliente carregar(Integer id) {

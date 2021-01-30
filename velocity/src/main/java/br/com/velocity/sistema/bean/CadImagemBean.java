@@ -10,7 +10,6 @@ import br.com.velocity.sistema.entidades.Usuario;
 import br.com.velocity.sistema.service.*;
 import br.com.velocity.sistema.util.MessagesView;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -204,7 +203,7 @@ public class CadImagemBean implements Serializable {
 
                 Path path = Paths.get(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/") + "resources/img");
 
-                System.err.println(path);
+                //System.err.println(path);
                 if (!Files.exists(path)) {
                     Files.createDirectories(path);
                 }
@@ -218,13 +217,13 @@ public class CadImagemBean implements Serializable {
 
                 //imagemDoCarroSelecionado = "../temp/carro/"+carroSelecionado.getCodigo() + ".jpg";
                 caminhoDaImagem = "/resources/img/" + img.getNomeImagem() + "." + img.getTipo();
-                System.out.println(caminhoDaImagem);
+               // System.out.println(caminhoDaImagem);
             } else {
 
                 caminhoDaImagem = null;
 
             }
-        } catch (IOException e) {
+        } catch (Throwable e) {
             caminhoDaImagem = null;
         }
         return caminhoDaImagem;

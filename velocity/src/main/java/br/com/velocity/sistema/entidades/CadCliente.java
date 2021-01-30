@@ -46,7 +46,7 @@ public class CadCliente implements Serializable {
     private Integer idCliente;
     @Column(name = "vendedor_fk")
     private Integer vendedorFk;
-    @Size(max = 30)
+    @Size(max = 30, message = "O campo Plano Pagamento Estudal deve ter entre 1 e 30 caracteres")
     @Column(name = "plano_pagto")
     private String planoPagto;
     @Column(name = "tabela_preco_fk")
@@ -55,13 +55,13 @@ public class CadCliente implements Serializable {
     private Integer segmentoFk;
     @Column(name = "classificacao_fk")
     private Integer classificacaoFk;
-    @Size(max = 50)
+    @Size(max = 50, message = "O campo Origem Cliente deve ter entre 1 e 50 caracteres")
     @Column(name = "origem_cliente")
     private String origemCliente;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "limite_credito")
     private BigDecimal limiteCredito;
-    @Size(max = 250)
+    @Size(max = 250, message = "O campo Observação deve ter entre 1 e 250 caracteres")
     @Column(name = "observacao")
     private String observacao;
     @Column(name = "representante_legal_fk")
@@ -198,5 +198,5 @@ public class CadCliente implements Serializable {
     public void setControleVeiculosCollection(Collection<ControleVeiculos> controleVeiculosCollection) {
         this.controleVeiculosCollection = controleVeiculosCollection;
     }
-    
+
 }

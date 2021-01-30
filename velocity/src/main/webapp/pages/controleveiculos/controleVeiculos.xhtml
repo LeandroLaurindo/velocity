@@ -8,66 +8,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="conteudo">
-        
-        <f:view>
-            <h:form id="forEscolha">
-                
-            </h:form>
-        </f:view>
-
-        <f:view>
-            <h:form id="formServicos">
-                <p:dialog closable="true" header="Controle" widgetVar="dgServico" id="dgServico"  visible="true"
-                          style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;">
-                    <h:panelGrid columns="1">
-                        <p:selectOneMenu id="veiculo2" value="#{controleVeiculosBean.veiculo}" converter="cadModeloVeiculosConverter" panelStyle="width:180px"
-                                         effect="fade" var="tv" style="width:280px" filter="true" filterMatchMode="startsWith" label="Veiculos">
-                            <f:selectItem itemLabel="Selecione Veiculo..." itemValue="" />
-                            <f:selectItems value="#{controleVeiculosBean.listaModeloVeiculos}" var="veicc"  itemValue="#{veicc}" itemLabel="#{veicc.modelo}"/>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Veículo"/>
-                                </f:facet>
-                                <h:outputText value="#{tv.modelo}"  />
-                            </p:column>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Cod. Serviço:" for="codServico" />
-                        <p:inputText id="codServico" value="#{controleVeiculosBean.cadServicos.codigoServico}" title="Cod. Serviço" />
-                        <p:outputLabel value="Nome Serviço:" for="nomeServico" />
-                        <p:inputText id="nomeServico" value="#{controleVeiculosBean.cadServicos.nomeServico}" title="NomeServico" />
-                        <p:outputLabel value="Tipo Servico:" for="tipoServico" />
-                        <p:inputText id="tipoServico" value="#{controleVeiculosBean.cadServicos.tipoServico}" title="TipoServico" />
-                        <p:outputLabel value="Descrição:" for="descricao" />
-                        <p:inputText id="descricao" value="#{controleVeiculosBean.cadServicos.descricao}" title="Descricao" size="100"/>
-                        <h:panelGrid style="margin: 0 auto; text-align: center; margin-top: 20px;" columns="2">
-                            <p:commandButton value="Salvar" actionListener="#{controleVeiculosBean.salvarServico()}" oncomplete="PF('dgServico').hide()" />
-                            <p:commandButton value="fechar" process="@this" onclick="PF('dgServico').hide()" />
-                        </h:panelGrid>
-                    </h:panelGrid>
-                </p:dialog>
-            </h:form>
-        </f:view>
-        <f:view>
-            <h:form id="formServicos2">
-                <p:dialog closable="true" header="Controle" widgetVar="dgServico2" id="dgServico2"  visible="true"
-                          style="margin-top:130px!important; max-height: 80%!important; z-index: 2!important;">
-                    <h:panelGrid columns="2">
-                    <p:outputLabel value="Cod. Serviço:" for="codServico2" />
-                    <p:inputText id="codServico2" value="#{controleVeiculosBean.cadServicos.codigoServico}" title="Cod. Serviço" />
-                    <p:outputLabel value="Nome Serviço:" for="nomeServico2" />
-                    <p:inputText id="nomeServico2" value="#{controleVeiculosBean.cadServicos.nomeServico}" title="NomeServico" />
-                    <p:outputLabel value="Tipo Servico:" for="tipoServico2" />
-                    <p:inputText id="tipoServico2" value="#{controleVeiculosBean.cadServicos.tipoServico}" title="TipoServico" />
-                    <p:outputLabel value="Descrição:" for="descricao2" />
-                    <p:inputText id="descricao2" value="#{controleVeiculosBean.cadServicos.descricao}" title="Descricao" size="100"/>
-                    </h:panelGrid>
-                    <h:panelGrid style="margin: 0 auto; text-align: center; margin-top: 20px;" columns="2">
-                        <p:commandButton value="Salvar" actionListener="#{controleVeiculosBean.salvarServico()}" oncomplete="PF('dgServico2').hide()" />
-                        <p:commandButton value="fechar" process="@this" onclick="PF('dgServico2').hide()" />
-                    </h:panelGrid>
-                </p:dialog>
-            </h:form>
-        </f:view>
+   
         <f:view>
             <h:form id="formCadCV">
                 <p:dialog closable="true" header="Controle" widgetVar="dglVControle" id="dglVControle"  
@@ -149,16 +90,36 @@
                     </h:panelGrid>
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
-                            <p:outputLabel value="Data Proximos Reparos:" for="agendamentoProximosReparos" />
-                            <p:calendar id="agendamentoProximosReparos"  value="#{controleVeiculosBean.controleVeiculos.dataHoraSaida}" locale="pt" navigator="true" pattern="MM/dd/yyyy" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="1">
                             <p:outputLabel value="Km Saida:" for="kmSaida" />
-                            <p:inputText id="kmSaida" value="#{controleVeiculosBean.controleVeiculos.kmSaida}" title="KmSaida" onkeypress="mascara(this, valor);" />
+                            <p:inputText id="kmSaida" value="#{controleVeiculosBean.controleVeiculos.kmSaida}" onkeypress="macaraKm(this);" title="KmSaida"  />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Km Retorno:" for="kmRetorno" />
-                            <p:inputText id="kmRetorno" value="#{controleVeiculosBean.controleVeiculos.kmRetorno}" title="KmSaida" onkeypress="mascara(this, valor);" />
+                            <p:inputText id="kmRetorno" value="#{controleVeiculosBean.controleVeiculos.kmRetorno}" onkeypress="macaraKmr(this);" title="KmSaida" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Aluguel- Reserva:" for="alugueloReserva" />
+                            <p:selectOneMenu id="alugueloReserva" value="#{controleVeiculosBean.controleVeiculos.alugueloReserva}" panelStyle="width:180px"
+                                             effect="fade" style="width:180px" filter="true" filterMatchMode="startsWith" 
+                                             required="true" requiredMessage="Aluguel ou Reserva e obrigatorio.">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItem itemLabel="ALUGUEL" itemValue="ALUGUEL" />
+                                <f:selectItem itemLabel="RESERVA" itemValue="RESERVA" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Valor diária:" for="diaria" />
+                            <p:inputText id="diaria" value="#{controleVeiculosBean.controleVeiculos.valorDiaria}" title="Diaria" onkeypress="mascara(this, valor);" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Valor desconto" for="desconto" />
+                            <p:inputText id="desconto" value="#{controleVeiculosBean.controleVeiculos.valorDesc}" title="Desconto" onkeypress="mascara(this, valor);" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Valor acréscimo:" for="acrescismo" />
+                            <p:inputText id="acrescismo" value="#{controleVeiculosBean.controleVeiculos.valorAcresc}" title="Acréscimo:" onkeypress="mascara(this, valor);" />
                         </h:panelGrid>
                     </h:panelGrid>
                     <h:panelGrid columns="1">
@@ -173,6 +134,7 @@
                             <h:outputText id="entradatres" />
                         </p:fieldset>
                     </h:panelGrid>
+
                     <h:panelGrid style="margin: 0 auto; text-align: center; margin-top: 20px;" columns="2">
                         <p:commandButton value="Salvar" actionListener="#{controleVeiculosBean.salvar()}" oncomplete="PF('dglVControle').hide()" />
                         <p:commandButton value="fechar" process="@this" onclick="PF('dglVControle').hide()" />
@@ -218,12 +180,7 @@
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Serviços"/>
-                        </f:facet>
-                        <p:commandButton value="Novo" actionListener="#{controleVeiculosBean.novoCadServico()}"  icon="ui ui-icon-plus"/>
-                    </p:column>
+
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Agendamento Proximos Reparos"/>
@@ -284,6 +241,7 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
+       
     </ui:define>
 
 </ui:composition>

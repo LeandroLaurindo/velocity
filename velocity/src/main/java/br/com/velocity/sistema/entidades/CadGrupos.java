@@ -36,13 +36,13 @@ public class CadGrupos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_grupo")
     private Integer idGrupo;
-    @Size(max = 50)
+    @Size(max = 50, message = "O campo Tipo deve ter entre 1 e 50 caracteres")
     @Column(name = "tipo")
     private String tipo;
-    @Size(max = 100)
+    @Size(max = 100, message = "O campo Nome deve ter entre 1 e 100 caracteres")
     @Column(name = "nome")
     private String nome;
-    @Size(max = 250)
+    @Size(max = 250, message = "O campo Descrição deve ter entre 1 e 250 caracteres")
     @Column(name = "descricao")
     private String descricao;
     @Size(max = 2147483647)

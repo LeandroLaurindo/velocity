@@ -13,6 +13,7 @@ import br.com.velocity.sistema.service.ControleVeiculosService;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -49,6 +50,9 @@ public class ControleVeiculosBean implements Serializable {
     private Integer idCliente;
     private List<CadFornecedor> listaFornecedores;
     private CadFornecedorService fornecedorService = new CadFornecedorService();
+    private List<String> tipoSaida;
+    private String saidak;
+    private String retornok;
 
     @PostConstruct
     public void init() {
@@ -62,20 +66,27 @@ public class ControleVeiculosBean implements Serializable {
         this.listaVeiculos = new ArrayList<>();
         this.cadCliente = new CadCliente();
         this.listaClientes = new ArrayList<>();
+        this.tipoSaida = new ArrayList<>();
+        this.tipoSaida.add("ALUGUEL");
+        this.tipoSaida.add("RESERVA");
         idV = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idv");
         idC = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idC");
         if (valido(idC)) {
             idCliente = Integer.valueOf(idC);
             carregarCliente();
+            Util.updateComponente("formCadCV");
+            Util.executarAcao("PF('dglVControle').show()");
         } else {
             if (valido(idV)) {
                 idCarro = Integer.valueOf(idV);
                 carregarVeiculo();
+                Util.updateComponente("formCadCV");
+                Util.executarAcao("PF('dglVControle').show()");
             }
         }
         listarVeiculos();
         listarClientes();
-        listarFornecedor();
+        //listarFornecedor();
 
         this.controleVeiculos = new ControleVeiculos();
         this.lista = new ArrayList<>();
@@ -94,9 +105,10 @@ public class ControleVeiculosBean implements Serializable {
     }
 
     public void carregarVeiculo() {
+        this.controleVeiculos = new ControleVeiculos();
         this.veiculo = new CadModeloVeiculo();
         this.veiculo = veiculoService.carregar(idCarro);
-        this.controleVeiculos.setVeiculoFk(veiculo);
+        this.controleVeiculos.setVeiculoFk(this.veiculo);
     }
 
     public void carregarVeiculoServico() {
@@ -129,9 +141,26 @@ public class ControleVeiculosBean implements Serializable {
     public void salvar() {
         if (this.controleVeiculos.getIdControleVeiculo() == null) {
             this.service.save(this.controleVeiculos);
-            this.msg.info("Salvo com sucesso.");
-            listar();
             this.controleVeiculos = new ControleVeiculos();
+            this.controleVeiculos = this.service.carregar(controleVeiculos.getIdControleVeiculo());
+            if (this.controleVeiculos != null) {
+                if (this.controleVeiculos.getIdControleVeiculo() != null) {
+
+                    CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
+                    if (cmv != null) {
+                        if (cmv.getIdModelo() != null) {
+                            if (this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("ALUGUEL") || this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("RESERVA")) {
+                                cmv.setDisponivel(false);
+                                cmv.setMotivo(this.controleVeiculos.getAlugueloReserva());
+                                this.veiculoService.update(cmv); 
+                            }
+                        }
+                    }
+                    this.msg.info("Salvo com sucesso.");
+                }
+                this.controleVeiculos = new ControleVeiculos();
+            }
+            listar();
             Util.executarAcao("PF('dglVControle').hide()");
         } else {
             this.editar();
@@ -160,6 +189,27 @@ public class ControleVeiculosBean implements Serializable {
 
     public void editar() {
         this.service.update(this.controleVeiculos);
+        this.controleVeiculos = new ControleVeiculos();
+        this.controleVeiculos = this.service.carregar(controleVeiculos.getIdControleVeiculo());
+        if (this.controleVeiculos != null) {
+            if (this.controleVeiculos.getIdControleVeiculo() != null) {
+                CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
+                if (cmv != null) {
+                    if (cmv.getIdModelo() != null) {
+                        if (this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("ALUGUEL") || this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("RESERVA")) {
+                            if (this.controleVeiculos.getDataHoraRetorno() == null) {
+                                cmv.setDisponivel(false);
+                                cmv.setMotivo(this.controleVeiculos.getAlugueloReserva());
+                            } else {
+                                cmv.setMotivo("");
+                                cmv.setDisponivel(true);
+                            }
+                            this.veiculoService.update(cmv);
+                        }
+                    }
+                }
+            }
+        }
         this.msg.info("Editado com sucesso.");
         listar();
         this.controleVeiculos = new ControleVeiculos();
@@ -169,6 +219,17 @@ public class ControleVeiculosBean implements Serializable {
     public void deletar() {
         this.service.delete(this.controleVeiculos);
         this.msg.info("Removido com sucesso.");
+        if (this.controleVeiculos != null) {
+            if (this.controleVeiculos.getIdControleVeiculo() != null) {
+                CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
+                if (cmv != null) {
+                    if (cmv.getIdModelo() != null) {
+                        cmv.setDisponivel(false);
+                        this.veiculoService.update(cmv);
+                    }
+                }
+            }
+        }
         listar();
         this.controleVeiculos = new ControleVeiculos();
     }
@@ -255,6 +316,82 @@ public class ControleVeiculosBean implements Serializable {
                 return "Não";
             }
         }
+    }
+
+    public String formatarV(String x) {
+
+        if (x != null) {
+            if (x.contains(".")) {
+                x = x.replaceAll("\\.", "");
+                System.err.println(x);
+                StringBuilder stringBuilder = new StringBuilder(x);
+                stringBuilder.insert(x.length() - 3, '.');
+                return stringBuilder.toString();
+            }
+            return "0." + x;
+        }
+        return "0.000";
+
+    }
+
+    public void formatarVTS() {
+
+        if (saidak != null) {
+            saidak = saidak.replaceAll("\\.", "");
+            saidak = saidak.replaceAll("\\,", "");
+            StringBuilder stringBuilder = new StringBuilder(saidak);
+            if (saidak.contains(".")) {
+                int t = saidak.length();
+                if (t > 3) {
+                    stringBuilder.insert(saidak.length() - 3, '.');
+                    t = stringBuilder.toString().length();
+                }
+                if (t > 7) {
+                    stringBuilder.insert(saidak.length() - 7, '.');
+                    t = stringBuilder.toString().length();
+                }
+                if (t > 11) {
+                    stringBuilder.insert(saidak.length() - 11, '.');
+                }
+                saidak = stringBuilder.toString();
+                controleVeiculos.setKmSaida(new BigDecimal(stringBuilder.toString()));
+            } else {
+                saidak = "0." + retornok;
+                controleVeiculos.setKmSaida(new BigDecimal("0." + saidak));
+            }
+        }
+        controleVeiculos.setKmSaida(new BigDecimal("0.000"));
+
+    }
+
+    public void formatarVTR() {
+        if (retornok != null) {
+            retornok = retornok.replaceAll("\\.", "");
+            retornok = retornok.replaceAll("\\,", "");
+            StringBuilder stringBuilder = new StringBuilder(retornok);
+            int t = retornok.length();
+            System.err.println(t);
+            if (t > 3) {
+                if (t > 3) {
+                    stringBuilder.insert(retornok.length() - 3, '.');
+                    t = stringBuilder.toString().length();
+                }
+                if (t > 7) {
+                    stringBuilder.insert(retornok.length() - 7, '.');
+                    t = stringBuilder.toString().length();
+                }
+                if (t > 11) {
+                    stringBuilder.insert(retornok.length() - 11, '.');
+                }
+                retornok = stringBuilder.toString();
+                controleVeiculos.setKmSaida(new BigDecimal(stringBuilder.toString()));
+            } else {
+                 retornok = "0." + retornok;
+                controleVeiculos.setKmSaida(new BigDecimal("0." + retornok));
+            }
+        }
+        controleVeiculos.setKmSaida(new BigDecimal("0.000"));
+
     }
 
     public ControleVeiculos getControleVeiculos() {
@@ -367,6 +504,30 @@ public class ControleVeiculosBean implements Serializable {
 
     public void setListaFornecedores(List<CadFornecedor> listaFornecedores) {
         this.listaFornecedores = listaFornecedores;
+    }
+
+    public List<String> getTipoSaida() {
+        return tipoSaida;
+    }
+
+    public void setTipoSaida(List<String> tipoSaida) {
+        this.tipoSaida = tipoSaida;
+    }
+
+    public String getSaidak() {
+        return saidak;
+    }
+
+    public void setSaidak(String saidak) {
+        this.saidak = saidak;
+    }
+
+    public String getRetornok() {
+        return retornok;
+    }
+
+    public void setRetornok(String retornok) {
+        this.retornok = retornok;
     }
 
 }

@@ -43,30 +43,30 @@ public class CadEndereco implements Serializable {
     private Integer idEndereco;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "O campo Endereço deve ter entre 1 e 50 caracteres")
     @Column(name = "logradouro")
     private String logradouro;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "O campo Bairro deve ter entre 1 e 50 caracteres")
     @Column(name = "bairro")
     private String bairro;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 5)
+    @Size(min = 1, max = 5, message = "O campo Número deve ter entre 1 e 5 caracteres")
     @Column(name = "numero")
     private String numero;
-    @Size(max = 25)
+    @Size(max = 25, message = "O campo Complemento deve ter entre 1 e 25 caracteres")
     @Column(name = "complemento")
     private String complemento;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 30, message = "O campo Cidade deve ter entre 1 e 30 caracteres")
     @Column(name = "cidade")
     private String cidade;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 10, message = "O campo Cep deve ter entre 1 e 10 caracteres")
     @Column(name = "cep")
     private String cep;
     @Basic(optional = false)

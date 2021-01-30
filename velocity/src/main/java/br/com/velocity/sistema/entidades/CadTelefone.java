@@ -47,7 +47,7 @@ public class CadTelefone implements Serializable {
     private int ddd;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 10, message = "O campo telefone deve ter entre 1 e 10 caracteres")
     @Column(name = "telefone")
     private String telefone;
     @Column(name = "whatsapp")

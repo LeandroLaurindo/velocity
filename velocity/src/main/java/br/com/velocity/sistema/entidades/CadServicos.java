@@ -45,16 +45,16 @@ public class CadServicos implements Serializable {
     private String tipoServico;
     @Column(name = "codigo_servico")
     private Integer codigoServico;
-    @Size(max = 30)
+    @Size(max = 30, message = "O campo Nome Serviço deve ter entre 1 e 30 caracteres")
     @Column(name = "nome_servico")
     private String nomeServico;
-    @Size(max = 500)
+    @Size(max = 500, message = "O campo descrição deve ter entre 1 e 500 caracteres")
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "data_servico")
     @Temporal(TemporalType.DATE)
     private Date dataServico;
-    @Size(max = 10)
+    @Size(max = 10, message = "O campo Situação deve ter entre 1 e 10 caracteres")
     @Column(name = "situacao")
     private String situacao;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

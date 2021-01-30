@@ -306,7 +306,7 @@
                         <h1>Atenção</h1>
                         <h3>Confirmar a remoção?</h3>
                         <h:panelGrid columns="2">
-                            <p:commandButton value="SIM" actionListener="#{cadFornecedorBean.deletar(cadFornecedorBean.pessoa.idPessoa)}" oncomplete="PF('dlgConf')hide();"/>
+                            <p:commandButton value="SIM" actionListener="#{cadFornecedorBean.deletar(cadFornecedorBean.pessoa)}" oncomplete="PF('dlgConf')hide();"/>
                             <p:commandButton value="NÃO" onclick="PF('dlgConf')hide();"/>
                         </h:panelGrid>
                     </h:panelGrid>

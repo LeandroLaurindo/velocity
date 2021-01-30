@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,7 +38,7 @@ public class CadImagens implements Serializable {
     private Integer idImagem;
     @Basic(optional = false)
     @NotNull
-    @Size(max = 50)
+    @Size(max = 50, message = "O campo Nome Imagem deve ter entre 1 e 50 caracteres")
     @Column(name = "nome_imagem")
     private String nomeImagem;
     @Basic(optional = false)
@@ -49,7 +48,7 @@ public class CadImagens implements Serializable {
     private byte[] imagem;
     @Column(name = "id_fk")
     private Integer idFk;
-    @Size(max = 50)
+    @Size(max = 50, message = "O campo Tipo deve ter entre 1 e 50 caracteres")
     @Column(name = "tipo")
     private String tipo;
 

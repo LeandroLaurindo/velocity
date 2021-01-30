@@ -22,30 +22,41 @@ public class CadHabilitacaoService implements Serializable {
         dao = new CadHabilitacaoDAO();
     }
 
-    public void save(CadHabilitacao habilitacao) {
-       
-        dao.save(habilitacao);
-        
+    public boolean save(CadHabilitacao habilitacao) {
+
+        return dao.save(habilitacao);
+
     }
 
-    public void update(CadHabilitacao habilitacao) {
+    public boolean update(CadHabilitacao habilitacao) {
+        try {
             dao.getById(habilitacao.getIdHabilitacao());
-            dao.update(habilitacao);
+            return dao.update(habilitacao);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
-    public void delete(CadHabilitacao habilitacao) {
+    public boolean delete(CadHabilitacao habilitacao) {
+        try {
             CadHabilitacao u = dao.getById(habilitacao.getIdHabilitacao());
-            dao.delete(u);
+            return dao.delete(u);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
-    public CadHabilitacao carregar(Integer id){
+    public CadHabilitacao carregar(Integer id) {
         return dao.getById(id);
     }
-    
+
+    public CadHabilitacao carregarParametros(String p) {
+        return dao.getByParametro(p);
+    }
     public List<CadHabilitacao> findAll() {
         return dao.findAll();
     }
-    
+
     public List<CadHabilitacao> findAll(String parametros) {
         return dao.findAll(parametros);
     }

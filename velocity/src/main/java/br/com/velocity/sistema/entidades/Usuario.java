@@ -47,12 +47,12 @@ public class Usuario implements Serializable {
     private Integer idUsuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 30, message = "O campo Login deve ter entre 1 e 30 caracteres")
     @Column(name = "login")
     private String login;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 250, message = "O campo Senha deve ter entre 1 e 250 caracteres")
     @Column(name = "senha")
     private String senha;
     @Size(max = 6)

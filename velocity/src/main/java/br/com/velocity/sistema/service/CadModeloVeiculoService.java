@@ -37,6 +37,7 @@ public class CadModeloVeiculoService implements Serializable {
     }
 
     public CadModeloVeiculo carregar(Integer id){
+        System.err.println("id "+id);
         return dao.getById(id);
     }
     
@@ -51,5 +52,7 @@ public class CadModeloVeiculoService implements Serializable {
     public List<CadModeloVeiculo> findAll(String parametros) {
         return dao.findAll(parametros);
     }
-
+  public List<String> findAll(String campos ,String parametros) {
+        return dao.findAll(campos, parametros);
+    }
 }

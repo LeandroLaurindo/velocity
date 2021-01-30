@@ -23,18 +23,26 @@ public class CadDocumentosService implements Serializable {
         dao = new CadDocumentosDAO();
     }
 
-    public void save(CadDocumentos documentos) {
-        dao.save(documentos);
+    public boolean save(CadDocumentos documentos) {
+       return dao.save(documentos);
     }
 
-    public void update(CadDocumentos documentos) {
+    public boolean update(CadDocumentos documentos) {
+        try{
         dao.getById(documentos.getIdDocumentos());
-        dao.update(documentos);
+        return dao.update(documentos);
+        }catch(Throwable e){
+         return false;
+        }
     }
 
-    public void delete(CadDocumentos documentos) {
+    public boolean delete(CadDocumentos documentos) {
+        try{
         CadDocumentos u = dao.getById(documentos.getIdDocumentos());
-        dao.delete(u);
+       return dao.delete(u);
+        }catch(Throwable e){
+         return false;
+        }
     }
 
     public CadDocumentos carregar(Integer id) {

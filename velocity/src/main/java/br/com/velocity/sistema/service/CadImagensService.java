@@ -22,18 +22,26 @@ public class CadImagensService implements Serializable {
         dao = new CadImagensDAO();
     }
 
-    public void save(CadImagens imagem) {
-        dao.save(imagem);
+    public boolean save(CadImagens imagem) {
+       return dao.save(imagem);
     }
 
-    public void update(CadImagens imagem) {
+    public boolean update(CadImagens imagem) {
+        try{
         dao.getById(imagem.getIdImagem());
-        dao.update(imagem);
+        return dao.update(imagem);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
-    public void delete(CadImagens imagem) {
+    public boolean delete(CadImagens imagem) {
+        try{
         CadImagens u = dao.getById(imagem.getIdImagem());
-        dao.delete(u);
+        return dao.delete(u);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
     public CadImagens carregar(Integer id) {

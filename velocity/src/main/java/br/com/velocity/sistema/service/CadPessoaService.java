@@ -23,26 +23,37 @@ public class CadPessoaService implements Serializable {
         dao = new CadPessoaDAO();
     }
 
-    public void save(CadPessoa pessoa) {
-        dao.save(pessoa);
+    public boolean save(CadPessoa pessoa) {
+      return dao.save(pessoa);
     }
 
-    public void update(CadPessoa pessoa) {
-        dao.getById(pessoa.getIdPessoa());
-        dao.update(pessoa);
-
+    public boolean update(CadPessoa pessoa) {
+        try{
+           dao.getById(pessoa.getIdPessoa());
+           return dao.update(pessoa);
+        }catch(Throwable e){
+           return false;
+        }
     }
 
-    public void update(Integer id) {
+    public boolean updateExcliur(Integer id, String p) {
+        try{
         CadPessoa pessoa = dao.getById(id);
         pessoa.setDataAlteracao(new Date());
-        pessoa.setSituacao("NAO");
-        dao.update(pessoa);
+        pessoa.setSituacao(p);
+        return dao.update(pessoa);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
-    public void delete(CadPessoa pessoa) {
+    public boolean delete(CadPessoa pessoa) {
+        try{
         CadPessoa u = dao.getById(pessoa.getIdPessoa());
-        dao.delete(u);
+       return dao.delete(u);
+        }catch(Throwable e){
+            return false;
+        }
     }
 
     public CadPessoa carregar(Integer id) {

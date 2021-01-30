@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,6 +35,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ControleVeiculos.findAll", query = "SELECT c FROM ControleVeiculos c")})
 public class ControleVeiculos implements Serializable {
+
+    @Column(name = "valor_diaria")
+    private BigDecimal valorDiaria;
+    @Column(name = "valor_desc")
+    private BigDecimal valorDesc;
+    @Column(name = "valor_acresc")
+    private BigDecimal valorAcresc;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "aluguelo_reserva")
+    private String alugueloReserva;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -221,6 +235,38 @@ public class ControleVeiculos implements Serializable {
     @Override
     public String toString() {
         return "br.com.velocity.sistema.entidades.ControleVeiculos[ idControleVeiculo=" + idControleVeiculo + " ]";
+    }
+
+    public String getAlugueloReserva() {
+        return alugueloReserva;
+    }
+
+    public void setAlugueloReserva(String alugueloReserva) {
+        this.alugueloReserva = alugueloReserva;
+    }
+
+    public BigDecimal getValorDiaria() {
+        return valorDiaria;
+    }
+
+    public void setValorDiaria(BigDecimal valorDiaria) {
+        this.valorDiaria = valorDiaria;
+    }
+
+    public BigDecimal getValorDesc() {
+        return valorDesc;
+    }
+
+    public void setValorDesc(BigDecimal valorDesc) {
+        this.valorDesc = valorDesc;
+    }
+
+    public BigDecimal getValorAcresc() {
+        return valorAcresc;
+    }
+
+    public void setValorAcresc(BigDecimal valorAcresc) {
+        this.valorAcresc = valorAcresc;
     }
     
 }

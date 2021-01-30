@@ -44,10 +44,10 @@ public class CadEmail implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 100, message = "O campo Email deve ter entre 1 e 100 caracteres")
     @Column(name = "email")
     private String email;
-    @Size(max = 100)
+    @Size(max = 100, message = "O campo Site deve ter entre 1 e 100 caracteres")
     @Column(name = "site")
     private String site;
     @Size(max = 200)

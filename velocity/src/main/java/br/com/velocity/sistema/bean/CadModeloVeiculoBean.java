@@ -7,6 +7,7 @@ package br.com.velocity.sistema.bean;
 
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
 import br.com.velocity.sistema.service.CadModeloVeiculoService;
+import br.com.velocity.sistema.service.ControleVeiculosService;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
@@ -25,13 +26,17 @@ import javax.faces.bean.ViewScoped;
 public class CadModeloVeiculoBean implements Serializable {
 
     private CadModeloVeiculoService veiculoService;
+    private ControleVeiculosService controleVeiculosService;
     private CadModeloVeiculo modeloVeiculo;
     private List<CadModeloVeiculo> listaDeMVeiculos;
     private MessagesView msg;
+    private String motivoMsg = "";
+    
 
     @PostConstruct
     public void init() {
         this.veiculoService = new CadModeloVeiculoService();
+        this.controleVeiculosService = new ControleVeiculosService();
         this.modeloVeiculo = new CadModeloVeiculo();
         this.listaDeMVeiculos = new ArrayList<>();
         this.msg = new MessagesView();
@@ -116,6 +121,34 @@ public class CadModeloVeiculoBean implements Serializable {
         String nome = String.valueOf(id);
         Util.rediricionar("servicos/controleServicos.xhtml?idVeiculo=" + nome);
     }
+     
+     public String disponivelVeiculo(Boolean d){
+         if(d != null){
+             if(d){
+                 return "SIM";
+             }else{
+                return "NÂO";
+             }
+         }
+         return "SIM";
+     }
+    
+    public void mostrarMotivo(String cv){
+        motivoMsg = "";
+        try{
+        
+        if(cv!= null){
+        this.motivoMsg = cv;
+        }else{
+            motivoMsg = "Não a dados para exibir!";
+        }
+        }catch(Exception e){
+            motivoMsg = "Não a dados para exibir!"; 
+            //e.printStackTrace();
+        }
+        Util.updateComponente("formMotivo");
+        Util.executarAcao("PF('dlgMotivo').show()");
+    }
     
     
     public CadModeloVeiculoService getVeiculoService() {
@@ -142,4 +175,12 @@ public class CadModeloVeiculoBean implements Serializable {
         this.listaDeMVeiculos = listaDeMVeiculos;
     }
 
+    public String getMotivoMsg() {
+        return motivoMsg;
+    }
+
+    public void setMotivoMsg(String motivoMsg) {
+        this.motivoMsg = motivoMsg;
+    }
+   
 }

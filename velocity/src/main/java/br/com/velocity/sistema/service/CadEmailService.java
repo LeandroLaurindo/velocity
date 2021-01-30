@@ -9,34 +9,40 @@ import br.com.velocity.sistema.dao.CadEmailDAO;
 import br.com.velocity.sistema.entidades.CadEmail;
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Inject;
 
 /**
  *
  * @author Leandro Laurindo
  */
 public class CadEmailService implements Serializable {
-   
-    
+
     private CadEmailDAO dao;
 
     public CadEmailService() {
         dao = new CadEmailDAO();
     }
 
-    public void save(CadEmail email) {
-        dao.save(email);
+    public boolean save(CadEmail email) {
+        return dao.save(email);
     }
 
-    public void update(CadEmail email) {
-        dao.getById(email.getIdEmail());
-        dao.update(email);
+    public boolean update(CadEmail email) {
+        try {
+            dao.getById(email.getIdEmail());
+            return dao.update(email);
+        } catch (Throwable e) {
+            return false;
+        }
+
     }
 
-    public void delete(CadEmail email) {
+    public boolean delete(CadEmail email) {
+        try{
         CadEmail u = dao.getById(email.getIdEmail());
-        dao.delete(u);
-
+        return dao.delete(u);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
     public CadEmail carregar(Integer id) {
