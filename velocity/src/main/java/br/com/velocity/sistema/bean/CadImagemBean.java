@@ -226,6 +226,7 @@ public class CadImagemBean implements Serializable {
         } catch (Throwable e) {
             caminhoDaImagem = null;
         }
+        
         return caminhoDaImagem;
     }
 

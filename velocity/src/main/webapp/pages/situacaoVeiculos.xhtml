@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./home.xhtml">
+
+    <ui:define name="conteudo">
+
+        <h:form id="formDisponiveis" style="max-width: 48%; float: left!important;">
+            <p:dataTable  value="#{controleVisaoTelaInicialBean.veiculosDisponiveis}" var="itemD"
+                          emptyMessage="Não há veículos Disponíveis no momento" 
+                          style="font-size: 13px!important">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Lista de Veículos Disponíveis"/>
+                    </f:facet>
+                    <div align="center">
+                        <p:graphicImage style="margin: 2px; float: left;" value="#{controleVisaoTelaInicialBean.buscarImagem(itemD.idModelo)}" width="100" height="100" rendered="#{controleVisaoTelaInicialBean.buscarImagem(itemD.idModelo) != null}"/>
+                        <p:graphicImage style="margin: 2px; float: left;" library="img" name="carro.jpg" width="100" height="100" rendered="#{controleVisaoTelaInicialBean.buscarImagem(itemD.idModelo) == null}" />
+                        <br />
+                        <h:outputText value="Modelo : #{itemD.modelo}"/>
+                        <br />
+                        <h:outputText value="Fabricante : #{itemD.fabricante}"/>
+                    </div>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+        <h:form id="formIndisponiveis" style="max-width: 48%; float: right;">
+            <p:dataTable  value="#{controleVisaoTelaInicialBean.veiculosIndisponiveis}" var="itemI"
+                          emptyMessage="Não há veículos indisponíveis no momento" 
+                          style="font-size: 13px!important">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Lista de Veículos Indisponíveis"/>
+                    </f:facet>
+                    <div align="center">
+                        <p:graphicImage style="margin: 2px; float: left;" value="#{controleVisaoTelaInicialBean.buscarImagem(itemD.idModelo)}" width="100" height="100" rendered="#{controleVisaoTelaInicialBean.buscarImagem(itemD.idModelo) != null}"/>
+                        <p:graphicImage style="margin: 2px; float: left;" library="img" name="carro.jpg" width="100" height="100" rendered="#{controleVisaoTelaInicialBean.buscarImagem(itemD.idModelo) == null}" />
+                        <br />
+                        <h:outputText value="Modelo : #{itemI.modelo}"/>
+                        <br />
+                        <h:outputText value="Fabricante : #{itemI.fabricante}"/>
+                        <br />
+                        <h:outputText value="#{controleVisaoTelaInicialBean.disponivelVeiculo(itemI.disponivel)}" style="margin-right: 10px;"/>
+                        <p:commandButton value="" icon="ui-icon-search" styleClass="botaoIcon" actionListener="#{controleVisaoTelaInicialBean.mostrarMotivo(itemI.motivo)}" title="foto" 
+                                         rendered="#{itemI.disponivel != null or itemD.disponivel == false}"/>
+                    </div>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <h:form id="formMotivo">
+            <p:dialog header="Dados" widgetVar="dlgMotivo" showEffect="dlgMotivo" closable="true">
+                <h:panelGrid columns="1">
+                    <h:panelGrid columns="1">
+                        <h:outputText value="#{controleVisaoTelaInicialBean.motivoMsg}" />
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

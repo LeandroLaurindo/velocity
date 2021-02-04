@@ -42,6 +42,20 @@
                             <p:inputText id="codigoServico" value="#{servicosBean.cadServicos.codigoServico}" title="CodigoServico" />
                             <p:outputLabel value="Nome Servico:" for="nomeServico" />
                             <p:inputText id="nomeServico" value="#{servicosBean.cadServicos.nomeServico}" title="NomeServico" />
+                             <h:panelGrid columns="1">
+                            <p:outputLabel value="Nome Servico:" for="nomeServico" />
+                            <p:selectOneMenu id="nomeServico" value="#{servicosBean.cadServicos.nomeServico}" converter="cadTipoServicoConverter" panelStyle="width:180px"
+                                             effect="fade" var="ts" style="width:280px" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{servicosBean.listaCadTipoServico}" var="tipoServ" itemValue="#{tipoServ.descricaoServico}"  itemLabel="#{tipoServ.descricaoServico}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Descrição"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ts.descricaoServico}" />
+                                </p:column>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
                             <p:outputLabel value="Descricao:" for="descricao" />
                             <p:inputText id="descricao" value="#{servicosBean.cadServicos.descricao}" title="Descricao" />
                             <p:outputLabel value="Data Servico:" for="dataServico" />
@@ -51,7 +65,7 @@
                                 <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
                                 <f:selectItem itemLabel="Incio Serviço" itemValue="Aberto" />
                                 <f:selectItem itemLabel="Terminou Serviço" itemValue="Fechado" />
-                                <f:selectItem itemLabel="Pago" itemValue="Pago" />
+                                <f:selectItem itemLabel="Pagou Serveiço" itemValue="Pago" />
                             </p:selectOneMenu>
                             <p:outputLabel value="Valor Serviço:" for="valorServico" />
                             <p:inputText id="valorServico" value="#{servicosBean.valorDoServico}" onkeyup="mascara(this, valor)" title="ValorServico" />
@@ -98,19 +112,19 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="NomeServico"/>
+                                <h:outputText value="Nome Serviço"/>
                             </f:facet>
                             <h:outputText value="#{item.nomeServico}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Descricao"/>
+                                <h:outputText value="Descrição"/>
                             </f:facet>
                             <h:outputText value="#{item.descricao}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="DataServico"/>
+                                <h:outputText value="Data Serviço"/>
                             </f:facet>
                             <h:outputText value="#{item.dataServico}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -118,13 +132,13 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Situacao"/>
+                                <h:outputText value="Situação"/>
                             </f:facet>
                             <h:outputText value="#{item.situacao}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="ValorServico"/>
+                                <h:outputText value="Valor Serviço"/>
                             </f:facet>
                             <h:outputText value="#{item.valorServico}"/>
                         </p:column>

@@ -8,7 +8,33 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="conteudo">
-   
+        <f:view>
+            <h:form id="formPv">
+                <p:dialog header="Filtro para pesquisar" widgetVar="dlgPesquisarV" id="dlgPesquisarV">
+                    <h:panelGrid columns="1">
+                         <h:panelGrid columns="1">
+                            <p:outputLabel value="Tipo de ação:" for="tipoD" />
+                            <p:selectOneMenu id="tipoD" value="#{controleVeiculosBean.tipoDeAcao}" label="Tipo" style="width: 200px;">
+                                <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
+                                <f:selectItem itemLabel="Aluguel" itemValue="ALUGUEL" />
+                                <f:selectItem itemLabel="Reserva" itemValue="RESERVA" />
+                                <p:ajax  process="tipoD" event="change" listener="#{controleVeiculosBean.mostraData()}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" rendered="#{controleVeiculosBean.mostrarDatas == 'sim'}">
+                            <p:outputLabel value="Data Inicio:" for="datai" />
+                            <p:calendar id="datai" value="#{controleVeiculosBean.dataI}" locale="pt" navigator="true" pattern="MM/dd/yyyy" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" rendered="#{controleVeiculosBean.mostrarDatas == 'sim'}">
+                            <p:outputLabel value="Data Fim" for="dataF" />
+                            <p:calendar id="dataF" value="#{controleVeiculosBean.dataF}" locale="pt" navigator="true" pattern="MM/dd/yyyy" />
+                        </h:panelGrid>
+                        <p:commandButton value="Pesquisar" icon="ui-icon-search" iconPos="true" actionListener="#{controleVeiculosBean.listarVeiculos()}" />
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
+
         <f:view>
             <h:form id="formCadCV">
                 <p:dialog closable="true" header="Controle" widgetVar="dglVControle" id="dglVControle"  
@@ -241,7 +267,7 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
-       
+
     </ui:define>
 
 </ui:composition>

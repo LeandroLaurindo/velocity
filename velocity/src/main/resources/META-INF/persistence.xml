@@ -21,10 +21,10 @@
         <class>br.com.velocity.sistema.entidades.CadImagens</class>
         <class>br.com.velocity.sistema.entidades.ControleVeiculos</class>
         <class>br.com.velocity.sistema.entidades.CadMulta</class>
+        <class>br.com.velocity.sistema.entidades.CadTipoServico</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///localeader"/>
-           
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///"/>
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.password" value=""/>

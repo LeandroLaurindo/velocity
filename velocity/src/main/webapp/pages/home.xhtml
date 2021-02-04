@@ -21,6 +21,21 @@
                 width: 30px!important;
                 height: 25px!important;
             }
+            .gravar {
+                width: 60px; height: 60px;
+                /*background-image: url("../resources/img/logo.png")!important;*/
+                background: none!important;
+                position: absolute;
+                top: 5px; left: 5px;
+                z-index: 1;
+            }
+            .imglogo{
+                width: 60px; height: 60px;
+                /*background-image: url("../resources/img/logo.png")!important;*/
+                background: none!important;
+                position: absolute;
+                top: 5px; left: 5px;
+            }
         </style>
 
         <h:outputScript library="js" name="sistema.js" />
@@ -31,13 +46,20 @@
         <p:layout fullPage="true"  >
 
             <p:layoutUnit position="north" header="">
-                <p:graphicImage library="img" name="logo.png"  width="50" height="50" 
-                                style="margin: 0 auto; float: left; margin-left: 5px; margin-top: 5px; text-align: center; border-radius: 5%; padding: 10px;box-shadow: -5px -2px 10px  5px #999999;" />
                 <h:form>
-                    <p:commandButton style="float: right" value="Sair" ajax="false"  action="#{usuarioController.logOut()}" />
-                    <p:graphicImage style="float: right; margin: 2px;" value="#{cadImagemBean.buscarImagem(usuarioController.getUsu())}" width="20" height="20" />
-                    <p:outputLabel style="float: right; margin: 2px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:button value="" outcome="/pages/situacaoVeiculos"  styleClass="gravar" />
+                            <p:graphicImage library="img" name="logo.png"  width="50" height="50" styleClass="imglogo"/>
+                        </f:facet>
+                        <f:facet name="right">
+                            <p:commandButton style="float: right; margin-bottom: 20px;" value="Sair" ajax="false" icon="ui-icon-closethick" iconPos="true"  action="#{usuarioController.logOut()}" process="@this" />
+                            <p:graphicImage style="float: right; margin: 2px;" value="#{cadImagemBean.buscarImagem(usuarioController.getUsu())}" width="30" height="30" />
+                            <p:outputLabel style="float: right; margin: 2px;" value="Olá seja bem vindo(a) : #{usuarioController.getUsuario()}" />
+                        </f:facet>
+                    </p:toolbar>
                 </h:form>
+
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="60" closable="false" collapsible="false" resizable="false">

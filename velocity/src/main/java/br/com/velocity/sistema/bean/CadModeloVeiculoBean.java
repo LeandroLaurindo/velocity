@@ -106,9 +106,8 @@ public class CadModeloVeiculoBean implements Serializable {
     }
     
     
-     public void urlControleVeiculos(Integer id) {
-        String nome = String.valueOf(id);
-        Util.rediricionar("controleveiculos/controleVeiculos.xhtml?idv=" + nome);
+     public void urlControleVeiculos() {
+        Util.rediricionar("controleveiculos/controleVeiculos.xhtml?valor=abrir");
     }
    
     public void urlEditaImagem(Integer id) {

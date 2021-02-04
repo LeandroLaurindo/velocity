@@ -15,26 +15,34 @@ import java.util.List;
  * @author Leandro Laurindo
  */
 public class ControleVeiculosService implements Serializable {
-   
-  
+
     private ControleVeiculosDAO dao;
 
     public ControleVeiculosService() {
         dao = new ControleVeiculosDAO();
-   }
-    public void save(ControleVeiculos cliente) {
-        dao.save(cliente);
+    }
+
+    public boolean save(ControleVeiculos cliente) {
+        return dao.save(cliente);
 
     }
 
-    public void update(ControleVeiculos cliente) {
-        dao.getById(cliente.getIdControleVeiculo());
-        dao.update(cliente);
+    public boolean update(ControleVeiculos cliente) {
+        try {
+            dao.getById(cliente.getIdControleVeiculo());
+            return dao.update(cliente);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
-    public void delete(ControleVeiculos cliente) {
-        ControleVeiculos u = dao.getById(cliente.getIdControleVeiculo());
-        dao.delete(u);
+    public boolean delete(ControleVeiculos cliente) {
+        try {
+            ControleVeiculos u = dao.getById(cliente.getIdControleVeiculo());
+            return dao.delete(u);
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
     public ControleVeiculos carregar(Integer id) {
@@ -52,7 +60,7 @@ public class ControleVeiculosService implements Serializable {
     public List<ControleVeiculos> findAll(String parametros) {
         return dao.findAll(parametros);
     }
-    
+
     public ControleVeiculosDAO getDao() {
         return dao;
     }
@@ -60,5 +68,5 @@ public class ControleVeiculosService implements Serializable {
     public void setDao(ControleVeiculosDAO dao) {
         this.dao = dao;
     }
-  
+
 }

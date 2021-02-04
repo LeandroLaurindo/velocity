@@ -23,30 +23,28 @@ public class CadServicosService implements Serializable {
     }
 
     
-    public void save(CadServicos cadServico) {
-        try { 
-            dao.save(cadServico);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public boolean save(CadServicos cadServico) {
+         return dao.save(cadServico);
     }
 
-    public void update(CadServicos cadServico) {
+    public boolean update(CadServicos cadServico) {
         try {
             dao.getById(cadServico.getIdServico());
-            dao.update(cadServico);
+          return dao.update(cadServico);
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    public void delete(CadServicos cadServico) {
+    public boolean delete(CadServicos cadServico) {
         try {
            
             CadServicos u = dao.getById(cadServico.getIdServico());
-            dao.delete(u);
+           return dao.delete(u);
         } catch (Exception e) {
             e.printStackTrace();
+            return  false;
         }
     }
 

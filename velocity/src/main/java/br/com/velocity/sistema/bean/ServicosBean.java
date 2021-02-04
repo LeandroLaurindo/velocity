@@ -8,9 +8,11 @@ package br.com.velocity.sistema.bean;
 import br.com.velocity.sistema.entidades.CadFornecedor;
 import br.com.velocity.sistema.entidades.CadModeloVeiculo;
 import br.com.velocity.sistema.entidades.CadServicos;
+import br.com.velocity.sistema.entidades.CadTipoServico;
 import br.com.velocity.sistema.service.CadFornecedorService;
 import br.com.velocity.sistema.service.CadModeloVeiculoService;
 import br.com.velocity.sistema.service.CadServicosService;
+import br.com.velocity.sistema.service.CadTipoServicoService;
 import br.com.velocity.sistema.util.MessagesView;
 import br.com.velocity.sistema.util.Util;
 import java.io.Serializable;
@@ -51,6 +53,10 @@ public class ServicosBean implements Serializable {
     private List<String> listaNomePrestador;
 
     private List<String> listaNomeVeiculo;
+    
+    private List<CadTipoServico> listaCadTipoServico;
+    
+    private CadTipoServicoService tipoServicoService;
 
     private Integer idV;
 
@@ -70,11 +76,12 @@ public class ServicosBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        cadServicosService = new CadServicosService();
-        fornecedorService = new CadFornecedorService();
-        veiculoService = new CadModeloVeiculoService();
-        cadServicos = new CadServicos();
-        msg = new MessagesView();
+        this.cadServicosService = new CadServicosService();
+        this.fornecedorService = new CadFornecedorService();
+        this.veiculoService = new CadModeloVeiculoService();
+        this.tipoServicoService = new CadTipoServicoService();
+        this.cadServicos = new CadServicos();
+        this.msg = new MessagesView();
         try {
             String veiculo = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idVeiculo");
             if (null != veiculo) {
@@ -93,6 +100,7 @@ public class ServicosBean implements Serializable {
             }
             listarVeiculos();
             listarFornecedores();
+            listarServicos();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,7 +136,7 @@ public class ServicosBean implements Serializable {
 
     public void listarServicos() {
         this.listaCadServicos = this.cadServicosService.findAll();
-
+        this.listaCadTipoServico = this.tipoServicoService.findAll("ORDER BY c.descricaoServico ASC");
     }
 
     public void listarVeiculos() {
@@ -205,7 +213,7 @@ public class ServicosBean implements Serializable {
          if(this.cadServicos.getSituacao().equalsIgnoreCase("Pago") || this.cadServicos.getSituacao().equalsIgnoreCase("Fechado")){
             CadModeloVeiculo cadModeloVeiculo = this.veiculoService.carregar(this.cadServicos.getVeiculo());
             cadModeloVeiculo.setDisponivel(true);
-            cadModeloVeiculo.setMotivo("");
+            cadModeloVeiculo.setMotivo(this.cadServicos.getTipoServico());
             this.veiculoService.update(modeloVeiculo);
         }
         listarServicos();
@@ -414,4 +422,12 @@ public class ServicosBean implements Serializable {
         this.valorDoServico = valorDoServico;
     }
 
+    public List<CadTipoServico> getListaCadTipoServico() {
+        return listaCadTipoServico;
+    }
+
+    public void setListaCadTipoServico(List<CadTipoServico> listaCadTipoServico) {
+        this.listaCadTipoServico = listaCadTipoServico;
+    }
+    
 }

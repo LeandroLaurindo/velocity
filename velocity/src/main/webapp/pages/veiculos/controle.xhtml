@@ -79,6 +79,7 @@
                         <h3>Lista de Veículos</h3>
                         <div style="float: right">
                             <p:commandButton value="Novo" actionListener="#{cadModeloVeiculoBean.limpar()}"  icon="ui ui-icon-plus"/>
+                            <p:commandButton value="Aluguel/Reserva" icon="ui-icon-plus" actionListener="#{cadModeloVeiculoBean.urlControleVeiculos}" />
                         </div>
                     </f:facet>
                     <p:column>
@@ -151,12 +152,6 @@
                             <h:outputText value="Serviços"/>
                         </f:facet>
                         <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{cadModeloVeiculoBean.urlControleServicos(item.idModelo)}" title="Serviço" />
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Aluguel"/>
-                        </f:facet>
-                        <p:commandButton value="" icon="ui-icon-plus" styleClass="botaoIcon" actionListener="#{cadModeloVeiculoBean.urlControleVeiculos(item.idModelo)}" title="Aluguel" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">

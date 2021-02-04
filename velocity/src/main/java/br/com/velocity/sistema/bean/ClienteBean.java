@@ -97,7 +97,7 @@ public class ClienteBean implements Serializable {
     private MessagesView msg = new MessagesView();
 
     private String tipoPessoa = "";
-    
+
     private String tipoPessoaAux = "";
 
     private UploadedFile file;
@@ -275,7 +275,7 @@ public class ClienteBean implements Serializable {
                                     this.msg.error("Não foi possivel inserir endereço.");
                                 }
                             } else {
-                                this.msg.error("Não foi possivel inserir  cliente");
+                                this.msg.error("Não foi possivel inserir  cliente.");
                             }
                         } else {
                             this.msg.error("Não foi possivel inserir documentos.");
@@ -637,7 +637,7 @@ public class ClienteBean implements Serializable {
                 this.msg.info("Habilitação vencida.");
             }
             Util.executarAcao("PF('dlghab').hide()");
-            Util.updateComponente("formHabilitacao");
+            //Util.updateComponente("formHabilitacao");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -688,24 +688,25 @@ public class ClienteBean implements Serializable {
     }
 
     public void urlHabilitacao(CadDocumentos cd) {
+        //CadHabilitacao ch =  this.habilitacaoService.carregarParametros("where c.documentoFk.idDocumentos =" + cd.getIdDocumentos() + "");
         this.cadHabilitacao = new CadHabilitacao();
         this.documentos = cd;
         this.cadHabilitacao.setDocumentoFk(documentos);
-        Util.executarAcao("PF('dlghab').show()");
         Util.updateComponente("frmdadosH");
+        Util.executarAcao("PF('dlghab').show()");
         //Util.rediricionar("habilitacao/lista.xhtml?id=" + id);
     }
 
-    public void setarDadosEditar(CadDocumentos id) {
+    public void setarDadosEditar(Integer id) {
         this.documentos = new CadDocumentos();
         this.cadHabilitacao = new CadHabilitacao();
         try {
             this.cadHabilitacao = this.habilitacaoService.carregarParametros("where c.documentoFk.idDocumentos =" + id + "");
             this.documentos = this.cadHabilitacao.getDocumentoFk();
-        } catch (NoResultException ex) {
-            this.msg.error("Habilitação não encontrada.");
             Util.updateComponente("frmdadosH");
             Util.executarAcao("PF('dlghab').show()");
+        } catch (NoResultException ex) {
+            this.msg.error("Habilitação não encontrada.");
         }
     }
 
@@ -1050,5 +1051,5 @@ public class ClienteBean implements Serializable {
     public void setTipoPessoaAux(String tipoPessoaAux) {
         this.tipoPessoaAux = tipoPessoaAux;
     }
-  
+
 }

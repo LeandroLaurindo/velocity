@@ -51,10 +51,10 @@ public class CadDocumentos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_documentos")
     private Integer idDocumentos;
-    @Size(max = 11, message = "O campo CPF deve ter entre 1 e 11 caracteres")
+    @Size(max = 14, message = "O campo CPF deve ter entre 1 e 11 caracteres")
     @Column(name = "cpf")
     private String cpf;
-    @Size(max = 15, message = "O campo CNPJ deve ter entre 1 e 100 caracteres")
+    @Size(max = 18, message = "O campo CNPJ deve ter entre 1 e 100 caracteres")
     @Column(name = "cnpj")
     private String cnpj;
     @Size(max = 20, message = "O campo RG deve ter entre 1 e 20 caracteres")
