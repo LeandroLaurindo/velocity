@@ -9,19 +9,26 @@
 
     <ui:define name="conteudo">
         <f:view>
+            <h:form>
+                <p:messages showDetail="true">
+                        <p:autoUpdate />
+                    </p:messages> 
+            </h:form>
+        </f:view>
+
+        <f:view>
             <h:form id="formPv">
                 <p:dialog header="Filtro para pesquisar" widgetVar="dlgPesquisarV" id="dlgPesquisarV">
                     <h:panelGrid columns="1">
-                         <h:panelGrid columns="1">
+                        <h:panelGrid columns="1">
                             <p:outputLabel value="Tipo de ação:" for="tipoD" />
                             <p:selectOneMenu id="tipoD" value="#{controleVeiculosBean.tipoDeAcao}" label="Tipo" style="width: 200px;">
                                 <f:selectItem itemLabel="Selecione ..." itemValue=""  noSelectionOption="true" />
                                 <f:selectItem itemLabel="Aluguel" itemValue="ALUGUEL" />
                                 <f:selectItem itemLabel="Reserva" itemValue="RESERVA" />
-                                <p:ajax  process="tipoD" event="change" listener="#{controleVeiculosBean.mostraData()}" />
                             </p:selectOneMenu>
                         </h:panelGrid>
-                        <h:panelGrid columns="1" rendered="#{controleVeiculosBean.mostrarDatas == 'sim'}">
+                        <h:panelGrid columns="1">
                             <p:outputLabel value="Data Inicio:" for="datai" />
                             <p:calendar id="datai" value="#{controleVeiculosBean.dataI}" locale="pt" navigator="true" pattern="MM/dd/yyyy" />
                         </h:panelGrid>
@@ -47,7 +54,7 @@
                     <h:panelGrid columns="2">
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Cliente" for="cliente" />
-                            <p:selectOneMenu id="cliente" value="#{controleVeiculosBean.cadCliente}" converter="cadClienteConverter" panelStyle="width:180px"
+                            <p:selectOneMenu id="cliente" value="#{controleVeiculosBean.controleVeiculos.clienteFk}" converter="cadClienteConverter" panelStyle="width:180px"
                                              effect="fade" var="t" style="width:280px" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Selecione..." itemValue="" />
                                 <f:selectItems value="#{controleVeiculosBean.listaCadClientes}" var="clie" itemValue="#{clie}"  itemLabel="#{clie.documentoFk.pessoaFk.nome}"/>
@@ -62,7 +69,7 @@
 
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Veículo" for="veiculo" />
-                            <p:selectOneMenu id="veiculo" value="#{controleVeiculosBean.veiculo}" converter="cadModeloVeiculosConverter" panelStyle="width:180px"
+                            <p:selectOneMenu id="veiculo" value="#{controleVeiculosBean.controleVeiculos.veiculoFk}" converter="cadModeloVeiculosConverter" panelStyle="width:180px"
                                              effect="fade" var="t2" style="width:280px" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Selecione..." itemValue="" />
                                 <f:selectItems value="#{controleVeiculosBean.listaModeloVeiculos}" var="veic"  itemValue="#{veic}" itemLabel="#{veic.modelo}"/>
@@ -137,15 +144,15 @@
                     <h:panelGrid columns="3">
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Valor diária:" for="diaria" />
-                            <p:inputText id="diaria" value="#{controleVeiculosBean.controleVeiculos.valorDiaria}" title="Diaria" onkeypress="mascara(this, valor);" />
+                            <p:inputText id="diaria" value="#{controleVeiculosBean.vdiaria}" title="Diaria" onkeypress="mascara(this, valor);" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Valor desconto" for="desconto" />
-                            <p:inputText id="desconto" value="#{controleVeiculosBean.controleVeiculos.valorDesc}" title="Desconto" onkeypress="mascara(this, valor);" />
+                            <p:inputText id="desconto" value="#{controleVeiculosBean.vdesc}" title="Desconto" onkeypress="mascara(this, valor);" />
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                             <p:outputLabel value="Valor acréscimo:" for="acrescismo" />
-                            <p:inputText id="acrescismo" value="#{controleVeiculosBean.controleVeiculos.valorAcresc}" title="Acréscimo:" onkeypress="mascara(this, valor);" />
+                            <p:inputText id="acrescismo" value="#{controleVeiculosBean.vacresc}" title="Acréscimo:" onkeypress="mascara(this, valor);" />
                         </h:panelGrid>
                     </h:panelGrid>
                     <h:panelGrid columns="1">
@@ -175,6 +182,7 @@
                              paginator="true" rows="10" style="font-size: 13px!important">
                     <f:facet name="header">
                         <h3>Controle de Veículos</h3>
+                        <p:commandButton value="Novo"  onclick="PF('dlgPesquisarV').show()"  icon="ui ui-icon-plus"/>
                     </f:facet>
                     <p:column>
                         <f:facet name="header">
@@ -187,7 +195,7 @@
                             <h:outputText value="Data Hora Saida"/>
                         </f:facet>
                         <h:outputText value="#{item.dataHoraSaida}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:column>
                     <p:column>
@@ -195,7 +203,7 @@
                             <h:outputText value="Data Hora Prevista Retorno"/>
                         </f:facet>
                         <h:outputText value="#{item.dataHoraPrevistaRetorno}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:column>
                     <p:column>
@@ -203,24 +211,10 @@
                             <h:outputText value="DataHoraRetorno"/>
                         </f:facet>
                         <h:outputText value="#{item.dataHoraRetorno}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Agendamento Proximos Reparos"/>
-                        </f:facet>
-                        <h:outputText value="#{item.agendamentoProximosReparos}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Veiculo Disponível"/>
-                        </f:facet>
-                        <h:outputText value="#{controleVeiculosBean.disponivelV(item.veiculoFk.disponivel)}"/>
-                    </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="KmSaida"/>
@@ -239,7 +233,13 @@
                         </f:facet>
                         <h:outputText value="#{item.outrasObservacoes}"/>
                     </p:column>
-
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ação"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{controleVeiculosBean.setarDadosEditar(item)}" process="@this"/>
+                        <p:commandButton value="Excluir" icon="ui-icon-trash" actionListener="#{controleVeiculosBean.setarDadosDeletar(item)}" process="@this"/>
+                    </p:column>
                 </p:dataTable>
             </h:form>
         </f:view>

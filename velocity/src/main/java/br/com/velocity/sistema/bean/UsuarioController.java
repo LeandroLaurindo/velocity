@@ -36,7 +36,11 @@ public class UsuarioController implements Serializable{
     } 
     
     public String getUsuario(){
+        try{
         return SessionUtil.getUser().getLogin();
+        }catch(Throwable ex){
+            return "login.xhtml?faces-redirect=true";
+        }
     }
     
     public String getUsu(){    

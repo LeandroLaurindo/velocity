@@ -55,7 +55,7 @@ public class LoginBean {
         if (user == null) {
             return null;
         }
-       
+
         String s = String.valueOf(password);
         if (Util.checkPass(s.trim(), user.getSenha().trim())) {
             return user;
@@ -65,27 +65,32 @@ public class LoginBean {
     }
 
     public String entrar() {
-        if (!login.isEmpty() && !password.isEmpty()) {
-            Usuario user = isValidLogin(login, password);
+        try {
+            if (!login.isEmpty() && !password.isEmpty()) {
+                Usuario user = isValidLogin(login, password);
 
-            if (user != null) {
-                usuarioController.setUser(user);
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-                request.getSession().setAttribute("user", user);
-                return "/pages/home.xhtml";
-            }
+                if (user != null) {
+                    usuarioController.setUser(user);
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+                    request.getSession().setAttribute("user", user);
+                    return "/pages/home.xhtml";
+                }
 
-            mv.warn("Verifique seu login / senha");
-            return null;
-        } else {
+                mv.warn("Verifique seu login / senha");
+                return null;
+            } else {
 
-            if (login.isEmpty()) {
-                mv.warn("Informe o login.");
+                if (login.isEmpty()) {
+                    mv.warn("Informe o login.");
+                }
+                if (password.isEmpty()) {
+                    mv.warn("Informe a senha.");
+                }
+                return null;
             }
-            if (password.isEmpty()) {
-                mv.warn("Informe a senha.");
-            }
+        } catch (Throwable ex) {
+            mv.error("Não foi possivel estabelecer uma conexão!");
             return null;
         }
     }

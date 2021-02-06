@@ -43,6 +43,7 @@ public class Util {
         try {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             if (destino.contains("login") || destino.contains("accessNegado")) {
+                System.err.println(context.getRequestContextPath() + "/" + destino + "");
                 context.redirect(context.getRequestContextPath() + "/" + destino + "");
             } else {
                 context.redirect(context.getRequestContextPath() + "/pages/" + destino + "");

@@ -52,6 +52,14 @@ public class ControleVeiculosBean implements Serializable {
     private Date dataF;
     private String mostrarDatas = "nao";
 
+    private String vdiaria;
+
+    private String vdesc;
+
+    private String vacresc;
+    
+    private ControleVeiculos controleEditar;
+
     @PostConstruct
     public void init() {
         this.cadServicosService = new CadServicosService();
@@ -67,7 +75,6 @@ public class ControleVeiculosBean implements Serializable {
         this.tipoSaida = new ArrayList<>();
         this.tipoSaida.add("ALUGUEL");
         this.tipoSaida.add("RESERVA");
-        this.controleVeiculos = new ControleVeiculos();
         this.controleVeiculos = new ControleVeiculos();
         this.lista = new ArrayList<>();
         this.msg = new MessagesView();
@@ -93,6 +100,7 @@ public class ControleVeiculosBean implements Serializable {
 
     public void mostraData() {
         mostrarDatas = "";
+
         if (tipoDeAcao.equalsIgnoreCase("RESERVA")) {
             mostrarDatas = "sim";
         } else {
@@ -112,6 +120,8 @@ public class ControleVeiculosBean implements Serializable {
     }
 
     public void listarVeiculos() {
+        this.controleVeiculos = new ControleVeiculos();
+        this.controleVeiculos.setAlugueloReserva(this.tipoDeAcao);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         this.listaModeloVeiculos = new ArrayList<>();
         List<CadModeloVeiculo> listaModeloVeiculosAux = veiculoService.findAll("ORDER BY c.modelo ASC");
@@ -152,13 +162,47 @@ public class ControleVeiculosBean implements Serializable {
                         }
                     }
                 }
+
                 if (podeEntrar) {
                     this.listaModeloVeiculos.add(veiculoAux);
                 }
             }
         } else {
             if (this.tipoDeAcao.equalsIgnoreCase("ALUGUEL")) {
-                this.listaModeloVeiculos = veiculoService.findAll("WHERE (c.disponivel is null OR c.disponivel=true) ORDER BY c.modelo ASC");
+                if (dataI == null) {
+                    dataI = new Date();
+                }
+                if (dataI != null && dataF != null) {
+                    hqlVAluguel = " AND c.dataHoraPrevistaRetorno >= '" + df.format(dataI) + " 00:00:00' AND c.dataHoraPrevistaRetorno <= '" + df.format(dataF) + " 23:59:00'";
+                } else {
+                    if (dataI != null) {
+                        hqlVAluguel = " AND c.dataHoraPrevistaRetorno >= '" + df.format(dataI) + " 00:00:00'";
+                    } else {
+                        if (dataF != null) {
+                            hqlVAluguel = " AND c.dataHoraPrevistaRetorno <= '" + df.format(dataF) + " 00:00:00'";
+                        }
+                    }
+                }
+                List<CadModeloVeiculo> listav = new ArrayList<>();
+                List<ControleVeiculos> listac = new ArrayList<>();
+                listav = veiculoService.findAll("WHERE (c.disponivel is null OR c.disponivel=true) ORDER BY c.modelo ASC");
+                for (CadModeloVeiculo cadMVeiculo : listav) {
+                    boolean pode = true;
+                    listac = this.service.findAll("WHERE c.veiculoFk.idModelo=" + cadMVeiculo.getIdModelo() + "" + hqlVAluguel);
+
+                    if (listac.size() > 0) {
+                        for (ControleVeiculos cVeiculos : listac) {
+                            if (cVeiculos.getVeiculoFk().getIdModelo().intValue() == cadMVeiculo.getIdModelo().intValue()) {
+                                pode = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (pode) {
+                        this.listaModeloVeiculos.add(cadMVeiculo);
+                    }
+                }
             }
         }
 
@@ -179,39 +223,50 @@ public class ControleVeiculosBean implements Serializable {
 
     public void salvar() {
         if (this.controleVeiculos.getIdControleVeiculo() == null) {
-            System.out.println("chamou medodo salvar");
-            String valoD = this.controleVeiculos.getValorDiaria().toString();
-            valoD = valoD.replaceAll("\\.", "");
-            valoD = valoD.replaceAll("\\,", ".");
-            this.controleVeiculos.setValorDiaria(new BigDecimal(valoD));
-            if (this.service.save(this.controleVeiculos)) {
-                System.out.println("salvou");
-                this.controleVeiculos = new ControleVeiculos();
-                this.controleVeiculos = this.service.carregar(controleVeiculos.getIdControleVeiculo());
-                if (this.controleVeiculos != null) {
-                    if (this.controleVeiculos.getIdControleVeiculo() != null) {
+            //System.out.println("chamou medodo salvar");
 
-                        CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
-                        if (cmv != null) {
-                            if (cmv.getIdModelo() != null) {
-                                if (this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("ALUGUEL") || this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("RESERVA")) {
-                                    cmv.setDisponivel(false);
-                                    cmv.setMotivo(this.controleVeiculos.getAlugueloReserva());
-                                    this.veiculoService.update(cmv);
-                                }
-                            }
+            this.controleVeiculos.setValorDiaria(new BigDecimal(formVpBigDecimal(vdiaria)));
+            this.controleVeiculos.setValorDesc(new BigDecimal(formVpBigDecimal(vdesc)));
+            this.controleVeiculos.setValorAcresc(new BigDecimal(formVpBigDecimal(vacresc)));
+
+            if (this.service.save(this.controleVeiculos)) {
+                CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
+                if (cmv != null) {
+                    if (cmv.getIdModelo() != null) {
+                        if (this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("ALUGUEL")) {
+                            cmv.setDisponivel(false);
+                            cmv.setMotivo(this.controleVeiculos.getAlugueloReserva());
+                            this.veiculoService.update(cmv);
                         }
-                        this.msg.info("Salvo com sucesso.");
                     }
-                    this.controleVeiculos = new ControleVeiculos();
                 }
+                this.msg.info("Salvo com sucesso.");
+
+                this.controleVeiculos = new ControleVeiculos();
+
                 listar();
                 Util.executarAcao("PF('dglVControle').hide()");
             } else {
                 this.msg.warn("Não possivel salvar");
             }
         } else {
+            if(controleEditar.getVeiculoFk().getIdModelo().intValue() != this.controleVeiculos.getIdControleVeiculo().intValue()){
+              if(!controleEditar.getAlugueloReserva().equalsIgnoreCase(this.controleVeiculos.getAlugueloReserva())){
+                  if(controleEditar.getAlugueloReserva().equalsIgnoreCase("ALUGUEL")){
+                      CadModeloVeiculo cadModeloVeicul = this.veiculoService.carregar(controleEditar.getVeiculoFk().getIdModelo());
+                      cadModeloVeicul.setModelo("");
+                      cadModeloVeicul.setDisponivel(true);
+                      this.veiculoService.update(cadModeloVeicul);
+                  }
+              }
+               if(verificarVeiculo(this.controleVeiculos)){
+                   this.editar();
+               }else{
+                   this.msg.warn(this.controleVeiculos.getVeiculoFk().getModelo() + " está indisponivel!");
+               }
+            }else{
             this.editar();
+            }
         }
     }
 
@@ -236,42 +291,23 @@ public class ControleVeiculosBean implements Serializable {
     }
 
     public void editar() {
-        String valoD = this.controleVeiculos.getValorDiaria().toString();
-        valoD = valoD.replaceAll("\\.", "");
-        valoD = valoD.replaceAll("\\,", ".");
-        this.controleVeiculos.setValorDiaria(new BigDecimal(valoD));
-        if (this.controleVeiculos.getValorAcresc() != null) {
-            valoD = this.controleVeiculos.getValorAcresc().toString();
-            valoD = valoD.replaceAll("\\.", "");
-            valoD = valoD.replaceAll("\\,", ".");
-            this.controleVeiculos.setValorAcresc(new BigDecimal(valoD));
-        }
-        if (this.controleVeiculos.getValorDesc() != null) {
-            valoD = this.controleVeiculos.getValorDesc().toString();
-            valoD = valoD.replaceAll("\\.", "");
-            valoD = valoD.replaceAll("\\,", ".");
-            this.controleVeiculos.setValorDesc(new BigDecimal(valoD));
-        }
-
+        
+        this.controleVeiculos.setValorDiaria(new BigDecimal(formVpBigDecimal(vdiaria)));
+        this.controleVeiculos.setValorDesc(new BigDecimal(formVpBigDecimal(vdesc)));
+        this.controleVeiculos.setValorAcresc(new BigDecimal(formVpBigDecimal(vacresc)));
         if (this.service.update(this.controleVeiculos)) {
-            this.controleVeiculos = new ControleVeiculos();
-            this.controleVeiculos = this.service.carregar(controleVeiculos.getIdControleVeiculo());
-            if (this.controleVeiculos != null) {
-                if (this.controleVeiculos.getIdControleVeiculo() != null) {
-                    CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
-                    if (cmv != null) {
-                        if (cmv.getIdModelo() != null) {
-                            if (this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("ALUGUEL") || this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("RESERVA")) {
-                                if (this.controleVeiculos.getDataHoraRetorno() == null) {
-                                    cmv.setDisponivel(false);
-                                    cmv.setMotivo(this.controleVeiculos.getAlugueloReserva());
-                                } else {
-                                    cmv.setMotivo("");
-                                    cmv.setDisponivel(true);
-                                }
-                                this.veiculoService.update(cmv);
-                            }
+            CadModeloVeiculo cmv = this.veiculoService.carregar(this.controleVeiculos.getVeiculoFk().getIdModelo());
+            if (cmv != null) {
+                if (cmv.getIdModelo() != null) {
+                    if (this.controleVeiculos.getAlugueloReserva().equalsIgnoreCase("ALUGUEL")) {
+                        if (this.controleVeiculos.getDataHoraRetorno() == null) {
+                            cmv.setDisponivel(false);
+                            cmv.setMotivo(this.controleVeiculos.getAlugueloReserva());
+                        } else {
+                            cmv.setMotivo("");
+                            cmv.setDisponivel(true);
                         }
+                        this.veiculoService.update(cmv);
                     }
                 }
             }
@@ -343,7 +379,12 @@ public class ControleVeiculosBean implements Serializable {
     }
 
     public void setarDadosEditar(ControleVeiculos cmv) {
+        this.listaModeloVeiculos = veiculoService.findAll("ORDER BY c.modelo ASC");
         this.controleVeiculos = cmv;
+        this.controleEditar = this.controleVeiculos;
+        this.vdiaria = formVpBigDecimalPReal(controleVeiculos.getValorDiaria().toString());
+        this.vdesc = formVpBigDecimalPReal(controleVeiculos.getValorDesc().toString());
+        this.vacresc = formVpBigDecimalPReal(controleVeiculos.getValorAcresc().toString());
         Util.executarAcao("PF('dglVControle').show()");
         Util.updateComponente("formCadCV");
     }
@@ -368,6 +409,43 @@ public class ControleVeiculosBean implements Serializable {
                 return "Sim";
             } else {
                 return "Não";
+            }
+        }
+    }
+
+    public String formVpBigDecimal(String valor) {
+        if (valor == null) {
+            return "0.00";
+        } else {
+            if (valor.isEmpty()) {
+                return "0.00";
+            } else {
+                valor = valor.replaceAll("\\.", "");
+                valor = valor.replaceAll("\\,", ".");
+                return valor;
+            }
+        }
+    }
+
+    public String formVpBigDecimalPReal(String valor) {
+        if (valor == null) {
+            return "0,00";
+        } else {
+            if (valor.isEmpty()) {
+                return "0,00";
+            } else {
+                valor = valor.replaceAll("\\.", ",");
+                StringBuilder stringBuilder = new StringBuilder(valor);
+                if (valor.length() > 6) {
+                    stringBuilder.insert(valor.length() - 6, '.');
+                    valor = stringBuilder.toString();
+                }
+                if (valor.length() >= 10) {
+                    stringBuilder.insert(valor.length() - 10, '.');
+                    valor = stringBuilder.toString();
+                }
+
+                return valor;
             }
         }
     }
@@ -590,6 +668,47 @@ public class ControleVeiculosBean implements Serializable {
 
     public void setMostrarDatas(String mostrarDatas) {
         this.mostrarDatas = mostrarDatas;
+    }
+
+    public String getVdiaria() {
+        return vdiaria;
+    }
+
+    public void setVdiaria(String vdiaria) {
+        this.vdiaria = vdiaria;
+    }
+
+    public String getVdesc() {
+        return vdesc;
+    }
+
+    public void setVdesc(String vdesc) {
+        this.vdesc = vdesc;
+    }
+
+    public String getVacresc() {
+        return vacresc;
+    }
+
+    public void setVacresc(String vacresc) {
+        this.vacresc = vacresc;
+    }
+
+    private boolean verificarVeiculo(ControleVeiculos controleVe) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        List<ControleVeiculos> lista1 = new ArrayList<>();
+        lista1 = this.service.findAll("WHERE c.veiculoFk.idmodelo=" + controleVe.getVeiculoFk().getIdModelo() + " AND c.dataHoraPrevistaRetorno >= '" + df.format(controleVe.getDataHoraPrevistaRetorno()) + " 00:00:00' AND c.dataHoraPrevistaRetorno <= '" + df.format(controleVe.getDataHoraPrevistaRetorno()) + " 23:59:00'");
+        if (lista1.size() > 0) {
+            return false;
+        } else {
+            List<CadServicos> lista2 = new ArrayList<>();
+            lista2 = this.cadServicosService.findAll("WHERE c.veiculo=" + controleVe.getVeiculoFk().getIdModelo() + " AND c.situacao='Aberto'");
+            if (lista2.size() > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
